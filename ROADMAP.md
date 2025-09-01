@@ -12,12 +12,6 @@ What makes hoho the 'last' CLI agent
 * automatically connects to other conversations through shared state files that are atomatically updated
 * conversations are stored in .hoho
 * has panes
-* opens inside a terminal
-	* PROBLEM: tui interfaces are clunky and don't scale
-	* SOLUTION: imtui
-		* NEW PROBLEM: it's c++
-		* How hard to port this? Probably a lot.
-	* probably better to just get a good grip on TUI programming. If we do python, prompt_toolkit is not great
 * mcp manager to add from global mcp list to project dynamically (no command hell) e.g.:
 	* `claude mcp` -> opens a manager for this repo
 	* `/mcp` opens the same manager (existing manager in claude with more features)

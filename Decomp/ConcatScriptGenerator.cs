@@ -32,15 +32,15 @@ print_header() {
     echo """"
 }
 
-# Minify JavaScript
+# Minify JavaScript using proper minify tool
 minify_js() {
-    # Basic minification: remove comments and extra whitespace
-    sed -e 's|//.*$||g' \
-        -e 's|/\*[^*]*\*\+\([^/*][^*]*\*\+\)*\/||g' \
-        -e 's/^[[:space:]]*//g' \
-        -e 's/[[:space:]]*$//g' \
-        -e '/^$/d' \
-        -e 's/[[:space:]]\+/ /g'
+    # Use minify CLI if available, preserving variable names for reference
+    if command -v minify >/dev/null 2>&1; then
+        minify --type=js --js-keep-var-names
+    else
+        # Fallback: just remove blank lines if minify not available
+        sed '/^[[:space:]]*$/d'
+    fi
 }
 
 echo ""╔══════════════════════════════════════════════════════════════════════════════╗""
