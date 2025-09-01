@@ -80,6 +80,8 @@ What makes hoho the 'last' CLI agent
 	* HUD drawn on top of the entire system (sticky across workspace)
 	* Try doing it signal based with any custom specified binary so people can implement custom HUDs
 	* Our own HUD is simple and debuggy: solid black rectangles with red text on top
+* Quote messages
+	* up/down in action mode navigate message history and makes it possible to quote
 
 ### Input
 
@@ -145,3 +147,12 @@ Critical issues that all current CLI agents have which we need to address, indir
 ### State-based editing
 
 The context window is refreshed more often. This prevents overreliance on context to store information about the project, and favors the extraction into specs file instead.
+
+### Voice Integration
+
+We will integrate voice, however it may be better to do this in a different app/library/daemon that we connect up to this project
+
+### Worries
+
+1. Is json the best format for mapping db
+2. 

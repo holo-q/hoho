@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    
+    <!-- Performance optimizations -->
+    <ParallelizeTestCollections>true</ParallelizeTestCollections>
+    <MaxParallelThreads>4</MaxParallelThreads>
   </PropertyGroup>
 
   <ItemGroup>
