@@ -42,6 +42,11 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     
+    <!-- ZERO-ALLOCATION LINQ & PERFORMANCE -->
+    <PackageReference Include="NetFabric.Hyperlinq" Version="3.0.0-beta48" />
+    <PackageReference Include="Microsoft.Toolkit.HighPerformance" Version="7.1.2" />
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.0" />
+    
   </ItemGroup>
 
   <ItemGroup>

@@ -1,3 +1,7 @@
+### Improvements over Claude Code
+
+* Separate ESC to interrupt and queued messages
+
 ### hoho
 
 * continue/resume last conversation by default
@@ -20,7 +24,8 @@
 	* .hoho on first launch detects other agent config and asks if it should be configured as a proxy, making .holo a reference to .claude, .gemini, etc. that the code uses as the source of data, with additional config on top.
 	* it provides a migration route which automatically cleans up all old agent files, asserting hoho as the master CLI agent. all files are placed into .hoho/migrated/yyyy-mm-dd/
 	* extend new /commands on a per-project basis
-		* .hoho/name.cmd.md individuals
+		* .hoho/name.cmd.md individual commands
+		* .hoho/name.cmd.md individual commands
 		* .hoho/server.mcp.json -- individual mcps
 		* .hoho/config.json -- any number of commands or mcp servers
 		* .hoho/intuitions/*.txt -- intuition repertoire, any number of abstract intuitions about how to act
@@ -47,7 +52,9 @@
 * Auto-summary insertion
 	* 
 * CONTEXT.md can be added to any file such that it's injected in context when the directory is ls'd or included, like a concept definition for this content partition
-	
+	* Can contain a metadata section at the top
+	* Can specify the order of files in this directory so that the files are always shown in a specific order, whether ls or full content
+	* The context templating can therefore present these document under a certain narrative, for example "These markdowns document our journey over the course of the project", this way the model can correctly sequence and structure its attention such as to maintain chronological consistency, causality, amendments, trajectory, etc.
 
 ### Commands
 
