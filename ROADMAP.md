@@ -16,6 +16,7 @@ Immediate improvements over Claude Code
 * different send keys
 	* send immediately (while claude is already working)
 	* queue up (when claude is finished, proper queue not whatever the fake ass queue in claude code is doing)
+* Immediately preview tool card before the xml tag is closed, with live feedback as it's writing
 
 ### hoho
 
@@ -59,8 +60,9 @@ What makes hoho the 'last' CLI agent
 		* message-level extraction, then global context integration intermittently
 * `hoho list` command shows list of recent project paths which can be unfolded to see conversations, and search like fzf (maybe we can even integrate directly with it)
 * CLAUDE.md -> HOHO.md	
-* Wire prompts to keyboard shortcut
-	* Quick-marks / efficient leader key registration
+* Quick-marks / efficient leader key registration
+	* Wire prompts to keyboard shortcut in realtime
+	* Wire HUD minimap toggles
 * Resume / go key
 	* Auto-resume detection with hint
 	* Auto-hint on escape

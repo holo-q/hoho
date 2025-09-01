@@ -11,7 +11,24 @@ public class DecompCommand : Command
 {
     public DecompCommand() : base("decomp", "Advanced decompilation and analysis tools")
     {
-        // Subcommands
+        // Core commands (simplified)
+        AddCommand(new ExtractNewCommand());
+        AddCommand(new SmartRenameCommand());
+        AddCommand(new RenameAllCommand());
+        AddCommand(new FinalizeCommand());
+        AddCommand(new CleanupCommand());
+        AddCommand(new ListVersionsCommand());
+        
+        // Mapping management
+        AddCommand(new AddMappingCommand());
+        AddCommand(new ShowMappingsCommand());
+        
+        // LSP server management
+        AddCommand(new LspStartCommand());
+        AddCommand(new LspStopCommand());
+        AddCommand(new LspStatusCommand());
+        
+        // Legacy commands (kept for compatibility)
         AddCommand(new SetupCommand());
         AddCommand(new ExtractCommand());
         AddCommand(new LearnCommand());
