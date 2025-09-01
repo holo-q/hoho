@@ -16,11 +16,53 @@
 * track file modification to communicate to the LLM when files have been modified outside of context, so it stays up to date
 * pass the current time to LLM along with a USER.md
 * all .claude config can be both in the root of the project and in .claude
-* .hoho on first launch detects other agent config and asks if it should be configured as a proxy, making .holo a reference to .claude, .gemini, etc. that the code uses as the source of data, with additional config on top.
+* .hoho/
+	* .hoho on first launch detects other agent config and asks if it should be configured as a proxy, making .holo a reference to .claude, .gemini, etc. that the code uses as the source of data, with additional config on top.
 	* it provides a migration route which automatically cleans up all old agent files, asserting hoho as the master CLI agent. all files are placed into .hoho/migrated/yyyy-mm-dd/
-* extend new /commands on a per-project basis
+	* extend new /commands on a per-project basis
+		* .hoho/name.cmd.json individuals
+		* .hoho/server.mcp.json individual mcps
+		* .hoho/config.json any number of commands or mcp servers
+		* .hoho/
+	* newly detected files are asked for inclusion in message prompt
+		* indexed in .hoho/cache.json
+	* modify message prompt
+	* modify HOHO.md order
 * extend message with pre/post-processing events that can activate meta-reflection prompts, meta-agentic loop, etc.
 	* use this to create data extraction pipeline so that no intuition or project knowledge is ever lost
 		* message-level extraction, then global context integration intermittently
 * `hoho list` command shows list of recent project paths which can be unfolded to see conversations, and search like fzf (maybe we can even integrate directly with it)
+* CLAUDE.md -> HOHO.md	
+* Wire prompts to keyboard shortcut
+	* Quick-marks / efficient leader key registration
+* Resume / go key
+	* Auto-resume detection with hint
+	* Auto-hint on escape
+	* Auto-hint on error
 
+
+### Use-cases
+
+Ideas of things that the user should be able to setup
+
+1. Auto-insert linter or command output into every prompt (e.g. linting)
+2. Auto-import after code-edit
+3. Auto-encode before code compression
+4. Extract preference profile on...
+	
+
+
+### Hooks
+
+Based on the features above, the user may want the following event signals to handle:
+
+1. Code edited
+	- Filter on filetype
+2. Context compressed
+3. Conversation started
+4. Prompt sent
+5. Message received
+6. Tool use
+7. Sentiment hook
+	1. Disagreement initiated
+	2. Disagreement resolved

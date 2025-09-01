@@ -75,3 +75,23 @@ Thumbs.db
 decomp/
 .cache/
 .tmp/
+
+# .NET
+bin/
+obj/
+*.user
+*.userprefs
+*.pidb
+*.suo
+*.sdf
+*.opensdf
+*.tlog
+*.log
+logs/
+TestResults/
+*.nupkg
+*.snupkg
+.vs/
+*.csproj.user
+*.pubxml
+*.pubxml.user
