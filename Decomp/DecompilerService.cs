@@ -51,6 +51,18 @@ public static class DecompilerService
             if (Directory.Exists(agentDir))
             {
                 await ConcatScriptGenerator.GenerateScriptAsync(agent, agentDir);
+                
+                // Generate symbol index
+                Console.WriteLine("Generating symbol index...");
+                await TreeSitterIndexer.GenerateIndexScriptAsync(agentDir);
+                var symbolIndex = await TreeSitterIndexer.GenerateIndexAsync(agentDir);
+                
+                if (!string.IsNullOrEmpty(symbolIndex))
+                {
+                    var indexPath = Path.Combine(agentDir, "symbol-index.md");
+                    await File.WriteAllTextAsync(indexPath, symbolIndex);
+                    Console.WriteLine($"✓ Symbol index saved to {indexPath}");
+                }
             }
         }
         

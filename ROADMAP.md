@@ -3,7 +3,9 @@
 Immediate improvements over Claude Code
 
 * Separate ESC to interrupt and queued messages
-* continue/resume last conversation by default
+* Continue/resume last conversation by default
+* 3rd option never ask again for command foo in any directory
+* cctweaks configurations built-in
 
 ### hoho
 
