@@ -1,10 +1,14 @@
-### Improvements over Claude Code
+### Immediate Improvements
+
+Immediate improvements over Claude Code
 
 * Separate ESC to interrupt and queued messages
+* continue/resume last conversation by default
 
 ### hoho
 
-* continue/resume last conversation by default
+What makes hoho the 'last' CLI agent
+
 * automatically connects to other conversations through shared state files that are atomatically updated
 * conversations are stored in .hoho
 * has panes

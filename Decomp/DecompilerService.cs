@@ -43,7 +43,22 @@ public static class DecompilerService
         var tasks = agents.Select(AnalyzeAgentAsync);
         await Task.WhenAll(tasks);
         
+        // Generate concatenation scripts
+        Console.WriteLine("\nGenerating concatenation scripts...");
+        foreach (var agent in agents)
+        {
+            var agentDir = Path.Combine("decomp", agent);
+            if (Directory.Exists(agentDir))
+            {
+                await ConcatScriptGenerator.GenerateScriptAsync(agent, agentDir);
+            }
+        }
+        
+        // Generate master script
+        await ConcatScriptGenerator.GenerateMasterScriptAsync("decomp");
+        
         Console.WriteLine($"\nCompleted: {agents.Length}/{agents.Length} agents processed");
+        Console.WriteLine("Concatenation scripts generated in decomp/ directory");
         Logger.Info("Decomp setup completed successfully for {AgentCount} agents", agents.Length);
     }
 
