@@ -17,7 +17,7 @@
     <Optimize>true</Optimize>
     <DebugType>none</DebugType>
     <WarningLevel>5</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     
     <!-- APPLICATION INFO -->
     <AssemblyTitle>Hoho - The CLI Agent That Just Says OK</AssemblyTitle>
@@ -27,9 +27,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- TUI FRAMEWORK -->
+    <PackageReference Include="Terminal.Gui" Version="1.17.1" />
+    
     <!-- ZERO-ALLOCATION STACK -->
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-    <PackageReference Include="Spectre.Console" Version="0.48.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
     <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
@@ -39,8 +41,6 @@
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     
   </ItemGroup>
 

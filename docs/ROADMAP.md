@@ -20,7 +20,7 @@
 	* .hoho on first launch detects other agent config and asks if it should be configured as a proxy, making .holo a reference to .claude, .gemini, etc. that the code uses as the source of data, with additional config on top.
 	* it provides a migration route which automatically cleans up all old agent files, asserting hoho as the master CLI agent. all files are placed into .hoho/migrated/yyyy-mm-dd/
 	* extend new /commands on a per-project basis
-		* .hoho/name.cmd.md individuals
+		* .hoho/name.cmd.json individuals
 		* .hoho/server.mcp.json -- individual mcps
 		* .hoho/config.json -- any number of commands or mcp servers
 		* .hoho/intuitions/*.txt -- intuition repertoire, any number of abstract intuitions about how to act
@@ -42,16 +42,7 @@
 	* Auto-resume detection with hint
 	* Auto-hint on escape
 	* Auto-hint on error
-* Run shell commands (hoho should function like a shell augmentation)
-	* Shell mode? allowing the user to cd around, etc. instead of entering prompts
-* Auto-summary insertion
-	* 
-* CONTEXT.md can be added to any file such that it's injected in context when the directory is ls'd or included, like a concept definition for this content partition
-	
 
-### Commands
-
-A good command requests Claude to create an artifact which incorporates context into 
 
 ### Use-cases
 
@@ -73,15 +64,8 @@ Based on the features above, the user may want the following event signals to ha
 4. Prompt sent
 5. Message received
 6. Tool use
-7. Message sentiment
+7. Sentiment hook
 	1. Disagreement initiated
 	2. Disagreement resolved
-8. Off-context summary
 
 A useful thing to do is to insert intuitions or hints automatically, perhaps from an embedding database or the autoencoding set
-
-
-
-### Ideas
-
-Dynamic reranking of intuitions

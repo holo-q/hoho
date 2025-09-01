@@ -1,7 +1,6 @@
 using System.IO.Compression;
 using System.Text.Json;
 using System.Net.Http.Json;
-using Spectre.Console;
 using Hoho.Core;
 
 namespace Hoho.Decomp;

@@ -1,5 +1,4 @@
 using System.CommandLine;
-using Spectre.Console;
 using Hoho.Core;
 using Hoho.Decomp;
 using Serilog;
