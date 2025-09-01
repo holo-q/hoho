@@ -64,6 +64,12 @@ namespace Hoho.Decomp {
 			string                                analysisPath   = Path.Combine(versionDir, "bundle-analysis.md");
 			await File.WriteAllTextAsync(analysisPath, analysisReport);
 
+			// Generate symbol frequency analysis for prioritized renaming
+			FrequencyAnalysis frequencyAnalysis = await SymbolFrequencyAnalyzer.AnalyzeSymbolFrequencyAsync(bundlePath);
+			string            frequencyReport   = SymbolFrequencyAnalyzer.GenerateFrequencyReport(frequencyAnalysis);
+			string            frequencyPath     = Path.Combine(versionDir, "frequency-analysis.md");
+			await File.WriteAllTextAsync(frequencyPath, frequencyReport);
+
 			// Create dev version
 			if (autoDeobfuscate && File.Exists(MAPPINGS_DB)) {
 				Logger.Info("Applying known mappings to create dev version...");
@@ -83,12 +89,13 @@ namespace Hoho.Decomp {
 			await File.WriteAllTextAsync(Path.Combine(devDir, "README.md"), readme);
 
 			return new ExtractResult {
-				Version        = version,
-				ModuleCount    = modules.Count,
-				OriginalDir    = versionDir,
-				DevDir         = devDir,
-				FinalDir       = finalDir,
-				BundleAnalysis = bundleAnalysis
+				Version           = version,
+				ModuleCount       = modules.Count,
+				OriginalDir       = versionDir,
+				DevDir            = devDir,
+				FinalDir          = finalDir,
+				BundleAnalysis    = bundleAnalysis,
+				FrequencyAnalysis = frequencyAnalysis
 			};
 		}
 
@@ -317,6 +324,7 @@ hoho decomp finalize {version}
 			public string DevDir      { get; set; } = "";
 			public string FinalDir    { get; set; } = "";
 			public WebpackBundleAnalyzer.BundleAnalysis? BundleAnalysis { get; set; }
+			public FrequencyAnalysis? FrequencyAnalysis { get; set; }
 		}
 
 		public class ModuleInfo {

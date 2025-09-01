@@ -38,6 +38,34 @@ namespace Hoho.Decomp {
 					Logger.Info($"  - Full Report: {Path.Combine(result.OriginalDir, "bundle-analysis.md")}");
 				}
 
+				// Show frequency analysis summary
+				if (result.FrequencyAnalysis != null) {
+					var freqAnalysis = result.FrequencyAnalysis;
+					Logger.Info("");
+					Logger.Info("🎯 Symbol Frequency Analysis:");
+					Logger.Info($"  - Total Unique Symbols: {freqAnalysis.TotalUniqueSymbols:N0}");
+					Logger.Info($"  - Total Occurrences: {freqAnalysis.TotalOccurrences:N0}");
+					var highPriorityCount = freqAnalysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.High);
+					var mediumPriorityCount = freqAnalysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.Medium);
+					Logger.Info($"  - High Priority Symbols: {highPriorityCount} (rename first)");
+					Logger.Info($"  - Medium Priority Symbols: {mediumPriorityCount}");
+					Logger.Info($"  - Priority Report: {Path.Combine(result.OriginalDir, "frequency-analysis.md")}");
+					
+					// Show top 3 high priority symbols
+					var topRecommendations = freqAnalysis.PrioritizedRecommendations
+						.Where(r => r.Priority == RenamingPriority.High)
+						.Take(3)
+						.ToList();
+					
+					if (topRecommendations.Any()) {
+						Logger.Info("  - Top Priority Symbols:");
+						foreach (var rec in topRecommendations) {
+							var suggestedName = rec.SuggestedNames.FirstOrDefault() ?? "...";
+							Logger.Info($"    • {rec.Symbol} → {suggestedName} ({rec.Frequency} occurrences)");
+						}
+					}
+				}
+
 				Logger.Info("");
 				Logger.Info("Next steps:");
 				Logger.Info($"1. Edit files in {result.DevDir}");
