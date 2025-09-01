@@ -62,6 +62,16 @@ public static class Logger
         _logger.Warning(template, propertyValue);
     
     /// <summary>
+    /// Log warning (alias for Warn for compatibility).
+    /// </summary>
+    public static void Warning(string message) => Warn(message);
+    
+    /// <summary>
+    /// Log success message (displayed as Info with green color in console).
+    /// </summary>
+    public static void Success(string message) => Info($"✓ {message}");
+    
+    /// <summary>
     /// Log error with zero-allocation performance.
     /// </summary>
     public static void Error(string message) => _logger.Error(message);

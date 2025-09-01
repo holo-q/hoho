@@ -54,4 +54,10 @@
     <EmbeddedResource Include="art_2.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Exclude test files from main project compilation -->
+    <Compile Remove="Decomp.Tests/**/*.cs" />
+    <None Remove="Decomp.Tests/**/*" />
+  </ItemGroup>
+
 </Project>
