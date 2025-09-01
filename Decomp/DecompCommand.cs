@@ -24,6 +24,8 @@ namespace Hoho.Decomp {
 			// Mapping management
 			AddCommand(new AddMappingCommand());
 			AddCommand(new ShowMappingsCommand());
+			AddCommand(new MappingDisplayCommand());
+			AddCommand(new MigrateMappingsCommand());
 
 			// LSP server management
 			AddCommand(new LspStartCommand());
