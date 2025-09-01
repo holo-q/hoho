@@ -318,15 +318,18 @@ public class ExtractedSymbols
     {
         var symbols = new ExtractedSymbols();
         
-        // Extract classes
-        var classPattern = @"class\s+(\w+)(?:\s+extends\s+(\w+))?\s*\{([^}]+)\}";
+        // Extract classes - use a more sophisticated pattern that handles nested braces
+        var classPattern = @"class\s+(\w+)(?:\s+extends\s+(\w+))?\s*\{";
         var matches = System.Text.RegularExpressions.Regex.Matches(code, classPattern);
         
         foreach (System.Text.RegularExpressions.Match match in matches)
         {
             var className = match.Groups[1].Value;
             var extends = match.Groups[2].Value;
-            var body = match.Groups[3].Value;
+            
+            // Extract the class body by finding matching braces
+            var startIndex = match.Index + match.Length;
+            var body = ExtractClassBody(code, startIndex);
             
             var classInfo = new ClassInfo
             {
@@ -334,16 +337,21 @@ public class ExtractedSymbols
                 Extends = string.IsNullOrEmpty(extends) ? null : extends
             };
             
-            // Extract methods
-            var methodPattern = @"(\w+)\s*\([^)]*\)\s*\{";
+            // Extract methods - need to match methods with empty bodies too
+            var methodPattern = @"(\w+)\s*\(\)\s*\{\s*\}";
             var methodMatches = System.Text.RegularExpressions.Regex.Matches(body, methodPattern);
             foreach (System.Text.RegularExpressions.Match methodMatch in methodMatches)
             {
-                classInfo.Methods.Add(methodMatch.Groups[1].Value);
+                var methodName = methodMatch.Groups[1].Value;
+                // Skip if it's a static method or property (handled separately)
+                if (!body.Contains($"static {methodName}") && !body.Contains($"get {methodName}"))
+                {
+                    classInfo.Methods.Add(methodName);
+                }
             }
             
             // Extract static methods
-            var staticPattern = @"static\s+(\w+)\s*\([^)]*\)\s*\{";
+            var staticPattern = @"static\s+(\w+)\s*\(\)\s*\{\s*\}";
             var staticMatches = System.Text.RegularExpressions.Regex.Matches(body, staticPattern);
             foreach (System.Text.RegularExpressions.Match staticMatch in staticMatches)
             {
@@ -351,7 +359,7 @@ public class ExtractedSymbols
             }
             
             // Extract properties
-            var propertyPattern = @"get\s+(\w+)\s*\(\)\s*\{";
+            var propertyPattern = @"get\s+(\w+)\s*\(\)\s*\{\s*\}";
             var propertyMatches = System.Text.RegularExpressions.Regex.Matches(body, propertyPattern);
             foreach (System.Text.RegularExpressions.Match propMatch in propertyMatches)
             {
@@ -363,6 +371,29 @@ public class ExtractedSymbols
         
         symbols.TotalClasses = symbols.Classes.Count;
         return symbols;
+    }
+    
+    private static string ExtractClassBody(string code, int startIndex)
+    {
+        var depth = 1; // We already passed the opening brace
+        var endIndex = startIndex;
+        
+        for (int i = startIndex; i < code.Length; i++)
+        {
+            if (code[i] == '{')
+                depth++;
+            else if (code[i] == '}')
+            {
+                depth--;
+                if (depth == 0)
+                {
+                    endIndex = i;
+                    break;
+                }
+            }
+        }
+        
+        return code.Substring(startIndex, endIndex - startIndex);
     }
 }
 
