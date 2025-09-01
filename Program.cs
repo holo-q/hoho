@@ -42,19 +42,8 @@ public static class Program
         versionCommand.SetHandler(ShowVersion);
         rootCommand.AddCommand(versionCommand);
 
-        // Decomp commands
-        var decompCommand = new Command("decomp", "CLI agent decompilation and analysis");
-        
-        var setupCommand = new Command("setup", "Instantly prepare decomp and analyze CLI agents");
-        setupCommand.SetHandler(async () => await DecompilerService.SetupAsync());
-        decompCommand.AddCommand(setupCommand);
-
-        var analyzeCommand = new Command("analyze", "Analyze a specific CLI agent");
-        var agentArgument = new Argument<string>("agent", "CLI agent to analyze (claude-code, etc.)");
-        analyzeCommand.AddArgument(agentArgument);
-        analyzeCommand.SetHandler(async (string agent) => await DecompilerService.AnalyzeAgentAsync(agent), agentArgument);
-        decompCommand.AddCommand(analyzeCommand);
-
+        // Decomp commands - use the comprehensive DecompCommand
+        var decompCommand = new DecompCommand();
         rootCommand.AddCommand(decompCommand);
 
             return await rootCommand.InvokeAsync(args);

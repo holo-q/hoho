@@ -1,0 +1,9957 @@
+=== Symbol Extraction Report ===
+Total Classes: 685
+Total Functions: 5299
+Standalone Functions: 1
+
+=== Classes with Methods ===
+
+Class A:
+  Methods (60):
+    - _addParent()
+    - _hasParent()
+    - _removeParent()
+    - _subscribe()
+    - _trySubscribe()
+    - abiVersion()
+    - accept()
+    - add()
+    - complete()
+    - digest()
+    - digest()
+    - digest()
+    - digest()
+    - digest()
+    - digest()
+    - digestSync()
+    - do()
+    - error()
+    - fieldCount()
+    - fieldIdForName()
+    - fieldNameForId()
+    - for()
+    - forEach()
+    - hashBuffer()
+    - idForNodeType()
+    - if()
+    - if()
+    - lift()
+    - lookaheadIterator()
+    - metadata()
+    - name()
+    - next()
+    - nextState()
+    - nodeTypeCount()
+    - nodeTypeForId()
+    - nodeTypeIsNamed()
+    - nodeTypeIsVisible()
+    - observe()
+    - parseFromString()
+    - pipe()
+    - query()
+    - remove()
+    - reset()
+    - reset()
+    - reset()
+    - schedule()
+    - stateCount()
+    - subscribe()
+    - subtypes()
+    - supertypes()
+    - toObservable()
+    - toPromise()
+    - unsubscribe()
+    - update()
+    - update()
+    - update()
+    - update()
+    - update()
+    - update()
+    - version()
+  Static Methods (1):
+    - static load()
+  Properties (2):
+    - fields
+    - types
+
+Class AL:
+  Methods (6):
+    - append()
+    - delete()
+    - get()
+    - getAll()
+    - has()
+    - set()
+
+Class ALB:
+  Methods (23):
+    - addActiveCall()
+    - addDisconnectListener()
+    - canSendPing()
+    - catch()
+    - catch()
+    - clearKeepaliveTimeout()
+    - createCall()
+    - flowControlTrace()
+    - getChannelzInfo()
+    - getChannelzRef()
+    - getOptions()
+    - getPeerName()
+    - handleDisconnect()
+    - if()
+    - if()
+    - internalsTrace()
+    - keepaliveTrace()
+    - maybeSendPing()
+    - maybeStartKeepalivePingTimer()
+    - removeActiveCall()
+    - reportDisconnectToOwner()
+    - shutdown()
+    - trace()
+  Properties (21):
+    - activeCalls
+    - channelzEnabled
+    - channelzRef
+    - disconnectHandled
+    - disconnectListeners
+    - keepaliveTimeMs
+    - keepaliveTimeoutMs
+    - keepaliveTimer
+    - keepaliveWithoutCalls
+    - keepalivesSent
+    - lastMessageReceivedTimestamp
+    - lastMessageSentTimestamp
+    - messagesReceived
+    - messagesSent
+    - options
+    - pendingSendKeepalivePing
+    - remoteName
+    - session
+    - streamTracker
+    - subchannelAddressString
+    - userAgent
+
+Class AN0:
+  Methods (2):
+    - getLoadBalancerName()
+    - toJsonObject()
+  Static Methods (1):
+    - static createFromJson()
+
+Class ATB:
+  Methods (6):
+    - B()
+    - _shutdown()
+    - forceFlush()
+    - if()
+    - onEmit()
+    - shutdown()
+  Properties (3):
+    - _exporter
+    - _shutdownOnce
+    - _unresolvedExports
+
+Class AU0:
+  Extends: pe
+  Methods (1):
+    - record()
+
+Class AVA:
+  Methods (6):
+    - add()
+    - catch()
+    - dispose()
+    - getChildren()
+    - has()
+    - remove()
+  Properties (3):
+    - _removeWatcher
+    - items
+    - path
+
+Class AZ1:
+  Methods (25):
+    - blockquote()
+    - br()
+    - checkbox()
+    - code()
+    - codespan()
+    - del()
+    - em()
+    - for()
+    - for()
+    - heading()
+    - hr()
+    - html()
+    - if()
+    - if()
+    - image()
+    - link()
+    - list()
+    - listitem()
+    - paragraph()
+    - space()
+    - strong()
+    - table()
+    - tablecell()
+    - tablerow()
+    - text()
+  Properties (1):
+    - options
+
+Class ActiveFormattingElements:
+  Methods (8):
+    - clearToMarker()
+    - findElementByTag()
+    - indexOf()
+    - insertAfter()
+    - insertMarker()
+    - push()
+    - remove()
+    - replace()
+
+Class Ad0:
+  Methods (6):
+    - _incrementSessionStatusCount()
+    - close()
+    - flush()
+    - getSessionAggregates()
+    - incrementSessionStatusCount()
+    - switch()
+  Properties (6):
+    - _client
+    - _intervalId
+    - _isEnabled
+    - _pendingAggregates
+    - _sessionAttrs
+    - flushTimeout
+
+Class Ai1:
+  Extends: Error
+
+Class Algorithm:
+  Methods (2):
+    - initialize()
+    - initialize()
+
+Class AnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class AzB:
+  Methods (10):
+    - _findBatchCallback()
+    - _findCallback()
+    - _observeBatchCallbacks()
+    - _observeCallbacks()
+    - addBatchCallback()
+    - addCallback()
+    - if()
+    - observe()
+    - removeBatchCallback()
+    - removeCallback()
+
+Class B:
+  Methods (61):
+    - _checkFinalizedStatuses()
+    - _checkFinalizedStatuses()
+    - _complete()
+    - _error()
+    - _execute()
+    - _execute()
+    - _innerSubscribe()
+    - _next()
+    - _subscribe()
+    - _subscribe()
+    - _subscribe()
+    - _subscribe()
+    - _subscribe()
+    - _teardown()
+    - _throwIfClosed()
+    - _trimBuffer()
+    - _trySubscribe()
+    - asObservable()
+    - clone()
+    - complete()
+    - complete()
+    - complete()
+    - complete()
+    - connect()
+    - error()
+    - error()
+    - error()
+    - execute()
+    - execute()
+    - flush()
+    - flush()
+    - flush()
+    - flush()
+    - getSubject()
+    - getValue()
+    - item()
+    - lift()
+    - next()
+    - next()
+    - next()
+    - next()
+    - next()
+    - next()
+    - recycleAsyncId()
+    - recycleAsyncId()
+    - recycleAsyncId()
+    - recycleAsyncId()
+    - refCount()
+    - requestAsyncId()
+    - requestAsyncId()
+    - requestAsyncId()
+    - requestAsyncId()
+    - requestAsyncId()
+    - schedule()
+    - schedule()
+    - schedule()
+    - schedule()
+    - unsubscribe()
+    - unsubscribe()
+    - unsubscribe()
+    - unsubscribe()
+  Properties (6):
+    - length
+    - length
+    - length
+    - nodes
+    - observed
+    - value
+
+Class B11:
+  Methods (1):
+    - if()
+  Properties (2):
+    - _descriptor
+    - _writableMetricStorage
+
+Class BD:
+  Methods (5):
+    - _handleAdd()
+    - _handleRemove()
+    - load()
+    - loadSync()
+    - resolveAll()
+
+Class BDB:
+  Extends: Error
+  Properties (2):
+    - code
+    - data
+
+Class BI1:
+  Methods (8):
+    - catch()
+    - cleanup()
+    - formatTokens()
+    - handleManualAuthCodeInput()
+    - if()
+    - startOAuthFlow()
+    - storeAccountInfo()
+    - waitForAuthorizationCode()
+  Properties (4):
+    - authCodeListener
+    - codeVerifier
+    - manualAuthCodeResolver
+    - port
+
+Class BLB:
+  Methods (11):
+    - F()
+    - I()
+    - V()
+    - Y()
+    - catch()
+    - connect()
+    - createSession()
+    - if()
+    - shutdown()
+    - tcpConnect()
+    - trace()
+  Properties (3):
+    - channelTarget
+    - isShutdown
+    - session
+
+Class BMB:
+  Methods (7):
+    - close()
+    - createCall()
+    - getChannelzRef()
+    - getConnectivityState()
+    - getTarget()
+    - if()
+    - watchConnectivityState()
+  Properties (1):
+    - internalChannel
+
+Class BN0:
+  Methods (10):
+    - calculateAndUpdateState()
+    - countChildrenWithState()
+    - destroy()
+    - exitIdle()
+    - getTypeName()
+    - if()
+    - resetBackoff()
+    - resetSubchannelList()
+    - updateAddressList()
+    - updateState()
+  Properties (7):
+    - channelControlHelper
+    - childChannelControlHelper
+    - children
+    - currentReadyPicker
+    - currentState
+    - lastError
+    - updatesPaused
+
+Class BP0:
+  Extends: Error
+  Properties (4):
+    - code
+    - exitCode
+    - name
+    - nestedError
+
+Class BU0:
+  Extends: VG1
+
+Class BVA:
+  Methods (3):
+    - entryPath()
+    - filterDir()
+    - filterPath()
+  Properties (7):
+    - dirParts
+    - followSymlinks
+    - fsw
+    - fullWatchPath
+    - path
+    - statMethod
+    - watchPath
+
+Class Bh:
+  Extends: h4
+  Methods (10):
+    - _addCheck()
+    - _parse()
+    - if()
+    - if()
+    - if()
+    - if()
+    - max()
+    - maxDate()
+    - min()
+    - minDate()
+
+Class Bk1:
+  Methods (4):
+    - clear()
+    - del()
+    - get()
+    - put()
+
+Class BnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class BoA:
+  Extends: Z34
+  Methods (7):
+    - F()
+    - G()
+    - J()
+    - Y()
+    - Z()
+    - for()
+    - for()
+
+Class Bt:
+  Extends: dI
+  Methods (4):
+    - countTokens()
+    - create()
+    - if()
+    - stream()
+  Properties (1):
+    - batches
+
+Class BwB:
+  Methods (4):
+    - build()
+    - withOnReceiveMessage()
+    - withOnReceiveMetadata()
+    - withOnReceiveStatus()
+  Properties (3):
+    - message
+    - metadata
+    - status
+
+Class Bx1:
+  Extends: Error
+
+Class ByteStringBuffer:
+  Methods (36):
+    - _optimizeConstructedString()
+    - at()
+    - bytes()
+    - clear()
+    - compact()
+    - copy()
+    - fillWithByte()
+    - getByte()
+    - getBytes()
+    - getInt()
+    - getInt16()
+    - getInt16Le()
+    - getInt24()
+    - getInt24Le()
+    - getInt32()
+    - getInt32Le()
+    - getSignedInt()
+    - isEmpty()
+    - last()
+    - length()
+    - putBuffer()
+    - putByte()
+    - putBytes()
+    - putInt()
+    - putInt16()
+    - putInt16Le()
+    - putInt24()
+    - putInt24Le()
+    - putInt32()
+    - putInt32Le()
+    - putSignedInt()
+    - putString()
+    - setAt()
+    - toHex()
+    - toString()
+    - truncate()
+
+Class C4B:
+  Methods (3):
+    - A()
+    - function()
+    - if()
+
+Class CDB:
+  Methods (7):
+    - catch()
+    - export()
+    - forceFlush()
+    - if()
+    - if()
+    - if()
+    - shutdown()
+  Properties (6):
+    - _diagLogger
+    - _promiseQueue
+    - _responseHandler
+    - _serializer
+    - _timeout
+    - _transport
+
+Class CHB:
+  Methods (2):
+    - getInstrumentDescriptor()
+    - updateDescription()
+  Properties (1):
+    - _instrumentDescriptor
+
+Class CK0:
+  Extends: SP
+
+Class CL0:
+  Methods (3):
+    - finish()
+    - start()
+    - update()
+
+Class CN:
+  Extends: h4
+  Methods (1):
+    - _parse()
+
+Class COB:
+  Methods (2):
+    - peekNextEndpoint()
+    - pick()
+  Properties (2):
+    - children
+    - nextIndex
+
+Class CP:
+  Extends: F7
+  Properties (4):
+    - beta
+    - completions
+    - messages
+    - models
+
+Class CP0:
+  Extends: PW1
+  Methods (2):
+    - close()
+    - write()
+  Properties (3):
+    - inputStream
+    - transport
+    - url
+
+Class CR2:
+  Methods (2):
+    - add()
+    - if()
+  Properties (3):
+    - concurrency
+    - jobs
+    - pending
+
+Class CVA:
+  Methods (17):
+    - appendEntry()
+    - catch()
+    - for()
+    - for()
+    - for()
+    - getAllCheckpoints()
+    - getAllTranscripts()
+    - getLastLog()
+    - getTranscript()
+    - if()
+    - if()
+    - if()
+    - if()
+    - insertCheckpoint()
+    - insertMessageChain()
+    - persistToRemote()
+    - setRemoteIngressUrl()
+  Properties (6):
+    - checkpoints
+    - didLoad
+    - messages
+    - remoteIngressUrl
+    - sessionFile
+    - summaries
+
+Class Ca2:
+  Methods (10):
+    - accessToken()
+    - getCredentials()
+    - getToken()
+    - hasExpired()
+    - idToken()
+    - if()
+    - isTokenExpiring()
+    - refreshToken()
+    - revokeToken()
+    - tokenType()
+  Properties (1):
+    - transporter
+
+Class Cj1:
+  Methods (1):
+    - sign()
+
+Class Ck1:
+  Extends: aI
+
+Class Cq0:
+  Methods (7):
+    - getFilters()
+    - push()
+    - receiveMessage()
+    - receiveMetadata()
+    - receiveTrailers()
+    - sendMessage()
+    - sendMetadata()
+  Properties (1):
+    - filters
+
+Class Ct2:
+  Extends: Dt2
+  Methods (15):
+    - _attachCurrentAttrLocationInfo()
+    - _createAttr()
+    - _createCharacterToken()
+    - _createCommentToken()
+    - _createDoctypeToken()
+    - _createEOFToken()
+    - _createEndTagToken()
+    - _createStartTagToken()
+    - _emitCurrentCharacterToken()
+    - _emitCurrentToken()
+    - _getCurrentLocation()
+    - _getOverriddenMethods()
+    - _leaveAttrName()
+    - _leaveAttrValue()
+    - function()
+  Properties (4):
+    - ctLoc
+    - currentAttrLocation
+    - posTracker
+    - tokenizer
+
+Class Cz1:
+  Extends: h4
+  Methods (6):
+    - _parse()
+    - discriminator()
+    - for()
+    - for()
+    - options()
+    - optionsMap()
+  Static Methods (1):
+    - static create()
+
+Class DG:
+  Methods (15):
+    - _checkDataSize()
+    - _emitError()
+    - _getNext()
+    - _handleErrors()
+    - _pipeNext()
+    - _realGetNext()
+    - _reset()
+    - _updateDataSize()
+    - append()
+    - destroy()
+    - end()
+    - pause()
+    - pipe()
+    - resume()
+    - write()
+
+Class DP0:
+  Methods (16):
+    - catch()
+    - close()
+    - connect()
+    - doDisconnect()
+    - for()
+    - handleConnectionError()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - isConnectedStatus()
+    - replayBufferedMessages()
+    - sendLine()
+    - setOnData()
+    - write()
+  Properties (9):
+    - headers
+    - lastSentId
+    - messageBuffer
+    - onData
+    - reconnectAttempts
+    - reconnectTimer
+    - state
+    - url
+    - ws
+
+Class DRB:
+  Methods (11):
+    - _filterResourceConstantLabels()
+    - _serializeHistogramDataPoint()
+    - _serializeMetricData()
+    - _serializeResource()
+    - _serializeScopeMetrics()
+    - _serializeSingularDataPoint()
+    - for()
+    - for()
+    - if()
+    - serialize()
+    - switch()
+  Properties (4):
+    - _additionalAttributes
+    - _appendTimestamp
+    - _prefix
+    - _withResourceConstantLabels
+
+Class DY:
+  Methods (12):
+    - bool()
+    - bytes()
+    - double()
+    - fixed32()
+    - float()
+    - int32()
+    - sfixed32()
+    - sint32()
+    - skip()
+    - skipType()
+    - string()
+    - uint32()
+
+Class DataBuffer:
+  Methods (36):
+    - accommodate()
+    - at()
+    - bytes()
+    - clear()
+    - compact()
+    - copy()
+    - fillWithByte()
+    - getByte()
+    - getBytes()
+    - getInt()
+    - getInt16()
+    - getInt16Le()
+    - getInt24()
+    - getInt24Le()
+    - getInt32()
+    - getInt32Le()
+    - getSignedInt()
+    - isEmpty()
+    - last()
+    - length()
+    - putBuffer()
+    - putByte()
+    - putBytes()
+    - putInt()
+    - putInt16()
+    - putInt16Le()
+    - putInt24()
+    - putInt24Le()
+    - putInt32()
+    - putInt32Le()
+    - putSignedInt()
+    - putString()
+    - setAt()
+    - toHex()
+    - toString()
+    - truncate()
+
+Class Dk1:
+  Extends: aI
+
+Class DnA:
+  Extends: NG
+  Properties (4):
+    - cause
+    - code
+    - message
+    - name
+
+Class E01:
+  Methods (1):
+    - item()
+  Properties (1):
+    - length
+
+Class EK0:
+  Extends: SP
+
+Class ELB:
+  Extends: KY1
+  Methods (2):
+    - compressMessage()
+    - decompressMessage()
+  Properties (1):
+    - maxRecvMessageLength
+
+Class ENB:
+  Methods (2):
+    - addTrace()
+    - getTraceMessage()
+  Properties (3):
+    - creationTimestamp
+    - events
+    - eventsLogged
+
+Class ET1:
+  Extends: Tu
+
+Class Eb0:
+  Methods (13):
+    - Md1()
+    - Md1()
+    - Md1()
+    - _fetchAndPrepFromNetwork()
+    - _getDataAsyncImpl()
+    - _getSdkKey()
+    - _loadFromCache()
+    - _prefetchDataImpl()
+    - _runLocalStorageCacheEviction()
+    - _writeToCache()
+    - attach()
+    - getDataSync()
+    - setData()
+  Properties (6):
+    - _adapterName
+    - _cacheSuffix
+    - _inMemoryCache
+    - _lastModifiedStoreKey
+    - _options
+    - _sdkKey
+
+Class Ek1:
+  Extends: aI
+
+Class ElementStack:
+  Methods (19):
+    - clearToContext()
+    - contains()
+    - elementInScope()
+    - elementInSpecificScope()
+    - elementTypeInScope()
+    - elementTypeInSpecificScope()
+    - generateImpliedEndTags()
+    - inButtonScope()
+    - inListItemScope()
+    - inScope()
+    - inSelectScope()
+    - inSpecificScope()
+    - inTableScope()
+    - pop()
+    - popElement()
+    - popElementType()
+    - popTag()
+    - push()
+    - removeElement()
+
+Class Et2:
+  Extends: DM6
+  Methods (4):
+    - _getOverriddenMethods()
+    - pop()
+    - popAllUpToHtmlElement()
+    - remove()
+  Properties (1):
+    - onItemPop
+
+Class Ev1:
+  Methods (1):
+    - toDescriptor()
+
+Class ExitStatus:
+  Properties (2):
+    - message
+    - status
+
+Class EzB:
+  Methods (2):
+    - getMeterSharedState()
+    - selectAggregations()
+  Properties (1):
+    - resource
+
+Class F11:
+  Methods (1):
+    - compose()
+  Static Methods (3):
+    - static createFromSecureContext()
+    - static createInsecure()
+    - static createSsl()
+
+Class F4:
+  Extends: LQ
+  Static Methods (2):
+    - static generate()
+    - static makeMessage()
+  Properties (4):
+    - error
+    - headers
+    - requestID
+    - status
+
+Class F6B:
+  Methods (1):
+    - getTracer()
+
+Class F7:
+  Methods (38):
+    - _calculateNonstreamingTimeout()
+    - apiKeyAuth()
+    - authHeaders()
+    - bearerAuth()
+    - buildBody()
+    - buildHeaders()
+    - buildRequest()
+    - buildURL()
+    - calculateDefaultRetryTimeoutMillis()
+    - calculateNonstreamingTimeout()
+    - defaultIdempotencyKey()
+    - defaultQuery()
+    - delete()
+    - fetchWithTimeout()
+    - get()
+    - getAPIList()
+    - getUserAgent()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - makeRequest()
+    - makeStatusError()
+    - methodRequest()
+    - patch()
+    - post()
+    - prepareOptions()
+    - prepareRequest()
+    - put()
+    - request()
+    - requestAPIList()
+    - retryRequest()
+    - shouldRetry()
+    - stringifyQuery()
+    - validateHeaders()
+    - withOptions()
+  Properties (10):
+    - _options
+    - apiKey
+    - authToken
+    - baseURL
+    - fetch
+    - fetchOptions
+    - logLevel
+    - logger
+    - maxRetries
+    - timeout
+
+Class FC:
+  Methods (40):
+    - adjascentGlobstarOptimize()
+    - braceExpand()
+    - catch()
+    - debug()
+    - debug()
+    - firstPhasePreProcess()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - hasMagic()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - levelOneOptimize()
+    - levelTwoFileOptimize()
+    - make()
+    - makeRe()
+    - match()
+    - matchOne()
+    - parse()
+    - parseNegate()
+    - partsMatch()
+    - preprocess()
+    - secondPhasePreProcess()
+    - slashSplit()
+    - while()
+  Static Methods (1):
+    - static defaults()
+  Properties (18):
+    - comment
+    - debug
+    - empty
+    - globParts
+    - globSet
+    - isWindows
+    - negate
+    - nocase
+    - nonegate
+    - options
+    - partial
+    - pattern
+    - platform
+    - preserveMultipleSlashes
+    - regexp
+    - set
+    - windowsNoMagicRoot
+    - windowsPathsNoEscape
+
+Class FN:
+  Extends: Error
+
+Class Fn2:
+  Methods (2):
+    - get()
+    - set()
+  Properties (2):
+    - capacity
+    - maxAge
+
+Class FnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class Function:
+  Methods (1):
+    - toString()
+
+Class Fw:
+  Extends: dI
+  Methods (4):
+    - countTokens()
+    - create()
+    - if()
+    - stream()
+  Properties (1):
+    - batches
+
+Class FzB:
+  Methods (1):
+    - process()
+  Properties (1):
+    - _allowedAttributeNames
+
+Class G:
+  Extends: Q
+  Methods (30):
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toString()
+  Properties (24):
+    - _max
+    - _max
+    - _min
+    - _min
+    - _sum
+    - _sum
+    - data
+    - inputEncoding
+    - internal
+    - nData
+    - name
+    - notationName
+    - pe
+    - pubID
+    - publicId
+    - sysID
+    - systemId
+    - type
+    - value
+    - value
+    - value
+    - value
+    - xmlEncoding
+    - xmlVersion
+
+Class G6B:
+  Methods (1):
+    - startActiveSpan()
+
+Class GHB:
+  Extends: B11
+  Methods (2):
+    - add()
+    - if()
+
+Class GOB:
+  Methods (2):
+    - destroy()
+    - updateResolution()
+  Static Methods (1):
+    - static getDefaultAuthority()
+  Properties (3):
+    - endpoints
+    - hasReturnedResult
+    - listener
+
+Class GY1:
+  Methods (1):
+    - toDescriptor()
+
+Class Ge2:
+  Methods (58):
+    - _adoptNodes()
+    - _appendCommentNode()
+    - _appendElement()
+    - _attachElementToTree()
+    - _bootstrap()
+    - _closePElement()
+    - _closeTableCell()
+    - _err()
+    - _findFormInFragmentContext()
+    - _findFosterParentingLocation()
+    - _fosterParentElement()
+    - _fosterParentText()
+    - _getAdjustedCurrentElement()
+    - _initTokenizerForFragmentParsing()
+    - _insertCharacters()
+    - _insertElement()
+    - _insertFakeElement()
+    - _insertFakeRootElement()
+    - _insertTemplate()
+    - _isElementCausesFosterParenting()
+    - _isIntegrationPoint()
+    - _isSpecialElement()
+    - _popTmplInsertionMode()
+    - _processInputToken()
+    - _processToken()
+    - _processTokenInBodyMode()
+    - _processTokenInForeignContent()
+    - _pushTmplInsertionMode()
+    - _reconstructActiveFormattingElements()
+    - _resetInsertionMode()
+    - _resetInsertionModeForSelect()
+    - _runParsingLoop()
+    - _setDocumentType()
+    - _setupTokenizerCDATAMode()
+    - _shouldFosterParentOnInsertion()
+    - _shouldProcessTokenInForeignContent()
+    - _switchToTextParsing()
+    - for()
+    - for()
+    - for()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - parse()
+    - parseFragment()
+    - runParsingLoopForCurrentChunk()
+    - switchToPlaintextParsing()
+    - while()
+  Properties (21):
+    - activeFormattingElements
+    - currentTmplInsertionMode
+    - document
+    - formElement
+    - fosterParentingEnabled
+    - fragmentContext
+    - framesetOk
+    - hasNonWhitespacePendingCharacterToken
+    - headElement
+    - insertionMode
+    - openElements
+    - options
+    - originalInsertionMode
+    - pendingCharacterTokens
+    - pendingScript
+    - skipNextNewLine
+    - stopped
+    - tmplInsertionModeStack
+    - tmplInsertionModeStackTop
+    - tokenizer
+    - treeAdapter
+
+Class Gh:
+  Extends: h4
+  Methods (2):
+    - _parse()
+    - unwrap()
+
+Class GlB:
+  Methods (9):
+    - _concatValue()
+    - argOptional()
+    - argParser()
+    - argRequired()
+    - choices()
+    - default()
+    - name()
+    - parseArg()
+    - switch()
+  Properties (8):
+    - _name
+    - argChoices
+    - defaultValue
+    - defaultValueDescription
+    - description
+    - parseArg
+    - required
+    - variadic
+
+Class GnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class GwB:
+  Extends: Yw0
+  Methods (1):
+    - start()
+
+Class Gx1:
+  Methods (1):
+    - createAggregator()
+
+Class H:
+  Methods (4):
+    - callFulfilled()
+    - callRejected()
+    - otherCallFulfilled()
+    - otherCallRejected()
+
+Class H8B:
+  Methods (5):
+    - createAccumulation()
+    - diff()
+    - if()
+    - merge()
+    - toMetricData()
+  Properties (2):
+    - _boundaries
+    - _recordMinMax
+
+Class HD0:
+  Extends: Error
+  Properties (5):
+    - field
+    - line
+    - name
+    - type
+    - value
+
+Class HLB:
+  Methods (5):
+    - receiveMessage()
+    - receiveMetadata()
+    - receiveTrailers()
+    - sendMessage()
+    - sendMetadata()
+
+Class HQ1:
+  Extends: Array
+
+Class HV0:
+  Extends: M31
+  Methods (4):
+    - isEnabled()
+    - makeLogger()
+    - setFilters()
+    - switch()
+  Properties (1):
+    - enabledRegexp
+
+Class Hd0:
+  Methods (43):
+    - _captureEvent()
+    - _clearOutcomes()
+    - _isClientDoneProcessing()
+    - _isEnabled()
+    - _process()
+    - _processEvent()
+    - _sendEnvelope()
+    - _setupIntegrations()
+    - _updateSessionFromEvent()
+    - addEventProcessor()
+    - addIntegration()
+    - captureAggregateMetrics()
+    - captureEvent()
+    - captureException()
+    - captureMessage()
+    - captureSession()
+    - catch()
+    - close()
+    - emit()
+    - flush()
+    - for()
+    - getDsn()
+    - getEventProcessors()
+    - getIntegration()
+    - getIntegrationById()
+    - getIntegrationByName()
+    - getOptions()
+    - getSdkMetadata()
+    - getTransport()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - init()
+    - on()
+    - recordDroppedEvent()
+    - sendEvent()
+    - sendSession()
+    - setupIntegrations()
+  Properties (9):
+    - _dsn
+    - _eventProcessors
+    - _hooks
+    - _integrations
+    - _integrationsInitialized
+    - _numProcessing
+    - _options
+    - _outcomes
+    - _transport
+
+Class HnA:
+  Extends: NG
+  Properties (6):
+    - code
+    - data
+    - headers
+    - message
+    - name
+    - statusCode
+
+Class Ho0:
+  Extends: op1
+  Methods (3):
+    - load()
+    - onExit()
+    - unload()
+
+Class Ht2:
+  Extends: HM6
+  Methods (4):
+    - _getOverriddenMethods()
+    - advance()
+    - dropParsedChunk()
+    - retreat()
+  Properties (7):
+    - col
+    - droppedBufferSize
+    - isEol
+    - line
+    - lineStartPos
+    - offset
+    - preprocessor
+
+Class I:
+  Methods (8):
+    - clear()
+    - delete()
+    - entries()
+    - forEach()
+    - get()
+    - has()
+    - set()
+    - toJSON()
+  Properties (1):
+    - size
+
+Class I7B:
+  Methods (1):
+    - now()
+  Properties (3):
+    - _epochMillis
+    - _monotonicClock
+    - _performanceMillis
+
+Class I8A:
+  Extends: cs1
+  Methods (2):
+    - proxyErrors()
+    - unpipe()
+  Properties (1):
+    - proxyErrors
+
+Class IE:
+  Methods (5):
+    - add()
+    - onAdd()
+    - onRemove()
+    - remove()
+    - toJSON()
+
+Class IHB:
+  Extends: B11
+  Methods (2):
+    - if()
+    - record()
+
+Class I_1:
+  Extends: Error
+  Properties (3):
+    - fallbackModel
+    - name
+    - originalModel
+
+Class If:
+  Static Methods (4):
+    - static debug()
+    - static error()
+    - static info()
+    - static warn()
+
+Class Ik1:
+  Extends: SZ1
+  Methods (31):
+    - assertCapability()
+    - assertCapabilityForMethod()
+    - assertNotificationCapability()
+    - assertRequestHandlerCapability()
+    - cacheToolOutputSchemas()
+    - callTool()
+    - catch()
+    - catch()
+    - catch()
+    - complete()
+    - connect()
+    - getInstructions()
+    - getPrompt()
+    - getServerCapabilities()
+    - getServerVersion()
+    - getToolOutputValidator()
+    - if()
+    - listPrompts()
+    - listResourceTemplates()
+    - listResources()
+    - listTools()
+    - ping()
+    - readResource()
+    - registerCapabilities()
+    - sendRootsListChanged()
+    - setLoggingLevel()
+    - subscribeResource()
+    - switch()
+    - switch()
+    - switch()
+    - unsubscribeResource()
+  Properties (7):
+    - _ajv
+    - _cachedToolOutputValidators
+    - _capabilities
+    - _clientInfo
+    - _instructions
+    - _serverCapabilities
+    - _serverVersion
+
+Class IlB:
+  Methods (15):
+    - _concatValue()
+    - argParser()
+    - attributeName()
+    - choices()
+    - conflicts()
+    - default()
+    - env()
+    - hideHelp()
+    - implies()
+    - is()
+    - isBoolean()
+    - makeOptionMandatory()
+    - name()
+    - parseArg()
+    - preset()
+  Properties (18):
+    - argChoices
+    - conflictsWith
+    - defaultValue
+    - defaultValueDescription
+    - description
+    - envVar
+    - flags
+    - hidden
+    - implied
+    - long
+    - mandatory
+    - negate
+    - optional
+    - parseArg
+    - presetArg
+    - required
+    - short
+    - variadic
+
+Class Im:
+  Methods (13):
+    - authorizationUrl()
+    - clientInformation()
+    - clientMetadata()
+    - codeVerifier()
+    - if()
+    - if()
+    - redirectToAuthorization()
+    - redirectUrl()
+    - saveClientInformation()
+    - saveCodeVerifier()
+    - saveTokens()
+    - state()
+    - tokens()
+  Properties (7):
+    - _authorizationUrl
+    - _codeVerifier
+    - _state
+    - handleRedirection
+    - redirectUri
+    - serverConfig
+    - serverName
+
+Class InA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class Is2:
+  Methods (4):
+    - if()
+    - if()
+    - isExpired()
+    - isValid()
+  Properties (7):
+    - errorCode
+    - errorMessage
+    - expirationTime
+    - subjectToken
+    - success
+    - tokenType
+    - version
+
+Class IsA:
+
+Class Ix1:
+  Methods (1):
+    - createAggregator()
+
+Class J:
+  Extends: G
+  Methods (24):
+    - adoptNode()
+    - createAttribute()
+    - createAttributeNS()
+    - createCDATASection()
+    - createComment()
+    - createDocumentFragment()
+    - createElement()
+    - createElementNS()
+    - createEntityReference()
+    - createEvent()
+    - createNodeIterator()
+    - createProcessingInstruction()
+    - createRange()
+    - createTextNode()
+    - createTreeWalker()
+    - end()
+    - getElementById()
+    - getElementsByClassName()
+    - getElementsByTagName()
+    - getElementsByTagNameNS()
+    - importNode()
+    - normalizeDocument()
+    - renameNode()
+    - toString()
+  Properties (19):
+    - URL
+    - characterSet
+    - compatMode
+    - contentType
+    - doctype
+    - documentElement
+    - documentURI
+    - domConfig
+    - implementation
+    - inputEncoding
+    - name
+    - options
+    - origin
+    - strictErrorChecking
+    - stringify
+    - type
+    - xmlEncoding
+    - xmlStandalone
+    - xmlVersion
+
+Class J11:
+  Methods (2):
+    - if()
+    - if()
+  Static Methods (3):
+    - static createEmpty()
+    - static createFromGoogleCredential()
+    - static createFromMetadataGenerator()
+
+Class J21:
+  Methods (16):
+    - G()
+    - G()
+    - G()
+    - Y()
+    - clear()
+    - concat()
+    - delete()
+    - get()
+    - has()
+    - if()
+    - if()
+    - normalize()
+    - set()
+    - toJSON()
+    - toString()
+    - while()
+  Static Methods (3):
+    - static accessor()
+    - static concat()
+    - static from()
+
+Class JC:
+  Methods (9):
+    - attempt()
+    - attempts()
+    - errors()
+    - mainError()
+    - reset()
+    - retry()
+    - start()
+    - stop()
+    - try()
+
+Class JHB:
+  Extends: Q11
+
+Class JO1:
+  Methods (8):
+    - ANY()
+    - catch()
+    - if()
+    - if()
+    - intersects()
+    - parse()
+    - test()
+    - toString()
+  Properties (5):
+    - loose
+    - operator
+    - options
+    - semver
+    - value
+
+Class JV0:
+  Methods (15):
+    - _defaultAdapter()
+    - _request()
+    - catch()
+    - catch()
+    - catch()
+    - for()
+    - getMultipartRequest()
+    - getResponseData()
+    - getResponseDataFromContentType()
+    - if()
+    - paramsSerializer()
+    - request()
+    - switch()
+    - translateResponse()
+    - validateStatus()
+  Properties (3):
+    - agentCache
+    - defaults
+    - interceptors
+
+Class Ji:
+  Methods (14):
+    - checkFollowGlobstar()
+    - globString()
+    - hasMore()
+    - if()
+    - isAbsolute()
+    - isDrive()
+    - isGlobstar()
+    - isRegExp()
+    - isString()
+    - isUNC()
+    - markFollowGlobstar()
+    - pattern()
+    - rest()
+    - root()
+  Properties (1):
+    - length
+
+Class Jj1:
+  Methods (8):
+    - decodeBase64StringUtf8()
+    - encodeBase64StringUtf8()
+    - randomBytesBase64()
+    - sha256DigestBase64()
+    - sha256DigestHex()
+    - sign()
+    - signWithHmacSha256()
+    - verify()
+  Static Methods (1):
+    - static padBase64()
+
+Class JnA:
+  Extends: NG
+  Properties (4):
+    - code
+    - message
+    - name
+    - socket
+
+Class JoA:
+  Extends: K34
+  Methods (3):
+    - close()
+    - destroy()
+    - dispatch()
+
+Class Jr1:
+  Methods (8):
+    - add()
+    - closeAllNodes()
+    - closeNode()
+    - openNode()
+    - root()
+    - toJSON()
+    - top()
+    - walk()
+  Static Methods (2):
+    - static _collapse()
+    - static _walk()
+  Properties (2):
+    - rootNode
+    - stack
+
+Class Jv:
+  Methods (1):
+    - toDescriptor()
+
+Class Jw:
+  Extends: F4
+  Properties (1):
+    - cause
+
+Class JwB:
+  Methods (26):
+    - Q()
+    - catch()
+    - catch()
+    - checkMetadataAndOptions()
+    - checkOptionalUnaryResponseArguments()
+    - close()
+    - getChannel()
+    - if()
+    - if()
+    - if()
+    - if()
+    - makeBidiStreamRequest()
+    - makeClientStreamRequest()
+    - makeServerStreamRequest()
+    - makeUnaryRequest()
+    - onReceiveMessage()
+    - onReceiveMessage()
+    - onReceiveMessage()
+    - onReceiveMessage()
+    - onReceiveStatus()
+    - onReceiveStatus()
+    - onReceiveStatus()
+    - onReceiveStatus()
+    - start()
+    - start()
+    - waitForReady()
+
+Class JzB:
+  Methods (1):
+    - process()
+
+Class K:
+  Methods (2):
+    - catch()
+    - then()
+
+Class KHB:
+  Methods (9):
+    - addBatchObservableCallback()
+    - createCounter()
+    - createGauge()
+    - createHistogram()
+    - createObservableCounter()
+    - createObservableGauge()
+    - createObservableUpDownCounter()
+    - createUpDownCounter()
+    - removeBatchObservableCallback()
+  Properties (1):
+    - _meterSharedState
+
+Class KP:
+  Extends: Jw
+
+Class KP0:
+  Methods (7):
+    - _ondata()
+    - _onerror()
+    - catch()
+    - close()
+    - processReadBuffer()
+    - send()
+    - start()
+  Properties (6):
+    - _ondata
+    - _onerror
+    - _readBuffer
+    - _started
+    - _stdin
+    - _stdout
+
+Class KY1:
+  Methods (2):
+    - readMessage()
+    - writeMessage()
+
+Class KZ1:
+  Methods (10):
+    - _serializeAttributes()
+    - _serializeChildNodes()
+    - _serializeCommentNode()
+    - _serializeDocumentTypeNode()
+    - _serializeElement()
+    - _serializeTextNode()
+    - for()
+    - for()
+    - if()
+    - serialize()
+  Properties (4):
+    - html
+    - options
+    - startNode
+    - treeAdapter
+
+Class KnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class Ko0:
+  Methods (3):
+    - emit()
+    - on()
+    - removeListener()
+
+Class KrA:
+  Methods (6):
+    - connected()
+    - free()
+    - pending()
+    - queued()
+    - running()
+    - size()
+
+Class Kx0:
+  Methods (5):
+    - clear()
+    - eject()
+    - forEach()
+    - forEach()
+    - use()
+  Properties (1):
+    - handlers
+
+Class L:
+  Methods (30):
+    - attribute()
+    - cdata()
+    - closeAttribute()
+    - closeNode()
+    - comment()
+    - declaration()
+    - docType()
+    - dtdAttList()
+    - dtdElement()
+    - dtdEntity()
+    - dtdNotation()
+    - element()
+    - endline()
+    - filterOptions()
+    - for()
+    - for()
+    - for()
+    - if()
+    - if()
+    - if()
+    - if()
+    - indent()
+    - openAttribute()
+    - openNode()
+    - processingInstruction()
+    - raw()
+    - run()
+    - switch()
+    - text()
+    - writeChildNode()
+  Properties (1):
+    - options
+
+Class L02:
+  Extends: bW4
+  Methods (23):
+    - _write()
+    - closingInfo()
+    - consume()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - parseCloseBody()
+    - parseControlFrame()
+    - run()
+    - while()
+  Properties (1):
+    - ws
+
+Class L71:
+  Extends: F4
+
+Class LB1:
+  Methods (7):
+    - Q()
+    - _cacheEvent()
+    - _enforceMaxEvents()
+    - _purgeEvent()
+    - _purgeEvents()
+    - _sendEvents()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (5):
+    - hub
+    - id
+    - maxStoredEvents
+    - name
+    - offlineEventStore
+
+Class LK0:
+  Methods (5):
+    - catch()
+    - catch()
+    - catch()
+    - retrieveCachedResponse()
+    - retrieveResponseFromExecutable()
+  Static Methods (1):
+    - static parseCommand()
+  Properties (3):
+    - commandComponents
+    - outputFile
+    - timeoutMillis
+
+Class LMB:
+  Methods (5):
+    - build()
+    - withSendMessage()
+    - withSendMetadata()
+    - withSendStatus()
+    - withStart()
+  Properties (4):
+    - message
+    - metadata
+    - start
+    - status
+
+Class LOB:
+  Methods (5):
+    - addFailure()
+    - addSuccess()
+    - getLastFailures()
+    - getLastSuccesses()
+    - switchBuckets()
+  Properties (2):
+    - activeBucket
+    - inactiveBucket
+
+Class LQ:
+  Extends: Error
+
+Class LQ1:
+  Extends: as1
+  Methods (3):
+    - isAbsolute()
+    - newRoot()
+    - parseRootPath()
+  Properties (1):
+    - nocase
+
+Class LV1:
+  Methods (3):
+    - catch()
+    - if()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (2):
+    - id
+    - name
+
+Class Le:
+  Extends: aI
+
+Class Li:
+  Extends: h4
+  Methods (1):
+    - _parse()
+
+Class Lk1:
+  Extends: aI
+
+Class Ll1:
+  Methods (3):
+    - add()
+    - toString()
+    - weight()
+  Properties (5):
+    - _count
+    - _last
+    - _max
+    - _min
+    - _sum
+
+Class Ly2:
+  Methods (2):
+    - decode()
+    - if()
+  Properties (3):
+    - chunks
+    - data
+    - event
+
+Class M31:
+  Methods (2):
+    - catch()
+    - log()
+  Properties (3):
+    - cached
+    - filters
+    - filtersSet
+
+Class M40:
+  Extends: vY4
+  Methods (2):
+    - abort()
+    - terminate()
+  Properties (5):
+    - connection
+    - dispatcher
+    - dump
+    - serializedAbortReason
+    - state
+
+Class M61:
+  Methods (3):
+    - delay()
+    - persist()
+    - times()
+
+Class M71:
+  Extends: F4
+
+Class M8B:
+  Extends: Error
+
+Class MJ:
+  Methods (41):
+    - E()
+    - H()
+    - U()
+    - clone()
+    - copyIn()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - hasMagic()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - isEnd()
+    - isStart()
+    - options()
+    - push()
+    - toJSON()
+    - toMMPattern()
+    - toRegExpSource()
+    - toString()
+    - while()
+    - while()
+    - while()
+    - z()
+  Static Methods (1):
+    - static fromGlob()
+  Properties (1):
+    - type
+
+Class MK0:
+  Extends: Error
+  Properties (1):
+    - code
+
+Class MMB:
+  Methods (10):
+    - getDeadline()
+    - getHost()
+    - getPeer()
+    - processPendingMessage()
+    - processPendingStatus()
+    - sendMessage()
+    - sendMetadata()
+    - sendStatus()
+    - start()
+    - startRead()
+  Properties (8):
+    - nextCall
+    - pendingMessage
+    - pendingMessageCallback
+    - pendingStatus
+    - processingMessage
+    - processingMetadata
+    - responder
+    - sentMetadata
+
+Class MOB:
+  Methods (4):
+    - G()
+    - if()
+    - if()
+    - pick()
+  Properties (2):
+    - countCalls
+    - wrappedPicker
+
+Class MQ1:
+  Methods (4):
+    - add()
+    - childrenIgnored()
+    - for()
+    - ignored()
+  Properties (6):
+    - absolute
+    - absoluteChildren
+    - mmopts
+    - platform
+    - relative
+    - relativeChildren
+
+Class MU0:
+  Methods (8):
+    - _clone()
+    - _keys()
+    - _parse()
+    - get()
+    - if()
+    - serialize()
+    - set()
+    - unset()
+  Properties (1):
+    - _internalState
+
+Class MV1:
+  Methods (5):
+    - fill()
+    - function()
+    - if()
+    - loadDependency()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (3):
+    - _module
+    - id
+    - name
+
+Class Me:
+  Extends: aI
+
+Class Mi:
+  Extends: h4
+  Methods (1):
+    - _parse()
+
+Class Mj1:
+  Extends: SP
+
+Class Mk1:
+  Extends: aI
+
+Class Ml1:
+  Methods (3):
+    - add()
+    - toString()
+    - weight()
+  Properties (1):
+    - _value
+
+Class MrA:
+  Extends: Y74
+  Methods (4):
+    - B()
+    - stats()
+    - while()
+    - while()
+
+Class MtA:
+  Extends: MZ4
+  Methods (1):
+    - intercept()
+  Properties (2):
+    - close
+    - dispatch
+
+Class My2:
+  Methods (3):
+    - getNextPage()
+    - hasNextPage()
+    - iterPages()
+  Properties (3):
+    - body
+    - options
+    - response
+
+Class N71:
+  Extends: F4
+
+Class N8A:
+  Methods (5):
+    - add()
+    - entries()
+    - get()
+    - if()
+    - keys()
+
+Class NG:
+  Extends: Error
+  Properties (2):
+    - code
+    - name
+
+Class NG1:
+  Methods (2):
+    - createAggregator()
+    - switch()
+
+Class NH0:
+  Methods (1):
+    - _getOverriddenMethods()
+
+Class NHB:
+  Methods (6):
+    - batchCumulate()
+    - collect()
+    - if()
+    - if()
+    - if()
+    - record()
+  Properties (4):
+    - _activeCollectionStorage
+    - _aggregator
+    - _cardinalityLimit
+    - _overflowHashCode
+
+Class NMB:
+  Methods (6):
+    - onCancel()
+    - onReceiveHalfClose()
+    - onReceiveMessage()
+    - onReceiveMetadata()
+    - processPendingHalfClose()
+    - processPendingMessage()
+  Properties (8):
+    - cancelled
+    - hasPendingHalfClose
+    - hasPendingMessage
+    - listener
+    - nextListener
+    - pendingMessage
+    - processingMessage
+    - processingMetadata
+
+Class NQ1:
+  Extends: as1
+  Methods (3):
+    - isAbsolute()
+    - newRoot()
+    - parseRootPath()
+  Properties (1):
+    - nocase
+
+Class NRB:
+  Methods (16):
+    - _isLogRecordReadonly()
+    - _makeReadonly()
+    - _truncateToLimitUtil()
+    - _truncateToSize()
+    - body()
+    - body()
+    - droppedAttributesCount()
+    - setAttribute()
+    - setAttributes()
+    - setBody()
+    - setSeverityNumber()
+    - setSeverityText()
+    - severityNumber()
+    - severityNumber()
+    - severityText()
+    - severityText()
+  Properties (14):
+    - _body
+    - _isReadonly
+    - _logRecordLimits
+    - _severityNumber
+    - _severityText
+    - body
+    - droppedAttributesCount
+    - hrTime
+    - hrTimeObserved
+    - instrumentationScope
+    - resource
+    - severityNumber
+    - severityText
+    - spanContext
+
+Class NS:
+  Methods (4):
+    - add()
+    - del()
+    - downgrade()
+    - getFirst()
+
+Class NV1:
+  Methods (13):
+    - _getSpanContextFromOperationArguments()
+    - _instrumentOperations()
+    - _patchOperation()
+    - catch()
+    - catch()
+    - fill()
+    - function()
+    - function()
+    - if()
+    - if()
+    - if()
+    - loadDependency()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (6):
+    - _describeOperations
+    - _module
+    - _operations
+    - _useMongoose
+    - id
+    - name
+
+Class Ne:
+  Extends: aI
+
+Class Ni:
+  Extends: h4
+  Methods (1):
+    - _parse()
+
+Class Nk1:
+  Extends: aI
+
+Class Nl1:
+  Methods (3):
+    - add()
+    - toString()
+    - weight()
+  Properties (1):
+    - _value
+
+Class Nt2:
+  Extends: RH0
+  Methods (21):
+    - _appendCommentNode()
+    - _appendElement()
+    - _attachElementToTree()
+    - _bootstrap()
+    - _findFosterParentingLocation()
+    - _getOverriddenMethods()
+    - _insertCharacters()
+    - _insertElement()
+    - _insertFakeRootElement()
+    - _insertTemplate()
+    - _processToken()
+    - _processTokenInForeignContent()
+    - _runParsingLoop()
+    - _setDocumentType()
+    - _setEndLocation()
+    - _setStartLocation()
+    - for()
+    - for()
+    - if()
+    - if()
+    - install()
+  Properties (6):
+    - currentToken
+    - lastFosterParentingLocation
+    - lastStartTagToken
+    - parser
+    - posTracker
+    - treeAdapter
+
+Class NzB:
+  Methods (6):
+    - collect()
+    - forceFlush()
+    - selectAggregation()
+    - selectAggregationTemporality()
+    - selectCardinalityLimit()
+    - shutdown()
+  Properties (2):
+    - _metricReader
+    - _sharedState
+
+Class O71:
+  Extends: F4
+
+Class O81:
+  Methods (13):
+    - catch()
+    - for()
+    - for()
+    - for()
+    - format()
+    - if()
+    - if()
+    - if()
+    - intersects()
+    - parseRange()
+    - range()
+    - test()
+    - toString()
+  Properties (6):
+    - formatted
+    - includePrerelease
+    - loose
+    - options
+    - raw
+    - set
+
+Class OE0:
+  Methods (5):
+    - export()
+    - forceFlush()
+    - if()
+    - selectAggregationTemporality()
+    - shutdown()
+  Static Methods (1):
+    - static _sendMetrics()
+  Properties (2):
+    - _shutdown
+    - _temporalitySelector
+
+Class OG1:
+  Methods (8):
+    - asyncAttributesPending()
+    - attributes()
+    - catch()
+    - for()
+    - for()
+    - getRawAttributes()
+    - merge()
+    - waitForAsyncAttributes()
+  Static Methods (1):
+    - static FromAttributeList()
+  Properties (3):
+    - _asyncAttributesPending
+    - _memoizedAttributes
+    - _rawAttributes
+
+Class OKB:
+  Methods (1):
+    - detect()
+
+Class OQ0:
+  Extends: j94
+  Methods (5):
+    - close()
+    - compose()
+    - destroy()
+    - dispatch()
+    - for()
+
+Class OQ1:
+  Methods (16):
+    - child()
+    - filterEntries()
+    - for()
+    - for()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - processPatterns()
+    - subwalkTargets()
+    - testGlobstar()
+    - testRegExp()
+    - testString()
+  Properties (5):
+    - dot
+    - follow
+    - hasWalkedCache
+    - opts
+    - patterns
+
+Class ORB:
+  Methods (1):
+    - emit()
+  Properties (2):
+    - _sharedState
+    - instrumentationScope
+
+Class OU0:
+  Methods (1):
+    - getMeter()
+
+Class Oc:
+  Methods (2):
+    - forceUpdate()
+    - setState()
+
+Class Oe:
+  Methods (3):
+    - if()
+    - toIDEPath()
+    - toLocalPath()
+  Properties (1):
+    - wslDistroName
+
+Class OeA:
+  Methods (1):
+    - deref()
+  Properties (1):
+    - value
+
+Class Oi:
+  Extends: h4
+  Methods (4):
+    - Z()
+    - _parse()
+    - for()
+    - options()
+
+Class Ok1:
+  Extends: aI
+
+Class Ol1:
+  Methods (3):
+    - add()
+    - toString()
+    - weight()
+  Properties (2):
+    - _value
+    - first
+
+Class Ou0:
+  Methods (7):
+    - clear()
+    - get()
+    - keys()
+    - remove()
+    - set()
+    - size()
+    - values()
+  Properties (2):
+    - _cache
+    - _maxSize
+
+Class Ow:
+  Methods (18):
+    - _ensureNoahArkCondition()
+    - _getNoahArkConditionCandidates()
+    - clearToLastMarker()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - getElementEntry()
+    - getElementEntryInScopeWithTagName()
+    - if()
+    - if()
+    - if()
+    - insertElementAfterBookmark()
+    - insertMarker()
+    - pushElement()
+    - removeEntry()
+    - while()
+  Properties (4):
+    - bookmark
+    - entries
+    - length
+    - treeAdapter
+
+Class P11:
+  Extends: KY1
+  Methods (3):
+    - compressMessage()
+    - decompressMessage()
+    - writeMessage()
+
+Class P8B:
+  Methods (6):
+    - _maxNormalLowerBoundaryIndex()
+    - _minNormalLowerBoundaryIndex()
+    - _rightShift()
+    - lowerBoundary()
+    - mapToIndex()
+    - scale()
+  Properties (1):
+    - _shift
+
+Class PK:
+  Extends: Error
+  Methods (13):
+    - A()
+    - Z()
+    - addIssue()
+    - addIssues()
+    - errors()
+    - formErrors()
+    - format()
+    - function()
+    - if()
+    - isEmpty()
+    - message()
+    - toString()
+    - while()
+  Static Methods (1):
+    - static assert()
+  Properties (5):
+    - __proto__
+    - addIssue
+    - addIssues
+    - issues
+    - name
+
+Class PR2:
+  Extends: et4
+  Methods (41):
+    - _write()
+    - consume()
+    - controlMessage()
+    - createError()
+    - dataMessage()
+    - decompress()
+    - getData()
+    - getInfo()
+    - getMask()
+    - getPayloadLength16()
+    - getPayloadLength64()
+    - haveLength()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - startLoop()
+    - switch()
+  Properties (21):
+    - _allowSynchronousEvents
+    - _binaryType
+    - _bufferedBytes
+    - _buffers
+    - _compressed
+    - _errored
+    - _extensions
+    - _fin
+    - _fragmented
+    - _fragments
+    - _isServer
+    - _loop
+    - _mask
+    - _masked
+    - _maxPayload
+    - _messageLength
+    - _opcode
+    - _payloadLength
+    - _skipUTF8Validation
+    - _state
+    - _totalPayloadLength
+
+Class PU0:
+  Methods (4):
+    - disable()
+    - getMeter()
+    - getMeterProvider()
+    - setGlobalMeterProvider()
+  Static Methods (1):
+    - static getInstance()
+  Properties (1):
+    - _instance
+
+Class PW1:
+  Methods (17):
+    - Y()
+    - await()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - createCanUseTool()
+    - createHookCallback()
+    - if()
+    - if()
+    - if()
+    - if()
+    - processLine()
+    - read()
+    - sendMcpMessage()
+    - sendRequest()
+    - write()
+  Properties (3):
+    - input
+    - inputClosed
+    - structuredInput
+
+Class P_:
+  Methods (16):
+    - close()
+    - dequeue()
+    - dispatch()
+    - enqueue()
+    - getBlobData()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - ping()
+    - pong()
+    - send()
+    - sendFrame()
+    - while()
+  Static Methods (1):
+    - static frame()
+  Properties (10):
+    - _bufferedBytes
+    - _compress
+    - _extensions
+    - _firstFragment
+    - _generateMask
+    - _maskBuffer
+    - _queue
+    - _socket
+    - _state
+    - onerror
+
+Class PdB:
+  Methods (3):
+    - get()
+    - keys()
+    - toJSON()
+  Properties (2):
+    - _keyMap
+    - _keys
+
+Class Pi:
+  Extends: h4
+  Methods (3):
+    - _parse()
+    - if()
+    - value()
+
+Class Pj1:
+  Extends: F7
+  Methods (4):
+    - buildRequest()
+    - if()
+    - prepareOptions()
+    - validateHeaders()
+  Properties (7):
+    - _auth
+    - _authClientPromise
+    - accessToken
+    - beta
+    - messages
+    - projectId
+    - region
+
+Class Py:
+  Extends: h4
+  Methods (28):
+    - _addCheck()
+    - _parse()
+    - finite()
+    - gt()
+    - gte()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - int()
+    - isFinite()
+    - isInt()
+    - lt()
+    - lte()
+    - maxValue()
+    - minValue()
+    - multipleOf()
+    - negative()
+    - nonnegative()
+    - nonpositive()
+    - positive()
+    - safe()
+    - setLimit()
+  Properties (3):
+    - max
+    - min
+    - step
+
+Class Q:
+  Methods (1):
+    - abort()
+  Properties (4):
+    - __isLong__
+    - data
+    - length
+    - textContent
+
+Class Q02:
+  Methods (1):
+    - createFrame()
+  Properties (1):
+    - frameData
+
+Class Q11:
+  Methods (2):
+    - addCallback()
+    - removeCallback()
+  Properties (3):
+    - _descriptor
+    - _metricStorages
+    - _observableRegistry
+
+Class Q71:
+  Methods (13):
+    - clip()
+    - for()
+    - for()
+    - for()
+    - get()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - unclip()
+    - write()
+  Properties (2):
+    - height
+    - width
+
+Class Q7B:
+  Methods (4):
+    - extract()
+    - fields()
+    - if()
+    - inject()
+
+Class QD:
+  Methods (9):
+    - getOption()
+    - onAdd()
+    - onRemove()
+    - resolve()
+    - setOption()
+    - setOptions()
+    - setParsedOption()
+    - toJSON()
+    - toString()
+
+Class QU0:
+  Extends: VG1
+
+Class QeA:
+  Methods (11):
+    - G()
+    - Z()
+    - for()
+    - full()
+    - getHandler()
+    - if()
+    - if()
+    - if()
+    - if()
+    - runLookup()
+    - setRecords()
+  Properties (4):
+    - affinity
+    - dualStack
+    - lookup
+    - pick
+
+Class Qh:
+  Extends: h4
+  Methods (1):
+    - _parse()
+  Properties (1):
+    - _any
+
+Class QnA:
+  Extends: UQ0
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class Qq0:
+  Methods (4):
+    - getChildLists()
+    - if()
+    - refChild()
+    - unrefChild()
+  Properties (4):
+    - channelChildren
+    - socketChildren
+    - subchannelChildren
+    - trackerMap
+
+Class Qs2:
+  Methods (2):
+    - getAwsRegion()
+    - getAwsSecurityCredentials()
+  Properties (4):
+    - additionalGaxiosOptions
+    - imdsV2SessionTokenUrl
+    - regionUrl
+    - securityCredentialsUrl
+
+Class Qw0:
+  Methods (6):
+    - B()
+    - I()
+    - _()
+    - g()
+    - if()
+    - if()
+  Properties (6):
+    - h
+    - i
+    - l
+    - o
+    - p
+    - u
+
+Class QwB:
+  Methods (5):
+    - build()
+    - withCancel()
+    - withHalfClose()
+    - withSendMessage()
+    - withStart()
+  Properties (4):
+    - cancel
+    - halfClose
+    - message
+    - start
+
+Class R71:
+  Extends: F4
+
+Class RV1:
+  Methods (13):
+    - fill()
+    - fill()
+    - fill()
+    - function()
+    - function()
+    - function()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - loadDependency()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (4):
+    - _module
+    - _useNest
+    - id
+    - name
+
+Class ReA:
+  Methods (2):
+    - register()
+    - unregister()
+  Properties (1):
+    - finalizer
+
+Class Ri:
+  Extends: h4
+  Methods (2):
+    - Z()
+    - _parse()
+
+Class Rk1:
+  Methods (19):
+    - _authThenStart()
+    - _commonHeaders()
+    - _startOrAuth()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - close()
+    - finishAuth()
+    - if()
+    - if()
+    - if()
+    - if()
+    - onerror()
+    - onmessage()
+    - onopen()
+    - send()
+    - setProtocolVersion()
+    - start()
+  Properties (10):
+    - _abortController
+    - _authProvider
+    - _endpoint
+    - _eventSource
+    - _eventSourceInit
+    - _fetch
+    - _protocolVersion
+    - _requestInit
+    - _resourceMetadataUrl
+    - _url
+
+Class Rx:
+  Methods (3):
+    - firstChild()
+    - lastChild()
+    - nodeType()
+
+Class Rz:
+  Extends: Event
+  Methods (7):
+    - data()
+    - if()
+    - initMessageEvent()
+    - lastEventId()
+    - origin()
+    - ports()
+    - source()
+  Static Methods (1):
+    - static createFastMessageEvent()
+
+Class RzB:
+  Methods (1):
+    - match()
+  Properties (2):
+    - _matchAll
+    - _pattern
+
+Class S:
+  Methods (2):
+    - forceUpdate()
+    - setState()
+
+Class S02:
+  Methods (3):
+    - Z()
+    - add()
+    - if()
+
+Class S11:
+  Methods (9):
+    - _addWatcher()
+    - _getConstructorOptions()
+    - _getInterceptors()
+    - _getSecureContextOptions()
+    - _isSecure()
+    - _removeWatcher()
+    - for()
+    - getWatcherCount()
+    - updateSecureContextOptions()
+  Static Methods (2):
+    - static createInsecure()
+    - static createSsl()
+  Properties (3):
+    - latestContextOptions
+    - serverConstructorOptions
+    - watchers
+
+Class SBB:
+  Methods (1):
+    - process()
+
+Class SG1:
+  Methods (5):
+    - _getMergedUnreportedAccumulations()
+    - _stashAccumulations()
+    - buildMetrics()
+    - for()
+    - while()
+  Static Methods (2):
+    - static calibrateStartTime()
+    - static merge()
+  Properties (1):
+    - _aggregator
+
+Class SK0:
+  Methods (51):
+    - _cacheClientFromJSON()
+    - _checkIsGCE()
+    - _getApplicationCredentialsFromFilePath()
+    - _isWindows()
+    - _tryGetApplicationCredentialsFromEnvironmentVariable()
+    - _tryGetApplicationCredentialsFromWellKnownFile()
+    - authorizeRequest()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - findAndCacheProjectId()
+    - fromAPIKey()
+    - fromImpersonatedJSON()
+    - fromJSON()
+    - fromStream()
+    - fromStreamAsync()
+    - getAccessToken()
+    - getAnyScopes()
+    - getApplicationDefault()
+    - getApplicationDefaultAsync()
+    - getClient()
+    - getCredentials()
+    - getCredentialsAsync()
+    - getDefaultServiceProjectId()
+    - getEnv()
+    - getExternalAccountClientProjectId()
+    - getFileProjectId()
+    - getGCEProjectId()
+    - getIdTokenClient()
+    - getProductionProjectId()
+    - getProjectId()
+    - getProjectIdAsync()
+    - getProjectIdOptional()
+    - getRequestHeaders()
+    - getUniverseDomain()
+    - getUniverseDomainFromMetadataServer()
+    - if()
+    - if()
+    - if()
+    - if()
+    - isGCE()
+    - request()
+    - setGapicJWTValues()
+    - sign()
+    - signBlob()
+  Properties (9):
+    - _cachedProjectId
+    - _findProjectIdPromise
+    - apiKey
+    - cachedCredential
+    - checkIsGCE
+    - clientOptions
+    - jsonContent
+    - keyFilename
+    - scopes
+
+Class SLB:
+  Methods (17):
+    - cancelWithStatus()
+    - catch()
+    - doPick()
+    - getCallNumber()
+    - getDeadlineInfo()
+    - getPeer()
+    - halfClose()
+    - if()
+    - if()
+    - if()
+    - if()
+    - outputStatus()
+    - sendMessageWithContext()
+    - setCredentials()
+    - start()
+    - startRead()
+    - trace()
+  Properties (18):
+    - callConfig
+    - callNumber
+    - channel
+    - child
+    - childStartTime
+    - credentials
+    - deadline
+    - ended
+    - host
+    - listener
+    - metadata
+    - methodName
+    - onCallEnded
+    - pendingHalfClose
+    - pendingMessage
+    - readPending
+    - serviceUrl
+    - startTime
+
+Class SNB:
+  Methods (28):
+    - addConnectivityStateListener()
+    - addHealthStateWatcher()
+    - createCall()
+    - getAddress()
+    - getCallCredentials()
+    - getChannelzInfo()
+    - getChannelzRef()
+    - getConnectivityState()
+    - getRealSubchannel()
+    - handleBackoffTimer()
+    - if()
+    - isHealthy()
+    - realSubchannelEquals()
+    - ref()
+    - refTrace()
+    - removeConnectivityStateListener()
+    - removeHealthStateWatcher()
+    - resetBackoff()
+    - startBackoff()
+    - startConnecting()
+    - startConnectingInternal()
+    - stopBackoff()
+    - switch()
+    - throttleKeepalive()
+    - trace()
+    - transitionToState()
+    - unref()
+    - unrefIfOneRef()
+  Properties (19):
+    - backoffTimeout
+    - callTracker
+    - channelTarget
+    - channelzEnabled
+    - channelzRef
+    - channelzTrace
+    - childrenTracker
+    - connectivityState
+    - connector
+    - continueConnecting
+    - keepaliveTime
+    - options
+    - refcount
+    - secureConnector
+    - stateListeners
+    - streamTracker
+    - subchannelAddress
+    - subchannelAddressString
+    - transport
+
+Class SP:
+  Extends: Error
+
+Class SP2:
+  Methods (18):
+    - W()
+    - displayWidthToStringIndex()
+    - for()
+    - for()
+    - for()
+    - for()
+    - getLine()
+    - getLineLength()
+    - getOffsetFromPosition()
+    - getPositionFromOffset()
+    - getWrappedLines()
+    - getWrappedText()
+    - lineCount()
+    - measureWrappedText()
+    - nextOffset()
+    - offsetAtDisplayWidth()
+    - prevOffset()
+    - stringIndexToDisplayWidth()
+  Properties (4):
+    - columns
+    - graphemes
+    - text
+    - wrappedLines
+
+Class SU:
+  Methods (7):
+    - clone()
+    - headers()
+    - ok()
+    - redirected()
+    - status()
+    - statusText()
+    - url()
+
+Class SZ1:
+  Methods (30):
+    - C()
+    - L()
+    - _cleanupTimeout()
+    - _onclose()
+    - _onerror()
+    - _onnotification()
+    - _onprogress()
+    - _onrequest()
+    - _onresponse()
+    - _resetTimeout()
+    - _setupTimeout()
+    - assertCanSetRequestHandler()
+    - catch()
+    - catch()
+    - close()
+    - connect()
+    - if()
+    - if()
+    - if()
+    - if()
+    - notification()
+    - onclose()
+    - onerror()
+    - onmessage()
+    - removeNotificationHandler()
+    - removeRequestHandler()
+    - request()
+    - setNotificationHandler()
+    - setRequestHandler()
+    - transport()
+  Properties (10):
+    - _notificationHandlers
+    - _options
+    - _pendingDebouncedNotifications
+    - _progressHandlers
+    - _requestHandlerAbortControllers
+    - _requestHandlers
+    - _requestMessageId
+    - _responseHandlers
+    - _timeoutInfo
+    - _transport
+
+Class S_:
+  Methods (2):
+    - target()
+    - type()
+  Properties (2):
+    - target
+    - type
+
+Class Sa:
+  Methods (7):
+    - add()
+    - if()
+    - if()
+    - search()
+    - while()
+    - while()
+    - while()
+  Properties (3):
+    - code
+    - middle
+    - value
+
+Class Sb0:
+  Methods (10):
+    - _capture()
+    - _onError()
+    - a4Q()
+    - attachErrorIfNoneExists()
+    - catch()
+    - catch()
+    - catch()
+    - getLastSeenErrorAndReset()
+    - logError()
+    - wrap()
+  Properties (5):
+    - _emitter
+    - _lastSeenError
+    - _options
+    - _sdkKey
+    - _seen
+
+Class Si:
+  Extends: h4
+  Methods (3):
+    - _parse()
+    - enum()
+    - if()
+  Properties (1):
+    - _cache
+
+Class Sv1:
+  Methods (5):
+    - ensureCleanupTask()
+    - for()
+    - getOrCreateSubchannel()
+    - if()
+    - unrefUnusedSubchannels()
+  Properties (2):
+    - cleanupTimer
+    - pool
+
+Class Sy:
+  Extends: h4
+  Methods (20):
+    - _addCheck()
+    - _getInvalidInput()
+    - _parse()
+    - gt()
+    - gte()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - lt()
+    - lte()
+    - maxValue()
+    - minValue()
+    - multipleOf()
+    - negative()
+    - nonnegative()
+    - nonpositive()
+    - positive()
+    - setLimit()
+  Properties (2):
+    - max
+    - min
+
+Class T:
+  Methods (78):
+    - a()
+    - appendChild()
+    - att()
+    - attribute()
+    - c()
+    - cdata()
+    - cloneNode()
+    - com()
+    - comment()
+    - commentAfter()
+    - commentBefore()
+    - compareDocumentPosition()
+    - contains()
+    - d()
+    - dat()
+    - debugInfo()
+    - dec()
+    - declaration()
+    - doc()
+    - document()
+    - dtd()
+    - dummy()
+    - e()
+    - ele()
+    - element()
+    - end()
+    - for()
+    - for()
+    - for()
+    - foreachTreeNode()
+    - function()
+    - getFeature()
+    - getUserData()
+    - hasAttributes()
+    - hasChildNodes()
+    - i()
+    - if()
+    - if()
+    - if()
+    - importDocument()
+    - importXMLBuilder()
+    - ins()
+    - insertAfter()
+    - insertBefore()
+    - instruction()
+    - instructionAfter()
+    - instructionBefore()
+    - isAncestor()
+    - isDefaultNamespace()
+    - isDescendant()
+    - isEqualNode()
+    - isFollowing()
+    - isPreceding()
+    - isSameNode()
+    - isSupported()
+    - lookupNamespaceURI()
+    - lookupPrefix()
+    - n()
+    - next()
+    - nod()
+    - node()
+    - normalize()
+    - prev()
+    - r()
+    - raw()
+    - remove()
+    - removeAttribute()
+    - removeChild()
+    - replaceChild()
+    - root()
+    - setParent()
+    - setUserData()
+    - t()
+    - text()
+    - treePosition()
+    - txt()
+    - u()
+    - up()
+  Properties (19):
+    - baseURI
+    - childNodes
+    - children
+    - firstChild
+    - lastChild
+    - nextSibling
+    - nodeName
+    - nodeType
+    - nodeValue
+    - options
+    - ownerDocument
+    - parent
+    - parentNode
+    - previousSibling
+    - rootObject
+    - stringify
+    - textContent
+    - type
+    - value
+
+Class T31:
+  Methods (7):
+    - configure()
+    - defaults()
+    - defaults()
+    - if()
+    - if()
+    - processError()
+    - request()
+  Properties (1):
+    - instance
+
+Class T71:
+  Extends: F4
+
+Class TFB:
+  Methods (3):
+    - promise()
+    - reject()
+    - resolve()
+  Properties (3):
+    - _promise
+    - _reject
+    - _resolve
+
+Class TJ:
+  Methods (5):
+    - abort()
+    - dirty()
+    - for()
+    - for()
+    - for()
+  Static Methods (3):
+    - static mergeArray()
+    - static mergeObjectAsync()
+    - static mergeObjectSync()
+  Properties (1):
+    - value
+
+Class TY0:
+  Methods (11):
+    - catch()
+    - catch()
+    - catch()
+    - for()
+    - getAllKeys()
+    - getItem()
+    - getProviderName()
+    - isReady()
+    - isReadyResolver()
+    - removeItem()
+    - setItem()
+  Properties (1):
+    - ready
+
+Class Ti:
+  Extends: h4
+  Methods (2):
+    - _parse()
+    - schema()
+
+Class Tk1:
+  Extends: Error
+  Properties (1):
+    - code
+
+Class Tm:
+  Methods (3):
+    - record()
+    - setStartTime()
+    - toPointValue()
+  Properties (4):
+    - _current
+    - monotonic
+    - reset
+    - startTime
+
+Class Tt2:
+  Extends: wM6
+  Methods (1):
+    - _reportError()
+  Properties (2):
+    - lastErrOffset
+    - posTracker
+
+Class Tu:
+  Extends: Promise
+  Methods (7):
+    - _thenUnwrap()
+    - asResponse()
+    - catch()
+    - finally()
+    - parse()
+    - then()
+    - withResponse()
+  Properties (3):
+    - parseResponse
+    - parsedPromise
+    - responsePromise
+
+Class Ty:
+  Extends: h4
+  Methods (1):
+    - _parse()
+  Properties (1):
+    - _unknown
+
+Class U1:
+  Methods (12):
+    - _extend()
+    - _getSupportedDrivers()
+    - _wrapLibraryMethodsWithReady()
+    - config()
+    - createInstance()
+    - defineDriver()
+    - driver()
+    - getDriver()
+    - getSerializer()
+    - ready()
+    - setDriver()
+    - supports()
+
+Class UA1:
+  Extends: Map
+  Methods (1):
+    - for()
+  Properties (1):
+    - first
+
+Class UK0:
+  Extends: SP
+
+Class UN:
+  Extends: h4
+  Methods (3):
+    - _parse()
+    - items()
+    - rest()
+
+Class UP0:
+  Methods (8):
+    - done()
+    - enqueue()
+    - error()
+    - if()
+    - if()
+    - if()
+    - next()
+    - return()
+  Properties (6):
+    - hasError
+    - isDone
+    - readReject
+    - readResolve
+    - returned
+    - started
+
+Class UQ0:
+  Extends: NG
+  Properties (2):
+    - message
+    - name
+
+Class UV:
+  Methods (16):
+    - blockTokens()
+    - for()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - inline()
+    - inlineTokens()
+    - lex()
+    - rules()
+    - while()
+    - while()
+  Static Methods (2):
+    - static lex()
+    - static lexInline()
+  Properties (5):
+    - inlineQueue
+    - options
+    - state
+    - tokenizer
+    - tokens
+
+Class Uf0:
+  Methods (15):
+    - Q()
+    - _enqueueExposure()
+    - _memoize()
+    - _setStatus()
+    - c6Q()
+    - catch()
+    - emt()
+    - flush()
+    - if()
+    - if()
+    - off()
+    - on()
+    - on()
+    - shutdown()
+    - updateRuntimeOptions()
+  Properties (11):
+    - _errorBoundary
+    - _initializePromise
+    - _listeners
+    - _logger
+    - _memoCache
+    - _options
+    - _sdkKey
+    - dataAdapter
+    - loadingStatus
+    - overrideAdapter
+    - storageProvider
+
+Class Uk1:
+  Extends: aI
+
+Class Un2:
+  Methods (4):
+    - getAttributes()
+    - getEnvelope()
+    - getPayload()
+    - getUserId()
+  Properties (2):
+    - envelope
+    - payload
+
+Class Uo1:
+  Extends: nY9
+  Methods (33):
+    - F()
+    - I()
+    - W()
+    - _addIgnoredPath()
+    - _addPathCloser()
+    - _awaitWriteFinish()
+    - _closeFile()
+    - _closePath()
+    - _emit()
+    - _emitRaw()
+    - _emitReady()
+    - _getWatchHelpers()
+    - _getWatchedDir()
+    - _handleError()
+    - _hasReadPermissions()
+    - _incrReadyCount()
+    - _isIgnored()
+    - _isntIgnored()
+    - _readdirp()
+    - _remove()
+    - _removeIgnoredPath()
+    - _throttle()
+    - add()
+    - catch()
+    - close()
+    - emitWithAll()
+    - getWatched()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - unwatch()
+  Properties (18):
+    - _boundRemove
+    - _closePromise
+    - _closers
+    - _emitRaw
+    - _emitReady
+    - _ignoredPaths
+    - _nodeFsHandler
+    - _pendingUnlinks
+    - _pendingWrites
+    - _readyCount
+    - _readyEmitted
+    - _streams
+    - _symlinkPaths
+    - _throttled
+    - _userIgnored
+    - _watched
+    - closed
+    - options
+
+Class Uq0:
+  Methods (3):
+    - clone()
+    - createFilter()
+    - push()
+  Properties (1):
+    - factories
+
+Class UtA:
+  Methods (9):
+    - G()
+    - createMockScopeDispatchData()
+    - defaultReplyHeaders()
+    - defaultReplyTrailers()
+    - if()
+    - reply()
+    - replyContentLength()
+    - replyWithError()
+    - validateReplyParameters()
+
+Class Uv1:
+  Methods (1):
+    - toDescriptor()
+
+Class Uy1:
+  Extends: Error
+  Properties (3):
+    - maxTokens
+    - name
+    - tokenCount
+
+Class Uz1:
+  Extends: h4
+  Methods (2):
+    - _parse()
+    - unwrap()
+
+Class V02:
+  Methods (3):
+    - decompress()
+    - if()
+    - if()
+
+Class VD0:
+  Methods (8):
+    - catch()
+    - close()
+    - if()
+    - pid()
+    - processReadBuffer()
+    - send()
+    - start()
+    - stderr()
+  Properties (5):
+    - _abortController
+    - _process
+    - _readBuffer
+    - _serverParams
+    - _stderrStream
+
+Class VG1:
+  Methods (2):
+    - addCallback()
+    - removeCallback()
+
+Class VN:
+  Extends: Error
+  Properties (5):
+    - code
+    - interrupted
+    - name
+    - stderr
+    - stdout
+
+Class VN0:
+  Methods (5):
+    - catch()
+    - catch()
+    - if()
+    - send()
+    - shutdown()
+  Properties (3):
+    - _client
+    - _metadata
+    - _parameters
+
+Class VP0:
+  Extends: SZ1
+  Methods (21):
+    - _oninitialize()
+    - assertCapabilityForMethod()
+    - assertNotificationCapability()
+    - assertRequestHandlerCapability()
+    - catch()
+    - createMessage()
+    - elicitInput()
+    - getCapabilities()
+    - getClientCapabilities()
+    - getClientVersion()
+    - listRoots()
+    - ping()
+    - registerCapabilities()
+    - sendLoggingMessage()
+    - sendPromptListChanged()
+    - sendResourceListChanged()
+    - sendResourceUpdated()
+    - sendToolListChanged()
+    - switch()
+    - switch()
+    - switch()
+  Properties (5):
+    - _capabilities
+    - _clientCapabilities
+    - _clientVersion
+    - _instructions
+    - _serverInfo
+
+Class Vf0:
+  Methods (20):
+    - _getInternalRequestArgs()
+    - _getPopulatedURL()
+    - _isRateLimited()
+    - _sendRequest()
+    - _tryEncodeBody()
+    - _tryToCompressBody()
+    - beacon()
+    - catch()
+    - catch()
+    - catch()
+    - get()
+    - getLastUsedInitUrlAndReset()
+    - isBeaconSupported()
+    - post()
+    - setErrorBoundary()
+    - wl()
+    - wl()
+    - wl()
+    - wl()
+    - wl()
+  Properties (8):
+    - _emitter
+    - _errorBoundary
+    - _fallbackResolver
+    - _lastUsedInitUrl
+    - _leakyBucket
+    - _netConfig
+    - _options
+    - _timeout
+
+Class VnA:
+  Extends: Error
+  Properties (3):
+    - code
+    - data
+    - name
+
+Class VzB:
+  Methods (1):
+    - process()
+  Properties (1):
+    - _deniedAttributeNames
+
+Class W3:
+  Methods (16):
+    - add()
+    - create()
+    - decode()
+    - decodeDelimited()
+    - encode()
+    - encodeDelimited()
+    - fromObject()
+    - get()
+    - isReservedId()
+    - isReservedName()
+    - remove()
+    - resolveAll()
+    - setup()
+    - toJSON()
+    - toObject()
+    - verify()
+
+Class W6B:
+  Methods (3):
+    - _getTracer()
+    - startActiveSpan()
+    - startSpan()
+  Properties (5):
+    - _delegate
+    - _provider
+    - name
+    - options
+    - version
+
+Class W8:
+  Methods (13):
+    - add()
+    - addJSON()
+    - define()
+    - get()
+    - getEnum()
+    - lookup()
+    - lookupEnum()
+    - lookupService()
+    - lookupType()
+    - lookupTypeOrEnum()
+    - remove()
+    - resolveAll()
+    - toJSON()
+  Properties (1):
+    - nestedArray
+
+Class WE:
+  Methods (6):
+    - add()
+    - create()
+    - get()
+    - remove()
+    - resolveAll()
+    - toJSON()
+  Properties (1):
+    - methodsArray
+
+Class WHB:
+  Extends: Q11
+
+Class WN0:
+  Methods (17):
+    - destroy()
+    - eject()
+    - exitIdle()
+    - for()
+    - getCurrentEjectionPercent()
+    - getTypeName()
+    - if()
+    - if()
+    - isCountingEnabled()
+    - resetBackoff()
+    - runChecks()
+    - runFailurePercentageCheck()
+    - runSuccessRateCheck()
+    - startTimer()
+    - switchAllBuckets()
+    - uneject()
+    - updateAddressList()
+  Properties (5):
+    - childBalancer
+    - ejectionTimer
+    - entryMap
+    - latestConfig
+    - timerStartTime
+
+Class WP0:
+  Extends: nT5
+  Methods (139):
+    - A()
+    - B()
+    - B()
+    - B()
+    - G()
+    - Q()
+    - Q()
+    - Q()
+    - Y()
+    - Z()
+    - Z()
+    - Z()
+    - Z()
+    - _callParseArg()
+    - _chainOrCall()
+    - _chainOrCallHooks()
+    - _chainOrCallSubCommandHook()
+    - _checkForBrokenPassThrough()
+    - _checkForConflictingLocalOptions()
+    - _checkForConflictingOptions()
+    - _checkForMissingMandatoryOptions()
+    - _checkNumberOfArguments()
+    - _conflictingOption()
+    - _dispatchHelpCommand()
+    - _dispatchSubcommand()
+    - _excessArguments()
+    - _executeSubCommand()
+    - _exit()
+    - _exitCallback()
+    - _findCommand()
+    - _findOption()
+    - _getCommandAndAncestors()
+    - _getHelpCommand()
+    - _getHelpContext()
+    - _getHelpOption()
+    - _optionEx()
+    - _outputHelpIfRequested()
+    - _parseCommand()
+    - _parseOptionsEnv()
+    - _parseOptionsImplied()
+    - _prepareUserArgs()
+    - _processArguments()
+    - _registerCommand()
+    - _registerOption()
+    - action()
+    - addArgument()
+    - addCommand()
+    - addHelpCommand()
+    - addHelpOption()
+    - addHelpText()
+    - addOption()
+    - alias()
+    - aliases()
+    - allowExcessArguments()
+    - allowUnknownOption()
+    - argument()
+    - arguments()
+    - catch()
+    - catch()
+    - combineFlagAndOptionalValue()
+    - command()
+    - configureHelp()
+    - configureOutput()
+    - copyInheritedSettings()
+    - createArgument()
+    - createCommand()
+    - createHelp()
+    - createOption()
+    - description()
+    - enablePositionalOptions()
+    - error()
+    - executableDir()
+    - exitOverride()
+    - for()
+    - getOptionValue()
+    - getOptionValueSource()
+    - getOptionValueSourceWithGlobals()
+    - help()
+    - helpCommand()
+    - helpInformation()
+    - helpOption()
+    - hook()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - missingArgument()
+    - missingMandatoryOptionValue()
+    - name()
+    - nameFromFilename()
+    - option()
+    - optionMissingArgument()
+    - opts()
+    - optsWithGlobals()
+    - outputHelp()
+    - parse()
+    - parseAsync()
+    - parseOptions()
+    - passThroughOptions()
+    - requiredOption()
+    - setOptionValue()
+    - setOptionValueWithSource()
+    - showHelpAfterError()
+    - showSuggestionAfterError()
+    - storeOptionsAsProperties()
+    - summary()
+    - switch()
+    - unknownCommand()
+    - unknownOption()
+    - usage()
+    - version()
+    - while()
+  Properties (41):
+    - _actionHandler
+    - _addImplicitHelpCommand
+    - _aliases
+    - _allowExcessArguments
+    - _allowUnknownOption
+    - _args
+    - _argsDescription
+    - _combineFlagAndOptionalValue
+    - _defaultCommandName
+    - _description
+    - _enablePositionalOptions
+    - _executableDir
+    - _executableFile
+    - _executableHandler
+    - _exitCallback
+    - _helpCommand
+    - _helpConfiguration
+    - _helpOption
+    - _hidden
+    - _lifeCycleHooks
+    - _name
+    - _optionValueSources
+    - _optionValues
+    - _outputConfiguration
+    - _passThroughOptions
+    - _scriptPath
+    - _showHelpAfterError
+    - _showSuggestionAfterError
+    - _storeOptionsAsProperties
+    - _summary
+    - _usage
+    - _version
+    - _versionOptionName
+    - args
+    - commands
+    - options
+    - parent
+    - processedArgs
+    - rawArgs
+    - registeredArguments
+    - runningCommand
+
+Class WlB:
+  Methods (1):
+    - valueFromOption()
+  Properties (3):
+    - dualOptions
+    - negativeOptions
+    - positiveOptions
+
+Class WnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class WrA:
+  Extends: O84
+  Methods (4):
+    - Z()
+    - for()
+    - pipelining()
+    - pipelining()
+
+Class Ws2:
+  Extends: SP
+
+Class Wt2:
+  Methods (43):
+    - _indexOf()
+    - _isInTemplate()
+    - _updateCurrentElement()
+    - clearBackToTableBodyContext()
+    - clearBackToTableContext()
+    - clearBackToTableRowContext()
+    - contains()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - generateImpliedEndTags()
+    - generateImpliedEndTagsThoroughly()
+    - generateImpliedEndTagsWithExclusion()
+    - getCommonAncestor()
+    - hasInButtonScope()
+    - hasInListItemScope()
+    - hasInScope()
+    - hasInSelectScope()
+    - hasInTableScope()
+    - hasNumberedHeaderInScope()
+    - hasTableBodyContextInTableScope()
+    - if()
+    - if()
+    - insertAfter()
+    - isRootHtmlElementCurrent()
+    - pop()
+    - popAllUpToHtmlElement()
+    - popUntilElementPopped()
+    - popUntilNumberedHeaderPopped()
+    - popUntilTableCellPopped()
+    - popUntilTagNamePopped()
+    - push()
+    - remove()
+    - replace()
+    - tryPeekProperlyNestedBodyElement()
+    - while()
+    - while()
+    - while()
+    - while()
+  Properties (7):
+    - current
+    - currentTagName
+    - currentTmplContent
+    - items
+    - stackTop
+    - tmplCount
+    - treeAdapter
+
+Class Wv:
+  Methods (1):
+    - toDescriptor()
+
+Class Wz:
+  Extends: h4
+  Methods (2):
+    - _parse()
+    - unwrap()
+
+Class X:
+  Extends: W
+  Methods (15):
+    - att()
+    - attList()
+    - ele()
+    - element()
+    - ent()
+    - entity()
+    - if()
+    - if()
+    - isEqualNode()
+    - not()
+    - notation()
+    - pEntity()
+    - pent()
+    - toString()
+    - up()
+  Properties (18):
+    - attributes
+    - classList
+    - className
+    - documentObject
+    - entities
+    - id
+    - internalSubset
+    - localName
+    - name
+    - namespaceURI
+    - notations
+    - prefix
+    - pubID
+    - publicId
+    - sysID
+    - systemId
+    - tagName
+    - type
+
+Class X8B:
+  Methods (4):
+    - createAccumulation()
+    - diff()
+    - merge()
+    - toMetricData()
+
+Class X90:
+  Methods (6):
+    - destroy()
+    - end()
+    - if()
+    - if()
+    - if()
+    - write()
+  Properties (8):
+    - abort
+    - bytesWritten
+    - client
+    - contentLength
+    - expectsPayload
+    - header
+    - request
+    - socket
+
+Class XDB:
+  Methods (4):
+    - B()
+    - awaitAll()
+    - hasReachedLimit()
+    - pushPromise()
+  Properties (1):
+    - _concurrencyLimit
+
+Class XHB:
+  Extends: Q11
+
+Class XL:
+  Methods (37):
+    - B()
+    - G()
+    - Q()
+    - Z()
+    - add()
+    - addAll()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - delete()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - keys()
+    - match()
+    - matchAll()
+    - processResponseEndOfBody()
+    - push()
+    - put()
+
+Class XT1:
+  Extends: Map
+  Methods (1):
+    - for()
+  Properties (1):
+    - first
+
+Class XT2:
+  Extends: re4
+  Methods (18):
+    - address()
+    - catch()
+    - catch()
+    - close()
+    - completeUpgrade()
+    - handleUpgrade()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - shouldHandle()
+  Properties (6):
+    - _removeListeners
+    - _server
+    - _shouldEmitClose
+    - _state
+    - clients
+    - options
+
+Class XTB:
+  Methods (11):
+    - B()
+    - _addToBuffer()
+    - _clearTimer()
+    - _export()
+    - _flushAll()
+    - _flushOneBatch()
+    - _maybeStartTimer()
+    - _shutdown()
+    - forceFlush()
+    - onEmit()
+    - shutdown()
+  Properties (7):
+    - _exportTimeoutMillis
+    - _exporter
+    - _maxExportBatchSize
+    - _maxQueueSize
+    - _scheduledDelayMillis
+    - _shutdownOnce
+    - _timer
+
+Class XU0:
+  Methods (6):
+    - _getContextManager()
+    - active()
+    - bind()
+    - disable()
+    - setGlobalContextManager()
+    - with()
+  Static Methods (1):
+    - static getInstance()
+  Properties (1):
+    - _instance
+
+Class XV:
+  Methods (15):
+    - G()
+    - Y()
+    - Y()
+    - Z()
+    - cancel()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - if()
+    - pull()
+    - rW0()
+    - tee()
+    - toReadableStream()
+  Static Methods (2):
+    - static fromReadableStream()
+    - static fromSSEResponse()
+  Properties (2):
+    - controller
+    - iterator
+
+Class Xf:
+  Methods (28):
+    - Dl()
+    - Dl()
+    - Dl()
+    - Dl()
+    - Dl()
+    - Dl()
+    - _appendAndResetNonExposedChecks()
+    - _getCurrentPageUrl()
+    - _getRequestData()
+    - _getStorageKey()
+    - _normalizeAndAppendEvent()
+    - _quickFlushIfNeeded()
+    - _retryFailedLogs()
+    - _saveFailedLogsToStorage()
+    - _sendEvents()
+    - _sendEventsViaBeacon()
+    - _sendEventsViaPost()
+    - _shouldLogEvent()
+    - _startBackgroundFlushInterval()
+    - catch()
+    - catch()
+    - enqueue()
+    - flush()
+    - incrementNonExposureCount()
+    - reset()
+    - setLoggingDisabled()
+    - start()
+    - stop()
+  Static Methods (2):
+    - static _safeFlushAndForget()
+    - static _safeRetryFailedLogs()
+  Properties (13):
+    - _creationTime
+    - _emitter
+    - _flushIntervalId
+    - _hasRunQuickFlush
+    - _isLoggingDisabled
+    - _lastExposureTimeMap
+    - _logEventUrlConfig
+    - _maxQueueSize
+    - _network
+    - _nonExposedChecks
+    - _options
+    - _queue
+    - _sdkKey
+
+Class Xl1:
+  Methods (46):
+    - _getData()
+    - attributes()
+    - attributes()
+    - description()
+    - description()
+    - end()
+    - endTimestamp()
+    - endTimestamp()
+    - finish()
+    - getSpanJSON()
+    - getTraceContext()
+    - if()
+    - isRecording()
+    - isSuccess()
+    - name()
+    - name()
+    - op()
+    - op()
+    - origin()
+    - origin()
+    - parentSpanId()
+    - parentSpanId()
+    - sampled()
+    - sampled()
+    - setAttribute()
+    - setAttributes()
+    - setData()
+    - setHttpStatus()
+    - setName()
+    - setStatus()
+    - setTag()
+    - spanContext()
+    - spanId()
+    - spanId()
+    - startChild()
+    - startTimestamp()
+    - startTimestamp()
+    - status()
+    - status()
+    - toContext()
+    - toJSON()
+    - toTraceparent()
+    - traceId()
+    - traceId()
+    - updateName()
+    - updateWithContext()
+  Properties (16):
+    - _attributes
+    - _endTime
+    - _exclusiveTime
+    - _logMessage
+    - _measurements
+    - _name
+    - _parentSpanId
+    - _sampled
+    - _spanId
+    - _startTime
+    - _status
+    - _traceId
+    - data
+    - instrumenter
+    - op
+    - tags
+
+Class XnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class Xw:
+  Extends: My2
+  Methods (4):
+    - getPaginatedItems()
+    - hasNextPage()
+    - if()
+    - nextPageRequestOptions()
+  Properties (4):
+    - data
+    - first_id
+    - has_more
+    - last_id
+
+Class Xx:
+  Methods (6):
+    - clone()
+    - headers()
+    - method()
+    - redirect()
+    - signal()
+    - url()
+  Properties (4):
+    - agent
+    - compress
+    - counter
+    - follow
+
+Class XzB:
+  Methods (1):
+    - process()
+  Properties (1):
+    - _processors
+
+Class Y:
+  Extends: Z
+  Methods (53):
+    - cdata()
+    - comment()
+    - declaration()
+    - docType()
+    - document()
+    - dtdAttList()
+    - dtdElement()
+    - dtdEntity()
+    - dtdNotation()
+    - element()
+    - endline()
+    - every()
+    - export()
+    - export()
+    - export()
+    - for()
+    - for()
+    - forEach()
+    - forEachReverse()
+    - get()
+    - getReverse()
+    - if()
+    - map()
+    - mapReverse()
+    - pop()
+    - processingInstruction()
+    - push()
+    - pushNode()
+    - raw()
+    - reduce()
+    - reduceReverse()
+    - removeNode()
+    - reverse()
+    - shift()
+    - slice()
+    - sliceReverse()
+    - text()
+    - toArray()
+    - toArrayReverse()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - toJSON()
+    - unshift()
+    - unshiftNode()
+  Properties (1):
+    - stream
+
+Class Y3:
+  Methods (50):
+    - _appendCharToCurrentCharacterToken()
+    - _consume()
+    - _consumeSequenceIfMatch()
+    - _createAttr()
+    - _createCharacterToken()
+    - _createCommentToken()
+    - _createDoctypeToken()
+    - _createEOFToken()
+    - _createEndTagToken()
+    - _createStartTagToken()
+    - _emitChars()
+    - _emitCodePoint()
+    - _emitCurrentCharacterToken()
+    - _emitCurrentToken()
+    - _emitEOFToken()
+    - _emitSeveralCodePoints()
+    - _ensureHibernation()
+    - _err()
+    - _errOnNextCodePoint()
+    - _flushCodePointsConsumedAsCharacterReference()
+    - _isCharacterReferenceAttributeQuirk()
+    - _isCharacterReferenceInAttribute()
+    - _isTempBufferEqualToScriptString()
+    - _leaveAttrName()
+    - _leaveAttrValue()
+    - _matchNamedCharacterReference()
+    - _reconsumeInState()
+    - _unconsume()
+    - for()
+    - getNextToken()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - insertHtmlAtCurrentPos()
+    - while()
+    - while()
+    - write()
+  Properties (13):
+    - active
+    - allowCDATA
+    - charRefCode
+    - consumedAfterSnapshot
+    - currentAttr
+    - currentCharacterToken
+    - currentToken
+    - lastStartTagName
+    - preprocessor
+    - returnState
+    - state
+    - tempBuff
+    - tokenQueue
+
+Class Y5:
+  Methods (19):
+    - _error()
+    - _generateBoundary()
+    - _getContentDisposition()
+    - _getContentType()
+    - _lastBoundary()
+    - _lengthRetriever()
+    - _multiPartFooter()
+    - _multiPartHeader()
+    - _trackLength()
+    - append()
+    - getBoundary()
+    - getBuffer()
+    - getHeaders()
+    - getLength()
+    - getLengthSync()
+    - hasKnownLength()
+    - setBoundary()
+    - submit()
+    - toString()
+
+Class YE:
+  Methods (3):
+    - resolve()
+    - setOption()
+    - toJSON()
+  Properties (1):
+    - packed
+
+Class YHB:
+  Extends: B11
+  Methods (1):
+    - record()
+
+Class YR1:
+  Extends: S_
+  Methods (1):
+    - data()
+  Properties (1):
+    - data
+
+Class YTB:
+  Methods (4):
+    - export()
+    - getFinishedLogRecords()
+    - reset()
+    - shutdown()
+  Properties (2):
+    - _finishedLogRecords
+    - _stopped
+
+Class YV0:
+  Extends: Error
+  Methods (2):
+    - catch()
+    - if()
+  Properties (5):
+    - code
+    - config
+    - error
+    - response
+    - status
+
+Class YY1:
+  Methods (1):
+    - toDescriptor()
+
+Class Yi:
+  Methods (2):
+    - pop()
+    - push()
+  Static Methods (1):
+    - static create()
+  Properties (2):
+    - heap
+    - length
+
+Class YlB:
+  Methods (29):
+    - I()
+    - Q()
+    - W()
+    - argumentDescription()
+    - argumentTerm()
+    - commandDescription()
+    - commandUsage()
+    - compareOptions()
+    - for()
+    - formatHelp()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - longestArgumentTermLength()
+    - longestGlobalOptionTermLength()
+    - longestOptionTermLength()
+    - longestSubcommandTermLength()
+    - optionDescription()
+    - optionTerm()
+    - padWidth()
+    - subcommandDescription()
+    - subcommandTerm()
+    - visibleArguments()
+    - visibleCommands()
+    - visibleGlobalOptions()
+    - visibleOptions()
+    - wrap()
+  Properties (4):
+    - helpWidth
+    - showGlobalOptions
+    - sortOptions
+    - sortSubcommands
+
+Class YnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class Yr1:
+  Methods (1):
+    - ignoreMatch()
+  Properties (2):
+    - data
+    - isMatchIgnored
+
+Class YsA:
+  Methods (2):
+    - baseUrl()
+    - origin()
+
+Class Yw0:
+  Methods (9):
+    - cancelWithStatus()
+    - catch()
+    - catch()
+    - getPeer()
+    - halfClose()
+    - sendMessage()
+    - sendMessageWithContext()
+    - start()
+    - startRead()
+  Properties (2):
+    - call
+    - methodDefinition
+
+Class YwB:
+  Extends: Yw0
+
+Class Yx1:
+  Methods (1):
+    - createAggregator()
+
+Class Z:
+  Extends: Q
+  Methods (2):
+    - clone()
+    - toString()
+  Properties (13):
+    - isElementContentWhitespace
+    - localName
+    - namespaceURI
+    - nodeType
+    - ownerElement
+    - parameterNames
+    - prefix
+    - publicId
+    - specified
+    - systemId
+    - textContent
+    - type
+    - wholeText
+
+Class ZHB:
+  Extends: B11
+  Methods (1):
+    - add()
+
+Class ZU0:
+  Extends: VG1
+
+Class ZeA:
+  Extends: JG4
+  Methods (3):
+    - if()
+    - onError()
+    - switch()
+
+Class Zh:
+  Extends: h4
+  Methods (9):
+    - Y()
+    - _parse()
+    - for()
+    - if()
+    - if()
+    - max()
+    - min()
+    - nonempty()
+    - size()
+
+Class ZlB:
+  Extends: BP0
+  Properties (1):
+    - name
+
+Class ZnA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class Zq0:
+  Methods (3):
+    - addCallFailed()
+    - addCallStarted()
+    - addCallSucceeded()
+  Properties (4):
+    - callsFailed
+    - callsStarted
+    - callsSucceeded
+    - lastCallStartedTimestamp
+
+Class ZsA:
+  Extends: v44
+  Methods (4):
+    - _final()
+    - _transform()
+    - if()
+    - if()
+  Properties (1):
+    - _inflateStream
+
+Class Zt:
+  Extends: dI
+  Methods (2):
+    - list()
+    - retrieve()
+
+Class Zw:
+  Methods (11):
+    - compare()
+    - compareBuild()
+    - compareMain()
+    - comparePre()
+    - format()
+    - if()
+    - if()
+    - if()
+    - inc()
+    - switch()
+    - toString()
+  Properties (10):
+    - build
+    - includePrerelease
+    - loose
+    - major
+    - minor
+    - options
+    - patch
+    - prerelease
+    - raw
+    - version
+
+Class ZwB:
+  Methods (9):
+    - cancelWithStatus()
+    - getPeer()
+    - halfClose()
+    - processPendingHalfClose()
+    - processPendingMessage()
+    - sendMessage()
+    - sendMessageWithContext()
+    - start()
+    - startRead()
+  Properties (7):
+    - nextCall
+    - pendingHalfClose
+    - pendingMessage
+    - pendingMessageContext
+    - processingMessage
+    - processingMetadata
+    - requester
+
+Class _:
+  Methods (16):
+    - del()
+    - dump()
+    - dumpLru()
+    - forEach()
+    - get()
+    - has()
+    - inspect()
+    - keys()
+    - load()
+    - peek()
+    - pop()
+    - prune()
+    - reset()
+    - rforEach()
+    - set()
+    - values()
+  Properties (6):
+    - allowStale
+    - itemCount
+    - length
+    - lengthCalculator
+    - max
+    - maxAge
+
+Class _5:
+  Methods (47):
+    - backspace()
+    - columns()
+    - createCursorWithColumn()
+    - del()
+    - deleteToLineEnd()
+    - deleteToLineStart()
+    - deleteToLogicalLineEnd()
+    - deleteWordAfter()
+    - deleteWordBefore()
+    - down()
+    - downLogicalLine()
+    - endOfLine()
+    - endOfLogicalLine()
+    - endOfWORD()
+    - endOfWord()
+    - equals()
+    - findLogicalLineEnd()
+    - findLogicalLineStart()
+    - firstNonBlankInLine()
+    - firstNonBlankInLogicalLine()
+    - for()
+    - getLogicalLineBounds()
+    - getOffset()
+    - getPosition()
+    - if()
+    - if()
+    - if()
+    - insert()
+    - isAtEnd()
+    - isAtStart()
+    - isOverWhitespace()
+    - isOverWordChar()
+    - left()
+    - modifyText()
+    - nextWORD()
+    - nextWord()
+    - prevWORD()
+    - prevWord()
+    - render()
+    - right()
+    - startOfFirstLine()
+    - startOfLastLine()
+    - startOfLine()
+    - startOfLogicalLine()
+    - text()
+    - up()
+    - upLogicalLine()
+  Static Methods (1):
+    - static fromText()
+  Properties (3):
+    - measuredText
+    - offset
+    - selection
+
+Class _90:
+  Methods (16):
+    - B()
+    - catch()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - onBodySent()
+    - onComplete()
+    - onConnect()
+    - onData()
+    - onError()
+    - onHeaders()
+    - onRequestSent()
+    - onUpgrade()
+  Properties (13):
+    - abort
+    - aborted
+    - dispatch
+    - end
+    - etag
+    - handler
+    - opts
+    - reason
+    - resume
+    - retryCount
+    - retryCountCheckpoint
+    - retryOpts
+    - start
+
+Class _M:
+  Methods (1):
+    - toJSON()
+
+Class _N0:
+  Methods (13):
+    - catch()
+    - convertAttributes()
+    - doExport()
+    - export()
+    - extractDataPoints()
+    - forceFlush()
+    - hrTimeToISOString()
+    - if()
+    - if()
+    - if()
+    - selectAggregationTemporality()
+    - shutdown()
+    - transformMetricsForInternal()
+  Properties (3):
+    - endpoint
+    - isShutdown
+    - timeout
+
+Class _Q:
+  Methods (7):
+    - compact()
+    - find()
+    - findLast()
+    - reject()
+    - slice()
+    - takeRightWhile()
+    - toArray()
+
+Class _Q1:
+  Extends: h4
+  Methods (1):
+    - _parse()
+
+Class _Y1:
+  Methods (2):
+    - renderStatic()
+    - reset()
+  Properties (1):
+    - alreadyRendered
+
+Class _dB:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+
+Class _k:
+  Methods (5):
+    - delete()
+    - has()
+    - keys()
+    - match()
+    - open()
+
+Class _oA:
+  Extends: b34
+  Methods (9):
+    - catch()
+    - if()
+    - if()
+    - if()
+    - onComplete()
+    - onConnect()
+    - onData()
+    - onError()
+    - onHeaders()
+  Properties (11):
+    - abort
+    - body
+    - callback
+    - context
+    - factory
+    - onInfo
+    - opaque
+    - res
+    - responseHeaders
+    - throwOnError
+    - trailers
+
+Class _q0:
+  Extends: S11
+  Methods (3):
+    - _equals()
+    - for()
+    - for()
+  Properties (1):
+    - options
+
+Class _s2:
+  Methods (1):
+    - getRequestHeaders()
+  Properties (2):
+    - selector
+    - token
+
+Class a11:
+  Methods (9):
+    - endCLIActivity()
+    - getActivityStates()
+    - if()
+    - if()
+    - if()
+    - if()
+    - recordUserActivity()
+    - startCLIActivity()
+    - trackOperation()
+  Static Methods (1):
+    - static getInstance()
+  Properties (3):
+    - isCLIActive
+    - lastCLIRecordedTime
+    - lastUserActivityTime
+
+Class a2B:
+  Extends: Error
+  Properties (2):
+    - code
+    - event
+
+Class a71:
+  Methods (40):
+    - A()
+    - A()
+    - A()
+    - A()
+    - A()
+    - A()
+    - _addMessage()
+    - _addMessageParam()
+    - _connected()
+    - _createMessage()
+    - _emit()
+    - _emitFinal()
+    - _fromReadableStream()
+    - _run()
+    - abort()
+    - aborted()
+    - currentMessage()
+    - done()
+    - emitted()
+    - ended()
+    - errored()
+    - finalMessage()
+    - finalText()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - off()
+    - on()
+    - once()
+    - request_id()
+    - response()
+    - switch()
+    - switch()
+    - switch()
+    - toReadableStream()
+    - withResponse()
+  Static Methods (2):
+    - static createMessage()
+    - static fromReadableStream()
+  Properties (3):
+    - controller
+    - messages
+    - receivedMessages
+
+Class a8:
+  Properties (1):
+    - textContent
+
+Class aFB:
+  Methods (4):
+    - createAccumulation()
+    - diff()
+    - merge()
+    - toMetricData()
+
+Class aG1:
+  Extends: Error
+  Properties (1):
+    - name
+
+Class aHB:
+  Methods (2):
+    - if()
+    - observe()
+
+Class aI:
+  Extends: Error
+  Methods (2):
+    - errorCode()
+    - toResponseObject()
+  Properties (2):
+    - errorUri
+    - name
+
+Class aP:
+  Methods (2):
+    - resolve()
+    - toJSON()
+
+Class anA:
+  Extends: y94
+  Methods (14):
+    - B()
+    - Q()
+    - catch()
+    - close()
+    - closed()
+    - destroy()
+    - destroyed()
+    - dispatch()
+    - if()
+    - if()
+    - if()
+    - if()
+    - interceptors()
+    - interceptors()
+
+Class ao2:
+  Methods (21):
+    - catch()
+    - for()
+    - for()
+    - for()
+    - function()
+    - function()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - lexer()
+    - onError()
+    - parseMarkdown()
+    - parser()
+    - setOptions()
+    - use()
+    - walkTokens()
+  Properties (1):
+    - defaults
+
+Class as1:
+  Methods (44):
+    - D()
+    - F()
+    - F()
+    - H()
+    - J()
+    - basename()
+    - chdir()
+    - childrenCache()
+    - depth()
+    - dirname()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - for()
+    - if()
+    - if()
+    - if()
+    - if()
+    - iterate()
+    - iterateSync()
+    - lstat()
+    - lstatSync()
+    - readdir()
+    - readdirSync()
+    - readlink()
+    - readlinkSync()
+    - realpath()
+    - realpathSync()
+    - relative()
+    - relativePosix()
+    - resolve()
+    - resolvePosix()
+    - stream()
+    - streamSync()
+    - walk()
+    - walkSync()
+    - while()
+    - while()
+  Properties (5):
+    - cwd
+    - nocase
+    - root
+    - rootPath
+    - roots
+
+Class az:
+  Extends: dI
+  Properties (3):
+    - files
+    - messages
+    - models
+
+Class b:
+  Methods (56):
+    - a()
+    - att()
+    - attList()
+    - attribute()
+    - c()
+    - cdata()
+    - closeNode()
+    - com()
+    - comment()
+    - createChildNode()
+    - d()
+    - dat()
+    - debugInfo()
+    - dec()
+    - declaration()
+    - doctype()
+    - dtd()
+    - dtdElement()
+    - dummy()
+    - e()
+    - ele()
+    - element()
+    - end()
+    - ent()
+    - entity()
+    - for()
+    - for()
+    - for()
+    - for()
+    - function()
+    - function()
+    - i()
+    - if()
+    - if()
+    - if()
+    - if()
+    - ins()
+    - instruction()
+    - n()
+    - nod()
+    - node()
+    - not()
+    - notation()
+    - onData()
+    - onEnd()
+    - openCurrent()
+    - openNode()
+    - pEntity()
+    - pent()
+    - r()
+    - raw()
+    - switch()
+    - t()
+    - text()
+    - txt()
+    - up()
+  Properties (14):
+    - currentLevel
+    - currentNode
+    - documentCompleted
+    - documentStarted
+    - name
+    - onDataCallback
+    - onEndCallback
+    - openTags
+    - options
+    - root
+    - stringify
+    - type
+    - writer
+    - writerOptions
+
+Class b5B:
+  Methods (2):
+    - _getLogger()
+    - emit()
+  Properties (5):
+    - _delegate
+    - _provider
+    - name
+    - options
+    - version
+
+Class b71:
+  Extends: dI
+  Methods (6):
+    - cancel()
+    - create()
+    - delete()
+    - list()
+    - results()
+    - retrieve()
+
+Class bA:
+  Methods (5):
+    - clone()
+    - delete()
+    - deleteLater()
+    - isAliasOf()
+    - isDeleted()
+
+Class bI1:
+  Properties (1):
+    - on
+
+Class bQ1:
+  Extends: h4
+  Methods (6):
+    - _parse()
+    - for()
+    - for()
+    - if()
+    - keySchema()
+    - valueSchema()
+
+Class bRB:
+  Methods (3):
+    - forceFlush()
+    - onEmit()
+    - shutdown()
+
+Class bS:
+  Methods (1):
+    - search()
+  Static Methods (2):
+    - static isMultiMatch()
+    - static isSingleMatch()
+  Properties (1):
+    - pattern
+
+Class bS1:
+  Extends: XV
+  Methods (5):
+    - I()
+    - Y()
+    - catch()
+    - catch()
+    - if()
+  Static Methods (1):
+    - static fromSSEResponse()
+
+Class bT0:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+  Properties (1):
+    - _bitapSearch
+
+Class bdB:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+
+Class bf0:
+  Methods (17):
+    - _extractBootstrapMetadata()
+    - _getDetailedStoreResult()
+    - _getDetails()
+    - _setWarningState()
+    - finalize()
+    - getConfig()
+    - getCurrentSourceDetails()
+    - getExposureMapping()
+    - getGate()
+    - getLayer()
+    - getParamStore()
+    - getSource()
+    - getValues()
+    - getWarnings()
+    - if()
+    - reset()
+    - setValues()
+  Properties (8):
+    - _bootstrapMetadata
+    - _lcut
+    - _rawValues
+    - _receivedAt
+    - _sdkKey
+    - _source
+    - _values
+    - _warnings
+
+Class bx:
+  Extends: aI
+
+Class bx1:
+  Extends: J11
+  Methods (3):
+    - _equals()
+    - compose()
+    - generateMetadata()
+  Properties (1):
+    - creds
+
+Class c31:
+  Methods (8):
+    - add()
+    - addAll()
+    - clear()
+    - for()
+    - for()
+    - getRecent()
+    - length()
+    - toArray()
+  Properties (4):
+    - buffer
+    - capacity
+    - head
+    - size
+
+Class c8:
+  Extends: EventTarget
+  Methods (21):
+    - abort()
+    - error()
+    - if()
+    - onabort()
+    - onabort()
+    - onerror()
+    - onerror()
+    - onload()
+    - onload()
+    - onloadend()
+    - onloadend()
+    - onloadstart()
+    - onloadstart()
+    - onprogress()
+    - onprogress()
+    - readAsArrayBuffer()
+    - readAsBinaryString()
+    - readAsDataURL()
+    - readAsText()
+    - readyState()
+    - result()
+
+Class cF:
+  Methods (86):
+    - K()
+    - P()
+    - Q()
+    - T()
+    - _()
+    - atime()
+    - atimeMs()
+    - b()
+    - birthtime()
+    - birthtimeMs()
+    - blksize()
+    - blocks()
+    - calledReaddir()
+    - canReaddir()
+    - canReadlink()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - child()
+    - children()
+    - childrenCache()
+    - ctime()
+    - ctimeMs()
+    - depth()
+    - dev()
+    - f()
+    - for()
+    - for()
+    - fullpath()
+    - fullpathPosix()
+    - g()
+    - getType()
+    - gid()
+    - h()
+    - i()
+    - if()
+    - if()
+    - ino()
+    - isBlockDevice()
+    - isCharacterDevice()
+    - isDirectory()
+    - isENOENT()
+    - isFIFO()
+    - isFile()
+    - isNamed()
+    - isSocket()
+    - isSymbolicLink()
+    - isType()
+    - isUnknown()
+    - lstat()
+    - lstatCached()
+    - lstatSync()
+    - m()
+    - mode()
+    - mtime()
+    - mtimeMs()
+    - nlink()
+    - p()
+    - parentPath()
+    - path()
+    - rdev()
+    - readdir()
+    - readdirCB()
+    - readdirCached()
+    - readdirSync()
+    - readlink()
+    - readlinkCached()
+    - readlinkSync()
+    - realpath()
+    - realpathCached()
+    - realpathSync()
+    - relative()
+    - relativePosix()
+    - resolve()
+    - shouldWalk()
+    - size()
+    - u()
+    - uid()
+    - v()
+    - x()
+    - y()
+  Properties (7):
+    - isCWD
+    - name
+    - nocase
+    - parent
+    - root
+    - roots
+    - sep
+
+Class cMB:
+  Methods (1):
+    - pick()
+  Properties (1):
+    - subchannel
+
+Class c_1:
+  Extends: Error
+
+Class ca2:
+  Methods (1):
+    - getSubjectToken()
+  Properties (5):
+    - additionalGaxiosOptions
+    - formatType
+    - headers
+    - subjectTokenFieldName
+    - url
+
+Class cbc:
+  Methods (5):
+    - decrypt()
+    - encrypt()
+    - pad()
+    - start()
+    - unpad()
+
+Class cf:
+  Extends: Error
+  Properties (3):
+    - defaultConfig
+    - filePath
+    - name
+
+Class cfb:
+  Methods (3):
+    - decrypt()
+    - encrypt()
+    - start()
+
+Class cnA:
+  Methods (19):
+    - addHeader()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - errorHandler()
+    - for()
+    - onBodySent()
+    - onComplete()
+    - onConnect()
+    - onData()
+    - onError()
+    - onFinally()
+    - onHeaders()
+    - onRequestSent()
+    - onResponseStarted()
+    - onUpgrade()
+    - w()
+  Properties (23):
+    - abort
+    - aborted
+    - blocking
+    - body
+    - bodyTimeout
+    - completed
+    - contentLength
+    - contentType
+    - endHandler
+    - error
+    - errorHandler
+    - expectContinue
+    - headers
+    - headersTimeout
+    - host
+    - idempotent
+    - method
+    - origin
+    - path
+    - reset
+    - servername
+    - throwOnError
+    - upgrade
+
+Class cs1:
+  Methods (4):
+    - end()
+    - ondrain()
+    - proxyErrors()
+    - unpipe()
+  Properties (4):
+    - dest
+    - ondrain
+    - opts
+    - src
+
+Class ct:
+  Extends: Error
+  Properties (1):
+    - code
+
+Class ctr:
+  Methods (2):
+    - encrypt()
+    - start()
+
+Class cx0:
+  Methods (1):
+    - encode()
+  Static Methods (1):
+    - static escapeName()
+  Properties (5):
+    - contentLength
+    - headers
+    - name
+    - size
+    - value
+
+Class d1:
+  Properties (1):
+    - props
+
+Class d71:
+  Methods (41):
+    - A()
+    - A()
+    - A()
+    - A()
+    - A()
+    - A()
+    - _addMessage()
+    - _addMessageParam()
+    - _connected()
+    - _createMessage()
+    - _emit()
+    - _emitFinal()
+    - _fromReadableStream()
+    - _run()
+    - abort()
+    - aborted()
+    - catch()
+    - currentMessage()
+    - done()
+    - emitted()
+    - ended()
+    - errored()
+    - finalMessage()
+    - finalText()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - off()
+    - on()
+    - once()
+    - request_id()
+    - response()
+    - switch()
+    - switch()
+    - switch()
+    - toReadableStream()
+    - withResponse()
+  Static Methods (2):
+    - static createMessage()
+    - static fromReadableStream()
+  Properties (3):
+    - controller
+    - messages
+    - receivedMessages
+
+Class dH1:
+  Extends: rs1
+  Methods (3):
+    - matchEmit()
+    - stream()
+    - streamSync()
+  Properties (1):
+    - results
+
+Class dHB:
+  Methods (1):
+    - record()
+  Properties (1):
+    - _backingStorages
+
+Class dI:
+  Properties (1):
+    - _client
+
+Class db0:
+  Methods (14):
+    - _pickNewFallbackUrl()
+    - _tryFetchFallbackUrlsFromNetwork()
+    - _updateFallbackInfoWithNewUrl()
+    - catch()
+    - for()
+    - for()
+    - gb0()
+    - gb0()
+    - getActiveFallbackUrl()
+    - getFallbackFromProvided()
+    - if()
+    - setErrorBoundary()
+    - tryBumpExpiryTime()
+    - tryFetchUpdatedFallbackInfo()
+  Properties (4):
+    - _dnsQueryCooldowns
+    - _errorBoundary
+    - _fallbackInfo
+    - _networkOverrideFunc
+
+Class de2:
+
+Class di2:
+  Methods (8):
+    - decodeBase64StringUtf8()
+    - encodeBase64StringUtf8()
+    - randomBytesBase64()
+    - sha256DigestBase64()
+    - sha256DigestHex()
+    - sign()
+    - signWithHmacSha256()
+    - verify()
+
+Class dq:
+  Methods (15):
+    - __init()
+    - __init2()
+    - __init3()
+    - __init4()
+    - _executeHandlers()
+    - _reject()
+    - _resolve()
+    - _setResult()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - finally()
+    - if()
+    - then()
+  Properties (7):
+    - _executeHandlers
+    - _handlers
+    - _reject
+    - _resolve
+    - _setResult
+    - _state
+    - _value
+
+Class dv1:
+  Methods (24):
+    - allChildrenHaveReportedTF()
+    - calculateAndReportNewState()
+    - connectToAddressList()
+    - destroy()
+    - exitIdle()
+    - getTypeName()
+    - if()
+    - if()
+    - if()
+    - if()
+    - maybeEnterStickyTransientFailureMode()
+    - onSubchannelStateUpdate()
+    - pickSubchannel()
+    - pickedSubchannelHealthListener()
+    - removeCurrentPick()
+    - requestReresolution()
+    - resetBackoff()
+    - resetChildrenReportedTF()
+    - resetSubchannelList()
+    - startConnecting()
+    - startNextSubchannelConnecting()
+    - subchannelStateListener()
+    - updateAddressList()
+    - updateState()
+  Properties (13):
+    - channelControlHelper
+    - children
+    - connectionDelayTimeout
+    - currentPick
+    - currentState
+    - currentSubchannelIndex
+    - lastError
+    - latestAddressList
+    - latestOptions
+    - pickedSubchannelHealthListener
+    - reportHealthStatus
+    - stickyTransientFailureMode
+    - subchannelStateListener
+
+Class e31:
+  Methods (49):
+    - autolink()
+    - blockquote()
+    - br()
+    - code()
+    - codespan()
+    - def()
+    - del()
+    - emStrong()
+    - escape()
+    - fences()
+    - heading()
+    - hr()
+    - html()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - inlineText()
+    - lheading()
+    - link()
+    - list()
+    - paragraph()
+    - reflink()
+    - space()
+    - table()
+    - tag()
+    - text()
+    - url()
+    - while()
+    - while()
+    - while()
+  Properties (1):
+    - options
+
+Class eC0:
+  Extends: pe
+  Methods (1):
+    - record()
+
+Class eD0:
+  Methods (3):
+    - close()
+    - send()
+    - start()
+  Properties (3):
+    - isClosed
+    - sendMcpMessage
+    - serverName
+
+Class eI0:
+  Methods (10):
+    - at()
+    - capture()
+    - captureString()
+    - catch()
+    - clean()
+    - if()
+    - if()
+    - if()
+    - parseLine()
+    - prepareStackTrace()
+  Static Methods (1):
+    - static nodeInternals()
+  Properties (3):
+    - _cwd
+    - _internals
+    - _wrapCallSite
+
+Class eN:
+  Methods (8):
+    - arrayBuffer()
+    - lastModified()
+    - name()
+    - size()
+    - slice()
+    - stream()
+    - text()
+    - type()
+
+Class ecb:
+  Methods (5):
+    - decrypt()
+    - encrypt()
+    - pad()
+    - start()
+    - unpad()
+
+Class eiA:
+  Extends: NG
+  Properties (7):
+    - body
+    - code
+    - headers
+    - message
+    - name
+    - status
+    - statusCode
+
+Class eoA:
+  Extends: s34
+  Methods (5):
+    - if()
+    - onConnect()
+    - onError()
+    - onHeaders()
+    - onUpgrade()
+  Properties (5):
+    - abort
+    - callback
+    - context
+    - opaque
+    - responseHeaders
+
+Class fE0:
+  Methods (1):
+    - detect()
+
+Class fQ1:
+  Extends: h4
+  Methods (1):
+    - _parse()
+
+Class fS1:
+  Extends: F7
+  Methods (4):
+    - buildRequest()
+    - if()
+    - prepareRequest()
+    - validateHeaders()
+  Properties (9):
+    - awsAccessKey
+    - awsRegion
+    - awsSecretKey
+    - awsSessionToken
+    - beta
+    - completions
+    - messages
+    - providerChainResolver
+    - skipAuth
+
+Class fT0:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+
+Class fU:
+  Methods (8):
+    - for()
+    - for()
+    - if()
+    - if()
+    - parse()
+    - parseInline()
+    - switch()
+    - switch()
+  Static Methods (2):
+    - static parse()
+    - static parseInline()
+  Properties (3):
+    - options
+    - renderer
+    - textRenderer
+
+Class fdB:
+  Methods (6):
+    - for()
+    - for()
+    - if()
+    - if()
+    - if()
+    - searchIn()
+  Static Methods (1):
+    - static condition()
+  Properties (3):
+    - options
+    - pattern
+    - query
+
+Class g5B:
+  Methods (4):
+    - getDelegate()
+    - getDelegateLogger()
+    - getLogger()
+    - setDelegate()
+  Properties (1):
+    - _delegate
+
+Class g8A:
+  Methods (4):
+    - _add()
+    - add()
+    - if()
+    - test()
+  Properties (3):
+    - _added
+    - _ignoreCase
+    - _rules
+
+Class gFA:
+  Extends: EY9
+  Methods (15):
+    - _exploreDir()
+    - _formatEntry()
+    - _getEntryType()
+    - _includeAsFile()
+    - _onError()
+    - _read()
+    - _stat()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - for()
+    - if()
+    - if()
+    - while()
+  Properties (14):
+    - _directoryFilter
+    - _fileFilter
+    - _isDirent
+    - _maxDepth
+    - _rdOptions
+    - _root
+    - _stat
+    - _statsProp
+    - _wantsDir
+    - _wantsEverything
+    - _wantsFile
+    - parent
+    - parents
+    - reading
+
+Class gH1:
+  Extends: cF
+  Methods (3):
+    - getRoot()
+    - getRootString()
+    - newChild()
+
+Class gKB:
+  Methods (1):
+    - detect()
+
+Class gLB:
+  Methods (3):
+    - allocate()
+    - free()
+    - freeAll()
+  Properties (4):
+    - allocatedPerCall
+    - limitPerCall
+    - totalAllocated
+    - totalLimit
+
+Class gNB:
+  Methods (11):
+    - catch()
+    - destroy()
+    - if()
+    - if()
+    - lookup()
+    - resolveTxt()
+    - startNextResolutionTimer()
+    - startResolution()
+    - startResolutionWithBackoff()
+    - stopNextResolutionTimer()
+    - updateResolution()
+  Static Methods (1):
+    - static getDefaultAuthority()
+  Properties (20):
+    - alternativeResolver
+    - backoff
+    - continueResolving
+    - defaultResolutionError
+    - dnsHostname
+    - ipResult
+    - isNextResolutionTimerRunning
+    - isServiceConfigEnabled
+    - latestLookupResult
+    - latestServiceConfig
+    - latestServiceConfigError
+    - listener
+    - minTimeBetweenResolutionsMs
+    - nextResolutionTimer
+    - pendingLookupPromise
+    - pendingTxtPromise
+    - percentage
+    - port
+    - returnedIpResult
+    - target
+
+Class gR0:
+  Extends: Error
+  Properties (1):
+    - name
+
+Class gRB:
+  Properties (4):
+    - activeProcessor
+    - forceFlushTimeoutMillis
+    - logRecordLimits
+    - resource
+
+Class gU0:
+  Methods (1):
+    - emit()
+
+Class gUB:
+  Methods (4):
+    - retry()
+    - send()
+    - shutdown()
+    - while()
+  Properties (1):
+    - _transport
+
+Class ga2:
+  Methods (2):
+    - catch()
+    - getSubjectToken()
+  Properties (3):
+    - filePath
+    - formatType
+    - subjectTokenFieldName
+
+Class gcm:
+  Methods (10):
+    - afterFinish()
+    - decrypt()
+    - encrypt()
+    - generateHashTable()
+    - generateSubHashTable()
+    - ghash()
+    - multiply()
+    - pow()
+    - start()
+    - tableMultiply()
+
+Class gm:
+  Methods (1):
+    - string()
+
+Class gm0:
+  Methods (1):
+    - add()
+  Properties (2):
+    - _maxlen
+    - spans
+
+Class goA:
+  Extends: hoA
+  Methods (2):
+    - _destroy()
+    - _read()
+
+Class gq0:
+  Methods (29):
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - checkCancelled()
+    - decompressAndMaybePush()
+    - decompressMessage()
+    - for()
+    - getDeadline()
+    - getHost()
+    - getPeer()
+    - handleDataFrame()
+    - handleEndEvent()
+    - handleTimeoutHeader()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - maybePushNextMessage()
+    - maybeSendMetadata()
+    - notifyOnCancel()
+    - sendMessage()
+    - sendMetadata()
+    - sendStatus()
+    - serializeMessage()
+    - start()
+    - startRead()
+  Properties (20):
+    - callEventTracker
+    - cancelNotified
+    - cancelled
+    - deadline
+    - deadlineTimer
+    - decoder
+    - handler
+    - host
+    - incomingEncoding
+    - isReadPending
+    - listener
+    - maxReceiveMessageSize
+    - maxSendMessageSize
+    - metadata
+    - metadataSent
+    - readQueue
+    - receivedHalfClose
+    - stream
+    - streamEnded
+    - wantTrailers
+
+Class gx:
+  Extends: Error
+  Properties (4):
+    - name
+    - originalError
+    - retryContext
+    - stack
+
+Class gx1:
+  Extends: F11
+  Methods (3):
+    - _createSecureConnector()
+    - _equals()
+    - _isSecure()
+  Properties (2):
+    - secureContext
+    - verifyOptions
+
+Class h4:
+  Methods (33):
+    - I()
+    - Q()
+    - _getOrReturnCtx()
+    - _getType()
+    - _parseAsync()
+    - _parseSync()
+    - _processInputParams()
+    - _refinement()
+    - and()
+    - array()
+    - brand()
+    - catch()
+    - catch()
+    - default()
+    - describe()
+    - description()
+    - isNullable()
+    - isOptional()
+    - nullable()
+    - nullish()
+    - optional()
+    - or()
+    - parse()
+    - parseAsync()
+    - pipe()
+    - promise()
+    - readonly()
+    - refine()
+    - refinement()
+    - safeParse()
+    - safeParseAsync()
+    - superRefine()
+    - transform()
+  Properties (25):
+    - _def
+    - and
+    - array
+    - brand
+    - catch
+    - default
+    - describe
+    - isNullable
+    - isOptional
+    - nullable
+    - nullish
+    - optional
+    - or
+    - parse
+    - parseAsync
+    - pipe
+    - promise
+    - readonly
+    - refine
+    - refinement
+    - safeParse
+    - safeParseAsync
+    - spa
+    - superRefine
+    - transform
+
+Class h8A:
+  Methods (3):
+    - _make()
+    - checkRegex()
+    - regex()
+  Properties (3):
+    - mark
+    - negative
+    - pattern
+
+Class hG1:
+  Extends: F11
+  Methods (12):
+    - _createSecureConnector()
+    - _equals()
+    - _isSecure()
+    - catch()
+    - getLatestSecureContext()
+    - getSecureContext()
+    - handleCaCertificateUpdate()
+    - handleIdentityCertitificateUpdate()
+    - hasReceivedUpdates()
+    - maybeUpdateWatchers()
+    - ref()
+    - unref()
+  Properties (9):
+    - caCertificateProvider
+    - caCertificateUpdateListener
+    - identityCertificateProvider
+    - identityCertificateUpdateListener
+    - latestCaUpdate
+    - latestIdentityUpdate
+    - refcount
+    - secureContextWatchers
+    - verifyOptions
+
+Class hH1:
+  Extends: cF
+  Methods (4):
+    - getRoot()
+    - getRootString()
+    - newChild()
+    - sameRoot()
+
+Class hLB:
+  Methods (3):
+    - addCallFailed()
+    - addCallSucceeded()
+    - canRetryCall()
+  Properties (3):
+    - maxTokens
+    - tokenRatio
+    - tokens
+
+Class hQ1:
+  Extends: h4
+  Methods (1):
+    - _parse()
+  Static Methods (1):
+    - static create()
+
+Class hXB:
+  Methods (5):
+    - catch()
+    - catch()
+    - extract()
+    - fields()
+    - inject()
+  Properties (2):
+    - _fields
+    - _propagators
+
+Class hsA:
+  Methods (26):
+    - catch()
+    - catch()
+    - catch()
+    - destroy()
+    - execute()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - onBody()
+    - onHeaderField()
+    - onHeaderValue()
+    - onHeadersComplete()
+    - onMessageBegin()
+    - onMessageComplete()
+    - onStatus()
+    - onUpgrade()
+    - readMore()
+    - resume()
+    - setTimeout()
+    - trackHeader()
+    - while()
+  Properties (21):
+    - bytesRead
+    - client
+    - connection
+    - contentLength
+    - headers
+    - headersMaxSize
+    - headersSize
+    - keepAlive
+    - llhttp
+    - maxResponseSize
+    - paused
+    - ptr
+    - resume
+    - shouldKeepAlive
+    - socket
+    - statusCode
+    - statusText
+    - timeout
+    - timeoutType
+    - timeoutValue
+    - upgrade
+
+Class i4B:
+  Methods (11):
+    - addEvent()
+    - addLink()
+    - addLinks()
+    - end()
+    - isRecording()
+    - recordException()
+    - setAttribute()
+    - setAttributes()
+    - setStatus()
+    - spanContext()
+    - updateName()
+  Properties (1):
+    - _spanContext
+
+Class iJA:
+  Methods (5):
+    - catch()
+    - clear()
+    - getStats()
+    - invalidate()
+    - readFile()
+
+Class iMB:
+  Methods (7):
+    - destroy()
+    - exitIdle()
+    - getConnectivityState()
+    - getEndpoint()
+    - getPicker()
+    - startConnecting()
+    - updateEndpoint()
+  Properties (5):
+    - endpoint
+    - latestPicker
+    - latestState
+    - options
+    - pickFirstBalancer
+
+Class iNB:
+  Methods (2):
+    - switch()
+    - write()
+  Properties (8):
+    - maxReadMessageLength
+    - readCompressFlag
+    - readMessageRemaining
+    - readMessageSize
+    - readPartialMessage
+    - readPartialSize
+    - readSizeRemaining
+    - readState
+
+Class iW:
+  Methods (6):
+    - length()
+    - toHash()
+    - toLong()
+    - toNumber()
+    - zzDecode()
+    - zzEncode()
+
+Class i_1:
+  Methods (30):
+    - _changeScale()
+    - _diffBuckets()
+    - _downscale()
+    - _grow()
+    - _highLowAtScale()
+    - _incrementIndexBy()
+    - _mergeBuckets()
+    - _minScale()
+    - _updateBuckets()
+    - clone()
+    - count()
+    - diff()
+    - for()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - max()
+    - merge()
+    - min()
+    - negative()
+    - positive()
+    - record()
+    - scale()
+    - setStartTime()
+    - sum()
+    - toPointValue()
+    - updateByIncrement()
+    - zeroCount()
+  Properties (11):
+    - _count
+    - _mapping
+    - _max
+    - _maxSize
+    - _min
+    - _negative
+    - _positive
+    - _recordMinMax
+    - _sum
+    - _zeroCount
+    - startTime
+
+Class ij1:
+  Methods (9):
+    - br()
+    - codespan()
+    - del()
+    - em()
+    - html()
+    - image()
+    - link()
+    - strong()
+    - text()
+
+Class im:
+  Methods (2):
+    - resolve()
+    - toJSON()
+
+Class inA:
+  Extends: OQ0
+  Methods (3):
+    - close()
+    - destroy()
+    - dispatch()
+
+Class iv0:
+  Methods (1):
+    - getUrl()
+  Properties (5):
+    - customUrl
+    - defaultUrl
+    - endpoint
+    - endpointDnsKey
+    - fallbackUrls
+
+Class j61:
+  Extends: Event
+  Methods (3):
+    - lengthComputable()
+    - loaded()
+    - total()
+
+Class jD0:
+  Extends: TransformStream
+  Methods (3):
+    - onError()
+    - super()
+    - transform()
+
+Class jM:
+  Methods (2):
+    - bytes()
+    - string()
+
+Class jU:
+  Methods (14):
+    - append()
+    - delete()
+    - for()
+    - for()
+    - forEach()
+    - get()
+    - has()
+    - if()
+    - if()
+    - keys()
+    - raw()
+    - set()
+    - values()
+    - while()
+
+Class jVB:
+  Methods (7):
+    - export()
+    - forceFlush()
+    - getMetrics()
+    - if()
+    - reset()
+    - selectAggregationTemporality()
+    - shutdown()
+  Properties (3):
+    - _aggregationTemporality
+    - _metrics
+    - _shutdown
+
+Class ja2:
+  Methods (2):
+    - applyClientAuthenticationOptions()
+    - injectAuthenticatedHeaders()
+  Properties (2):
+    - clientAuthentication
+    - crypto
+
+Class jf:
+  Methods (3):
+    - __init()
+    - if()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (4):
+    - _breadcrumbs
+    - _tracing
+    - id
+    - name
+
+Class ji:
+  Extends: h4
+  Methods (2):
+    - _parse()
+    - removeDefault()
+
+Class ji2:
+  Extends: M31
+  Methods (2):
+    - makeLogger()
+    - setFilters()
+  Properties (1):
+    - debugPkg
+
+Class jrA:
+  Extends: z74
+  Methods (1):
+    - if()
+
+Class jt:
+  Methods (10):
+    - arrayBuffer()
+    - for()
+    - function()
+    - if()
+    - size()
+    - slice()
+    - stream()
+    - text()
+    - toString()
+    - type()
+
+Class jt2:
+  Extends: LM6
+  Properties (1):
+    - posTracker
+
+Class jw:
+  Methods (19):
+    - areDiagnosticArraysEqual()
+    - areDiagnosticsEqual()
+    - beforeFileEdited()
+    - catch()
+    - catch()
+    - catch()
+    - ensureFileOpened()
+    - for()
+    - getNewDiagnostics()
+    - handleQueryStart()
+    - if()
+    - if()
+    - if()
+    - initialize()
+    - isLinterDiagnostic()
+    - normalizeFileUri()
+    - parseDiagnosticResult()
+    - reset()
+    - shutdown()
+  Static Methods (3):
+    - static formatDiagnosticsSummary()
+    - static getInstance()
+    - static getSeveritySymbol()
+  Properties (2):
+    - initialized
+    - mcpClient
+
+Class jy:
+  Extends: h4
+  Methods (8):
+    - Enum()
+    - Values()
+    - _parse()
+    - enum()
+    - exclude()
+    - extract()
+    - if()
+    - options()
+  Properties (1):
+    - _cache
+
+Class jzB:
+  Methods (3):
+    - getNameFilter()
+    - getType()
+    - getUnitFilter()
+  Properties (3):
+    - _nameFilter
+    - _type
+    - _unitFilter
+
+Class k7:
+  Methods (30):
+    - body()
+    - bodyUsed()
+    - cache()
+    - catch()
+    - catch()
+    - clone()
+    - credentials()
+    - destination()
+    - duplex()
+    - headers()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - integrity()
+    - isHistoryNavigation()
+    - isReloadNavigation()
+    - keepalive()
+    - method()
+    - mode()
+    - redirect()
+    - referrer()
+    - referrerPolicy()
+    - signal()
+    - url()
+
+Class k8:
+  Extends: EventTarget
+  Methods (22):
+    - J()
+    - binaryType()
+    - binaryType()
+    - bufferedAmount()
+    - catch()
+    - close()
+    - extensions()
+    - if()
+    - if()
+    - if()
+    - onclose()
+    - onclose()
+    - onerror()
+    - onerror()
+    - onmessage()
+    - onmessage()
+    - onopen()
+    - onopen()
+    - protocol()
+    - readyState()
+    - send()
+    - url()
+
+Class kRB:
+  Methods (3):
+    - forceFlush()
+    - onEmit()
+    - shutdown()
+  Properties (2):
+    - forceFlushTimeoutMillis
+    - processors
+
+Class kU0:
+  Methods (6):
+    - _getGlobalPropagator()
+    - disable()
+    - extract()
+    - fields()
+    - inject()
+    - setGlobalPropagator()
+  Static Methods (1):
+    - static getInstance()
+  Properties (6):
+    - _instance
+    - createBaggage
+    - deleteBaggage
+    - getActiveBaggage
+    - getBaggage
+    - setBaggage
+
+Class kdB:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+
+Class kfB:
+  Methods (1):
+    - build()
+
+Class ki:
+  Extends: h4
+  Methods (3):
+    - Q()
+    - _parse()
+    - unwrap()
+
+Class ko:
+  Extends: S_
+  Methods (3):
+    - code()
+    - reason()
+    - wasClean()
+  Properties (3):
+    - code
+    - reason
+    - wasClean
+
+Class kq0:
+  Extends: S11
+  Methods (2):
+    - _equals()
+    - _getSettings()
+
+Class ktA:
+  Extends: jZ4
+  Methods (1):
+    - intercept()
+  Properties (2):
+    - close
+    - dispatch
+
+Class kw1:
+  Methods (14):
+    - append()
+    - clear()
+    - contains()
+    - delete()
+    - entries()
+    - entriesList()
+    - for()
+    - get()
+    - if()
+    - if()
+    - if()
+    - rawValues()
+    - set()
+    - toSortedArray()
+  Properties (1):
+    - cookies
+
+Class l02:
+  Extends: zJ4
+  Methods (17):
+    - _transform()
+    - clearEvent()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - parseLine()
+    - processEvent()
+    - switch()
+    - switch()
+    - while()
+  Properties (8):
+    - buffer
+    - checkBOM
+    - crlfCheck
+    - event
+    - eventEndCheck
+    - pos
+    - push
+    - state
+
+Class lD0:
+  Methods (8):
+    - catch()
+    - catch()
+    - close()
+    - onCloseHandler()
+    - onErrorHandler()
+    - onMessageHandler()
+    - send()
+    - start()
+  Properties (3):
+    - opened
+    - started
+    - ws
+
+Class lE0:
+  Methods (10):
+    - _findOrUpdateCompatibleStorage()
+    - _registerStorage()
+    - findOrUpdateCompatibleCollectorStorage()
+    - findOrUpdateCompatibleStorage()
+    - for()
+    - getStorages()
+    - if()
+    - if()
+    - register()
+    - registerForCollector()
+  Static Methods (1):
+    - static create()
+
+Class lLB:
+  Methods (18):
+    - addConnectivityStateListener()
+    - addHealthStateWatcher()
+    - getAddress()
+    - getCallCredentials()
+    - getChannelzRef()
+    - getConnectivityState()
+    - getRealSubchannel()
+    - if()
+    - isHealthy()
+    - realSubchannelEquals()
+    - ref()
+    - removeConnectivityStateListener()
+    - removeHealthStateWatcher()
+    - setHealthy()
+    - startConnecting()
+    - throttleKeepalive()
+    - unref()
+    - updateHealthListeners()
+  Properties (3):
+    - child
+    - healthListeners
+    - healthy
+
+Class lV0:
+  Methods (7):
+    - catch()
+    - fromJSON()
+    - fromStream()
+    - fromStreamAsync()
+    - getCachedKey()
+    - getRequestHeaders()
+    - if()
+  Static Methods (1):
+    - static getExpirationTime()
+  Properties (6):
+    - cache
+    - eagerRefreshThresholdMillis
+    - email
+    - key
+    - keyId
+    - projectId
+
+Class le:
+  Methods (6):
+    - clear()
+    - getAllEntries()
+    - getEntry()
+    - removeEntries()
+    - removeEntry()
+    - setEntry()
+  Properties (1):
+    - _entries
+
+Class lrA:
+  Extends: b74
+
+Class lzB:
+  Methods (6):
+    - for()
+    - forceFlush()
+    - getMeter()
+    - if()
+    - if()
+    - shutdown()
+  Properties (2):
+    - _sharedState
+    - _shutdown
+
+Class m4:
+  Static Methods (2):
+    - static isEnabled()
+    - static refresh()
+
+Class m8A:
+  Methods (10):
+    - _initCache()
+    - _t()
+    - _test()
+    - add()
+    - addPattern()
+    - checkIgnore()
+    - createFilter()
+    - filter()
+    - ignores()
+    - test()
+  Properties (4):
+    - _ignoreCache
+    - _rules
+    - _strictPathCheck
+    - _testCache
+
+Class mH1:
+  Extends: rs1
+  Methods (3):
+    - matchEmit()
+    - walk()
+    - walkSync()
+
+Class mI:
+  Extends: F4
+
+Class mZ:
+  Extends: h4
+  Methods (21):
+    - _getCached()
+    - _parse()
+    - catchall()
+    - deepPartial()
+    - extend()
+    - for()
+    - for()
+    - for()
+    - if()
+    - if()
+    - keyof()
+    - merge()
+    - omit()
+    - partial()
+    - passthrough()
+    - pick()
+    - required()
+    - setKey()
+    - shape()
+    - strict()
+    - strip()
+  Properties (3):
+    - _cached
+    - augment
+    - nonstrict
+
+Class mZ1:
+  Extends: Error
+  Properties (1):
+    - name
+
+Class moA:
+  Extends: m34
+  Methods (9):
+    - catch()
+    - if()
+    - if()
+    - if()
+    - onComplete()
+    - onConnect()
+    - onData()
+    - onError()
+    - onHeaders()
+  Properties (10):
+    - abort
+    - body
+    - context
+    - handler
+    - onInfo
+    - opaque
+    - req
+    - res
+    - responseHeaders
+    - ret
+
+Class mt:
+  Methods (1):
+    - verify()
+
+Class nC0:
+  Methods (7):
+    - A()
+    - Q()
+    - createComponentLogger()
+    - disable()
+    - function()
+    - if()
+    - if()
+  Static Methods (1):
+    - static instance()
+  Properties (1):
+    - _instance
+
+Class nHB:
+  Methods (2):
+    - if()
+    - observe()
+  Properties (2):
+    - _instrumentName
+    - _valueType
+
+Class nY:
+  Extends: Error
+  Properties (2):
+    - formattedMessage
+    - name
+
+Class n_:
+  Extends: dI
+  Methods (1):
+    - create()
+
+Class nk1:
+  Extends: Error
+  Properties (1):
+    - name
+
+Class noA:
+  Extends: i34
+  Methods (5):
+    - if()
+    - onConnect()
+    - onError()
+    - onHeaders()
+    - onUpgrade()
+  Properties (5):
+    - abort
+    - callback
+    - context
+    - opaque
+    - responseHeaders
+
+Class np2:
+  Extends: Set
+
+Class o8A:
+  Extends: Jr1
+  Methods (5):
+    - addKeyword()
+    - addSublanguage()
+    - addText()
+    - finalize()
+    - toHTML()
+  Properties (1):
+    - options
+
+Class o9:
+  Extends: Ee4
+  Methods (29):
+    - binaryType()
+    - binaryType()
+    - bufferedAmount()
+    - close()
+    - emitClose()
+    - extensions()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - isPaused()
+    - onclose()
+    - onerror()
+    - onmessage()
+    - onopen()
+    - pause()
+    - ping()
+    - pong()
+    - protocol()
+    - readyState()
+    - resume()
+    - send()
+    - setSocket()
+    - terminate()
+    - url()
+  Properties (23):
+    - CLOSED
+    - CLOSING
+    - CONNECTING
+    - OPEN
+    - _autoPong
+    - _binaryType
+    - _bufferedAmount
+    - _closeCode
+    - _closeFrameReceived
+    - _closeFrameSent
+    - _closeMessage
+    - _closeTimer
+    - _errorEmitted
+    - _extensions
+    - _isServer
+    - _paused
+    - _protocol
+    - _readyState
+    - _receiver
+    - _redirects
+    - _sender
+    - _socket
+    - readyState
+
+Class oC0:
+  Extends: pe
+  Methods (1):
+    - add()
+
+Class oLB:
+  Methods (33):
+    - addWrappedSubchannel()
+    - callRefTimerRef()
+    - callRefTimerUnref()
+    - close()
+    - createCall()
+    - createLoadBalancingCall()
+    - createResolvingCall()
+    - createRetryingCall()
+    - doPick()
+    - enterIdle()
+    - getChannelzRef()
+    - getConfig()
+    - getConnectivityState()
+    - getOptions()
+    - getTarget()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - maybeStartIdleTimer()
+    - onCallEnd()
+    - onCallStart()
+    - queueCallForConfig()
+    - queueCallForPick()
+    - removeConnectivityStateWatcher()
+    - removeWrappedSubchannel()
+    - startIdleTimeout()
+    - throttleKeepalive()
+    - trace()
+    - updateState()
+    - watchConnectivityState()
+  Properties (26):
+    - callCount
+    - callRefTimer
+    - channelzEnabled
+    - channelzInfoTracker
+    - channelzRef
+    - configSelectionQueue
+    - configSelector
+    - connectivityState
+    - connectivityStateWatchers
+    - credentials
+    - currentPicker
+    - currentResolutionError
+    - defaultAuthority
+    - filterStackFactory
+    - idleTimeoutMs
+    - idleTimer
+    - keepaliveTime
+    - lastActivityTimestamp
+    - options
+    - pickQueue
+    - randomChannelId
+    - resolvingLoadBalancer
+    - retryBufferTracker
+    - subchannelPool
+    - target
+    - wrappedSubchannels
+
+Class oP:
+  Methods (1):
+    - toDescriptor()
+
+Class oU0:
+  Methods (9):
+    - clone()
+    - countAt()
+    - decrement()
+    - emptyBucket()
+    - for()
+    - growTo()
+    - increment()
+    - length()
+    - reverse()
+  Properties (1):
+    - _counts
+
+Class oVB:
+  Methods (8):
+    - _isBaggageOctetString()
+    - _isValid()
+    - _isValidAndNotEmpty()
+    - _parseResourceAttributes()
+    - catch()
+    - detect()
+    - for()
+    - for()
+
+Class oa2:
+  Methods (1):
+    - getRequestOptions()
+  Properties (3):
+    - crypto
+    - getCredentials
+    - region
+
+Class ofb:
+  Methods (2):
+    - encrypt()
+    - start()
+
+Class oiA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class okB:
+  Methods (1):
+    - parseFromString()
+
+Class op1:
+
+Class osA:
+  Methods (9):
+    - call()
+    - on()
+    - onBodySent()
+    - onComplete()
+    - onConnect()
+    - onData()
+    - onError()
+    - onHeaders()
+    - onUpgrade()
+  Properties (8):
+    - abort
+    - dispatch
+    - handler
+    - history
+    - location
+    - maxRedirections
+    - opts
+    - redirectionLimitReached
+
+Class ozB:
+  Methods (3):
+    - export()
+    - forceFlush()
+    - shutdown()
+  Properties (1):
+    - _delegate
+
+Class p8B:
+  Methods (4):
+    - createAccumulation()
+    - diff()
+    - merge()
+    - toMetricData()
+  Properties (2):
+    - _maxSize
+    - _recordMinMax
+
+Class p90:
+  Extends: GZ4
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class pE0:
+  Methods (1):
+    - match()
+  Static Methods (2):
+    - static escapePattern()
+    - static hasWildcard()
+  Properties (2):
+    - _matchAll
+    - _regexp
+
+Class pRB:
+  Methods (5):
+    - _shutdown()
+    - addLogRecordProcessor()
+    - forceFlush()
+    - getLogger()
+    - shutdown()
+  Properties (2):
+    - _sharedState
+    - _shutdownOnce
+
+Class pU0:
+  Methods (4):
+    - disable()
+    - getLogger()
+    - getLoggerProvider()
+    - setGlobalLoggerProvider()
+  Static Methods (1):
+    - static getInstance()
+  Properties (2):
+    - _instance
+    - _proxyLoggerProvider
+
+Class p_:
+  Methods (2):
+    - decode()
+    - flush()
+
+Class pe:
+
+Class px1:
+  Methods (9):
+    - getEndTime()
+    - isRunning()
+    - ref()
+    - reset()
+    - runOnce()
+    - runTimer()
+    - stop()
+    - trace()
+    - unref()
+  Static Methods (1):
+    - static getNextId()
+  Properties (12):
+    - callback
+    - endTime
+    - hasRef
+    - id
+    - initialDelay
+    - jitter
+    - maxDelay
+    - multiplier
+    - nextDelay
+    - running
+    - startTime
+    - timerId
+
+Class q:
+  Properties (1):
+    - props
+
+Class q71:
+  Extends: F4
+
+Class q8A:
+  Methods (2):
+    - add()
+    - entries()
+
+Class qE0:
+  Methods (3):
+    - _resolve()
+    - createAggregator()
+    - switch()
+
+Class qG1:
+  Methods (3):
+    - record()
+    - setStartTime()
+    - toPointValue()
+  Properties (3):
+    - _current
+    - sampleTime
+    - startTime
+
+Class qLB:
+  Methods (1):
+    - createFilter()
+  Properties (2):
+    - options
+    - sharedFilterConfig
+
+Class qM0:
+  Methods (16):
+    - close()
+    - getPort()
+    - handleError()
+    - handleErrorRedirect()
+    - handleRedirect()
+    - handleSuccessRedirect()
+    - hasPendingResponse()
+    - if()
+    - if()
+    - if()
+    - reject()
+    - resolve()
+    - start()
+    - startLocalListener()
+    - validateAndRespond()
+    - waitForAuthorization()
+  Properties (6):
+    - expectedState
+    - localServer
+    - pendingResponse
+    - port
+    - promiseRejecter
+    - promiseResolver
+
+Class qMB:
+  Methods (5):
+    - build()
+    - withOnCancel()
+    - withOnReceiveHalfClose()
+    - withOnReceiveMessage()
+    - withOnReceiveMetadata()
+  Properties (4):
+    - cancel
+    - halfClose
+    - message
+    - metadata
+
+Class qNB:
+  Extends: Zq0
+  Methods (3):
+    - addCallFailed()
+    - addCallStarted()
+    - addCallSucceeded()
+
+Class qQ0:
+
+Class qR2:
+  Methods (21):
+    - _compress()
+    - _decompress()
+    - accept()
+    - acceptAsClient()
+    - acceptAsServer()
+    - cleanup()
+    - compress()
+    - decompress()
+    - extensionName()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - normalizeParams()
+    - offer()
+  Properties (7):
+    - _deflate
+    - _inflate
+    - _isServer
+    - _maxPayload
+    - _options
+    - _threshold
+    - params
+
+Class qV:
+  Extends: Error
+  Properties (3):
+    - code
+    - data
+    - name
+
+Class qV1:
+  Methods (11):
+    - G()
+    - Proxy()
+    - Y()
+    - call()
+    - call()
+    - catch()
+    - fill()
+    - function()
+    - if()
+    - loadDependency()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (3):
+    - _module
+    - id
+    - name
+
+Class qVB:
+  Methods (11):
+    - collect()
+    - forceFlush()
+    - if()
+    - if()
+    - if()
+    - onInitialized()
+    - selectAggregation()
+    - selectAggregationTemporality()
+    - selectCardinalityLimit()
+    - setMetricProducer()
+    - shutdown()
+  Properties (6):
+    - _aggregationSelector
+    - _aggregationTemporalitySelector
+    - _cardinalitySelector
+    - _metricProducers
+    - _sdkMetricProducer
+    - _shutdown
+
+Class qd0:
+  Methods (7):
+    - _captureMetrics()
+    - _flush()
+    - close()
+    - flush()
+    - if()
+    - if()
+    - if()
+  Properties (6):
+    - _buckets
+    - _bucketsTotalWeight
+    - _client
+    - _flushShift
+    - _forceFlush
+    - _interval
+
+Class qe:
+  Extends: EventTarget
+  Methods (13):
+    - addEventListener()
+    - close()
+    - if()
+    - onerror()
+    - onerror()
+    - onmessage()
+    - onmessage()
+    - onopen()
+    - onopen()
+    - readyState()
+    - removeEventListener()
+    - url()
+    - withCredentials()
+  Properties (3):
+    - CLOSED
+    - CONNECTING
+    - OPEN
+
+Class qi:
+  Extends: h4
+  Methods (12):
+    - Q()
+    - Z()
+    - _parse()
+    - args()
+    - dX()
+    - dX()
+    - if()
+    - implement()
+    - parameters()
+    - returnType()
+    - returns()
+    - strictImplement()
+  Static Methods (1):
+    - static create()
+  Properties (1):
+    - validate
+
+Class qk1:
+  Extends: aI
+
+Class qx1:
+  Methods (3):
+    - emit()
+    - off()
+    - on()
+
+Class r81:
+  Extends: S_
+  Methods (2):
+    - error()
+    - message()
+  Properties (2):
+    - error
+    - message
+
+Class r8A:
+  Methods (5):
+    - addText()
+    - closeNode()
+    - openNode()
+    - span()
+    - value()
+  Properties (2):
+    - buffer
+    - classPrefix
+
+Class rC0:
+  Methods (9):
+    - addBatchObservableCallback()
+    - createCounter()
+    - createGauge()
+    - createHistogram()
+    - createObservableCounter()
+    - createObservableGauge()
+    - createObservableUpDownCounter()
+    - createUpDownCounter()
+    - removeBatchObservableCallback()
+
+Class rEB:
+  Methods (4):
+    - connect()
+    - destroy()
+    - getCallCredentials()
+    - waitForReady()
+  Properties (2):
+    - callCredentials
+    - connectionOptions
+
+Class rLB:
+  Methods (1):
+    - getChannelzInfoCallback()
+  Properties (5):
+    - callTracker
+    - childrenTracker
+    - state
+    - target
+    - trace
+
+Class rRB:
+  Methods (4):
+    - _exportInfo()
+    - _sendLogRecords()
+    - export()
+    - shutdown()
+
+Class rU0:
+  Methods (13):
+    - _relocateBucket()
+    - _rotate()
+    - at()
+    - clone()
+    - counts()
+    - decrementBucket()
+    - downscale()
+    - for()
+    - if()
+    - incrementBucket()
+    - length()
+    - offset()
+    - trim()
+  Properties (4):
+    - backing
+    - indexBase
+    - indexEnd
+    - indexStart
+
+Class rX:
+  Methods (12):
+    - body()
+    - bodyUsed()
+    - catch()
+    - clone()
+    - headers()
+    - if()
+    - ok()
+    - redirected()
+    - status()
+    - statusText()
+    - type()
+    - url()
+  Static Methods (3):
+    - static error()
+    - static json()
+    - static redirect()
+
+Class re:
+  Static Methods (1):
+    - static combine()
+  Properties (2):
+    - high
+    - low
+
+Class rf:
+  Extends: ds1
+  Methods (54):
+    - B()
+    - B()
+    - I()
+    - J()
+    - Q()
+    - W()
+    - X()
+    - aborted()
+    - aborted()
+    - addListener()
+    - bufferLength()
+    - collect()
+    - concat()
+    - destroy()
+    - destroyed()
+    - emit()
+    - emittedEnd()
+    - encoding()
+    - encoding()
+    - end()
+    - flowing()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - isStream()
+    - objectMode()
+    - objectMode()
+    - off()
+    - on()
+    - pause()
+    - paused()
+    - pipe()
+    - promise()
+    - read()
+    - removeAllListeners()
+    - removeListener()
+    - resume()
+    - setEncoding()
+    - unpipe()
+    - write()
+  Properties (2):
+    - readable
+    - writable
+
+Class riA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class ro2:
+  Methods (10):
+    - _addGap()
+    - _checkForProblematicCharacters()
+    - _err()
+    - _processSurrogate()
+    - advance()
+    - dropParsedChunk()
+    - if()
+    - insertHtmlAtCurrentPos()
+    - retreat()
+    - write()
+  Properties (9):
+    - bufferWaterline
+    - endOfChunkHit
+    - gapStack
+    - html
+    - lastCharPos
+    - lastChunkWritten
+    - lastGapPos
+    - pos
+    - skipNextNewLine
+
+Class rp0:
+  Methods (15):
+    - A()
+    - B()
+    - _createRouteTransaction()
+    - _registerInpInteractionListener()
+    - _registerInteractionListener()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - setupOnce()
+  Properties (7):
+    - _collectWebVitals
+    - _getCurrentHub
+    - _hasSetTracePropagationTargets
+    - _interactionIdToRouteNameMapping
+    - _latestRoute
+    - name
+    - options
+
+Class rs1:
+  Methods (28):
+    - G()
+    - Y()
+    - Y()
+    - Y()
+    - Y()
+    - Z()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - match()
+    - matchCheck()
+    - matchCheckSync()
+    - matchCheckTest()
+    - matchFinish()
+    - matchSync()
+    - onResume()
+    - pause()
+    - resume()
+    - walkCB()
+    - walkCB2()
+    - walkCB2Sync()
+    - walkCB3()
+    - walkCB3Sync()
+    - walkCBSync()
+  Properties (7):
+    - includeChildMatches
+    - maxDepth
+    - opts
+    - path
+    - patterns
+    - paused
+    - signal
+
+Class s21:
+  Methods (34):
+    - _callExtensionMethod()
+    - _sendSessionUpdate()
+    - addBreadcrumb()
+    - bindClient()
+    - captureEvent()
+    - captureException()
+    - captureMessage()
+    - captureSession()
+    - catch()
+    - catch()
+    - configureScope()
+    - endSession()
+    - getClient()
+    - getIntegration()
+    - getIsolationScope()
+    - getScope()
+    - getStack()
+    - getStackTop()
+    - isOlderThan()
+    - lastEventId()
+    - popScope()
+    - pushScope()
+    - run()
+    - setContext()
+    - setExtra()
+    - setExtras()
+    - setTag()
+    - setTags()
+    - setUser()
+    - shouldSendDefaultPii()
+    - startSession()
+    - startTransaction()
+    - traceHeaders()
+    - withScope()
+  Properties (4):
+    - _isolationScope
+    - _lastEventId
+    - _stack
+    - _version
+
+Class s71:
+  Extends: dI
+  Methods (6):
+    - cancel()
+    - create()
+    - delete()
+    - list()
+    - results()
+    - retrieve()
+
+Class s9B:
+  Methods (5):
+    - debug()
+    - error()
+    - info()
+    - verbose()
+    - warn()
+  Properties (1):
+    - _namespace
+
+Class sBB:
+  Methods (1):
+    - process()
+
+Class sHA:
+  Methods (5):
+    - flush()
+    - for()
+    - if()
+    - push()
+    - reset()
+  Properties (3):
+    - allocByteArray
+    - byteArrays
+    - byteLength
+
+Class sKB:
+  Methods (4):
+    - _matchInstrument()
+    - _matchMeter()
+    - addView()
+    - findViews()
+
+Class sL2:
+  Methods (4):
+    - delete()
+    - get()
+    - if()
+    - set()
+  Properties (2):
+    - map
+    - max
+
+Class sLB:
+  Methods (1):
+    - pick()
+
+Class sMB:
+  Methods (9):
+    - addCaCertificateListener()
+    - addIdentityCertificateListener()
+    - if()
+    - if()
+    - maybeStartWatchingFiles()
+    - maybeStopWatchingFiles()
+    - removeCaCertificateListener()
+    - removeIdentityCertificateListener()
+    - updateCertificates()
+  Properties (8):
+    - caListeners
+    - config
+    - fileResultPromise
+    - identityListeners
+    - lastUpdateTime
+    - latestCaUpdate
+    - latestIdentityUpdate
+    - refreshTimer
+
+Class sNB:
+  Methods (31):
+    - Q()
+    - cancelWithStatus()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - destroyHttp2Stream()
+    - endCall()
+    - getCallNumber()
+    - getDeadlineInfo()
+    - getPeer()
+    - getStatus()
+    - halfClose()
+    - handleTrailers()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - maybeOutputStatus()
+    - onDisconnect()
+    - outputStatus()
+    - push()
+    - sendMessageWithContext()
+    - startRead()
+    - switch()
+    - trace()
+    - tryPush()
+  Properties (17):
+    - callEventTracker
+    - callId
+    - canPush
+    - connectionDropped
+    - decoder
+    - finalStatus
+    - http2Stream
+    - httpStatusCode
+    - internalError
+    - isPushPending
+    - isReadFilterPending
+    - listener
+    - readsClosed
+    - serverEndedCall
+    - statusOutput
+    - transport
+    - unpushedReadMessages
+
+Class sX:
+  Methods (7):
+    - append()
+    - delete()
+    - for()
+    - get()
+    - getSetCookie()
+    - has()
+    - set()
+  Static Methods (4):
+    - static getHeadersGuard()
+    - static getHeadersList()
+    - static setHeadersGuard()
+    - static setHeadersList()
+
+Class siA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class srA:
+  Extends: s74
+  Methods (4):
+    - A()
+    - catch()
+    - dispatch()
+    - if()
+
+Class ss1:
+  Methods (3):
+    - copy()
+    - hasWalked()
+    - storeWalked()
+  Properties (1):
+    - store
+
+Class sy:
+  Methods (7):
+    - build()
+    - buildAttrPairStr()
+    - buildObjectNode()
+    - buildTextValNode()
+    - closeTag()
+    - j2x()
+    - replaceEntitiesValue()
+
+Class t31:
+  Methods (5):
+    - postprocess()
+    - preprocess()
+    - processAllTokens()
+    - provideLexer()
+    - provideParser()
+  Properties (1):
+    - options
+
+Class t6B:
+  Methods (3):
+    - extract()
+    - fields()
+    - inject()
+
+Class tC0:
+  Extends: pe
+  Methods (1):
+    - add()
+
+Class tFB:
+  Methods (4):
+    - createAccumulation()
+    - diff()
+    - merge()
+    - toMetricData()
+  Properties (1):
+    - monotonic
+
+Class tXB:
+  Methods (4):
+    - extract()
+    - fields()
+    - if()
+    - inject()
+
+Class tiA:
+  Extends: NG
+  Properties (3):
+    - code
+    - message
+    - name
+
+Class tm1:
+  Methods (12):
+    - A()
+    - B()
+    - I()
+    - Promise()
+    - if()
+    - subscribe()
+    - then()
+    - throwIfRequested()
+    - tm1()
+    - toAbortSignal()
+    - unsubscribe()
+    - unsubscribe()
+  Static Methods (1):
+    - static source()
+  Properties (2):
+    - _listeners
+    - promise
+
+Class to:
+  Methods (2):
+    - decoder()
+    - if()
+  Static Methods (1):
+    - static fromResponse()
+  Properties (2):
+    - controller
+    - iterator
+
+Class tq0:
+  Methods (4):
+    - destroy()
+    - for()
+    - if()
+    - updateResolution()
+  Static Methods (1):
+    - static getDefaultAuthority()
+  Properties (4):
+    - endpoints
+    - error
+    - hasReturnedResult
+    - listener
+
+Class ttA:
+  Extends: GG4
+  Methods (7):
+    - F()
+    - if()
+    - onComplete()
+    - onConnect()
+    - onData()
+    - onError()
+    - onHeaders()
+
+Class tz:
+  Extends: Error
+
+Class u90:
+  Extends: T34
+  Methods (8):
+    - catch()
+    - if()
+    - if()
+    - onComplete()
+    - onConnect()
+    - onData()
+    - onError()
+    - onHeaders()
+  Properties (15):
+    - abort
+    - body
+    - callback
+    - context
+    - highWaterMark
+    - method
+    - onInfo
+    - opaque
+    - reason
+    - removeAbortListener
+    - res
+    - responseHeaders
+    - signal
+    - throwOnError
+    - trailers
+
+Class uE0:
+  Methods (7):
+    - entries()
+    - get()
+    - getOrDefault()
+    - has()
+    - keys()
+    - set()
+    - size()
+  Properties (1):
+    - _hash
+
+Class uF:
+  Extends: Error
+  Properties (1):
+    - name
+
+Class uH1:
+  Extends: LQ1
+
+Class uHA:
+  Extends: cX9
+
+Class uLB:
+  Methods (44):
+    - cancelWithStatus()
+    - catch()
+    - clearSentMessages()
+    - commitCall()
+    - commitCallWithMostMessages()
+    - countActiveCalls()
+    - for()
+    - for()
+    - getBufferEntry()
+    - getCallNumber()
+    - getDeadlineInfo()
+    - getHost()
+    - getMethod()
+    - getNextBufferIndex()
+    - getNextRetryBackoffMs()
+    - getPeer()
+    - getPushback()
+    - halfClose()
+    - handleChildStatus()
+    - handleChildWriteCompleted()
+    - handleProcessedStatus()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - isStatusCodeInList()
+    - maybeRetryCall()
+    - maybeStartHedgingAttempt()
+    - maybeStartHedgingTimer()
+    - reportStatus()
+    - sendMessageWithContext()
+    - sendNextChildMessage()
+    - setCredentials()
+    - start()
+    - startNewAttempt()
+    - startRead()
+    - switch()
+    - switch()
+    - switch()
+    - trace()
+  Properties (24):
+    - attempts
+    - bufferTracker
+    - callConfig
+    - callNumber
+    - channel
+    - committedCallIndex
+    - credentials
+    - deadline
+    - hedgingTimer
+    - host
+    - initialMetadata
+    - initialRetryBackoffSec
+    - listener
+    - maxAttempts
+    - methodName
+    - nextRetryBackoffSec
+    - readStarted
+    - retryThrottler
+    - startTime
+    - state
+    - transparentRetryUsed
+    - underlyingCalls
+    - writeBuffer
+    - writeBufferOffset
+
+Class uR0:
+  Extends: Error
+  Properties (1):
+    - name
+
+Class uU0:
+  Methods (1):
+    - getLogger()
+
+Class uoA:
+  Extends: hoA
+  Methods (2):
+    - _destroy()
+    - _read()
+
+Class utA:
+  Extends: aZ4
+  Methods (11):
+    - activate()
+    - assertNoPendingInterceptors()
+    - close()
+    - deactivate()
+    - disableNetConnect()
+    - dispatch()
+    - enableNetConnect()
+    - get()
+    - if()
+    - isMockActive()
+    - pendingInterceptors()
+
+Class ux1:
+  Extends: F11
+  Methods (4):
+    - _createSecureConnector()
+    - _equals()
+    - _isSecure()
+    - compose()
+  Properties (2):
+    - callCredentials
+    - channelCredentials
+
+Class uzB:
+  Properties (7):
+    - aggregation
+    - aggregationCardinalityLimit
+    - attributesProcessor
+    - description
+    - instrumentSelector
+    - meterSelector
+    - name
+
+Class v5:
+  Methods (17):
+    - _push()
+    - bool()
+    - bytes()
+    - double()
+    - finish()
+    - fixed32()
+    - fixed64()
+    - float()
+    - fork()
+    - int32()
+    - ldelim()
+    - reset()
+    - sint32()
+    - sint64()
+    - string()
+    - uint32()
+    - uint64()
+
+Class v71:
+  Extends: dI
+  Methods (2):
+    - list()
+    - retrieve()
+
+Class vKB:
+  Methods (2):
+    - catch()
+    - detect()
+
+Class vM:
+  Methods (5):
+    - add()
+    - isReservedId()
+    - isReservedName()
+    - remove()
+    - toJSON()
+
+Class vMB:
+  Methods (4):
+    - build()
+    - withCode()
+    - withDetails()
+    - withMetadata()
+  Properties (3):
+    - code
+    - details
+    - metadata
+
+Class vQ1:
+  Extends: h4
+  Methods (4):
+    - _parse()
+    - element()
+    - keySchema()
+    - valueSchema()
+  Static Methods (1):
+    - static create()
+
+Class vT0:
+  Methods (5):
+    - X()
+    - if()
+    - if()
+    - if()
+    - searchIn()
+  Properties (3):
+    - chunks
+    - options
+    - pattern
+
+Class vU0:
+  Methods (4):
+    - disable()
+    - getTracer()
+    - getTracerProvider()
+    - setGlobalTracerProvider()
+  Static Methods (1):
+    - static getInstance()
+  Properties (10):
+    - _instance
+    - _proxyTracerProvider
+    - deleteSpan
+    - getActiveSpan
+    - getSpan
+    - getSpanContext
+    - isSpanContextValid
+    - setSpan
+    - setSpanContext
+    - wrapSpanContext
+
+Class v_1:
+  Methods (3):
+    - deleteValue()
+    - getValue()
+    - setValue()
+
+Class vdB:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+
+Class vq0:
+  Extends: S11
+  Methods (7):
+    - _addWatcher()
+    - _equals()
+    - _getConstructorOptions()
+    - _getInterceptors()
+    - _getSecureContextOptions()
+    - _isSecure()
+    - _removeWatcher()
+  Properties (2):
+    - childCredentials
+    - interceptors
+
+Class vrA:
+  Extends: M74
+  Methods (6):
+    - _updateBalancedPoolStats()
+    - addUpstream()
+    - if()
+    - removeUpstream()
+    - upstreams()
+    - while()
+
+Class vx1:
+  Methods (15):
+    - add()
+    - catch()
+    - clone()
+    - for()
+    - for()
+    - get()
+    - getMap()
+    - getOptions()
+    - if()
+    - merge()
+    - remove()
+    - set()
+    - setOptions()
+    - toHttp2Headers()
+    - toJSON()
+  Static Methods (1):
+    - static fromHttp2Headers()
+  Properties (2):
+    - internalRepr
+    - options
+
+Class w0:
+  Methods (1):
+    - toString()
+
+Class w21:
+  Methods (12):
+    - _request()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - forEach()
+    - forEach()
+    - getUri()
+    - if()
+    - if()
+    - request()
+    - while()
+  Properties (2):
+    - defaults
+    - interceptors
+
+Class w6:
+  Methods (4):
+    - deleteObject()
+    - fromWireType()
+    - ga()
+    - pa()
+
+Class w71:
+  Extends: F4
+
+Class wE0:
+  Methods (1):
+    - createAggregator()
+  Properties (2):
+    - _maxSize
+    - _recordMinMax
+
+Class wK:
+  Methods (12):
+    - __init()
+    - __init2()
+    - __init3()
+    - __init4()
+    - __init5()
+    - __init6()
+    - _onRequestCreate()
+    - _onRequestEnd()
+    - _onRequestError()
+    - _shouldCreateSpan()
+    - catch()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (8):
+    - _createSpanUrlMap
+    - _headersUrlMap
+    - _onRequestCreate
+    - _onRequestEnd
+    - _onRequestError
+    - _options
+    - id
+    - name
+
+Class wK0:
+  Extends: SP
+
+Class wLB:
+  Extends: KY1
+  Methods (2):
+    - compressMessage()
+    - decompressMessage()
+  Properties (1):
+    - compressionName
+
+Class wNB:
+  Extends: Qq0
+  Methods (2):
+    - refChild()
+    - unrefChild()
+
+Class wV1:
+  Methods (9):
+    - call()
+    - call()
+    - catch()
+    - fill()
+    - function()
+    - if()
+    - if()
+    - loadDependency()
+    - setupOnce()
+  Static Methods (1):
+    - static __initStatic()
+  Properties (4):
+    - _module
+    - _usePgNative
+    - id
+    - name
+
+Class wk1:
+  Extends: aI
+
+Class wn0:
+  Methods (7):
+    - _getProperties()
+    - _unrollArray()
+    - _unrollObject()
+    - _unrollOther()
+    - configureAndConnect()
+    - getLocalVariables()
+    - setPauseOnExceptions()
+  Properties (1):
+    - _session
+
+Class ws:
+  Extends: EventTarget
+  Methods (17):
+    - B()
+    - V()
+    - X()
+    - catch()
+    - close()
+    - if()
+    - if()
+    - onerror()
+    - onerror()
+    - onmessage()
+    - onmessage()
+    - onopen()
+    - onopen()
+    - processResponse()
+    - readyState()
+    - url()
+    - withCredentials()
+
+Class x11:
+  Methods (3):
+    - getLoadBalancerName()
+    - getShuffleAddressList()
+    - toJsonObject()
+  Static Methods (1):
+    - static createFromJson()
+  Properties (1):
+    - shuffleAddressList
+
+Class x4B:
+  Methods (5):
+    - active()
+    - bind()
+    - disable()
+    - enable()
+    - with()
+
+Class x71:
+  Extends: dI
+  Methods (5):
+    - delete()
+    - download()
+    - list()
+    - retrieveMetadata()
+    - upload()
+
+Class x8B:
+  Methods (7):
+    - _maxNormalLowerBoundaryIndex()
+    - _minNormalLowerBoundaryIndex()
+    - if()
+    - if()
+    - lowerBoundary()
+    - mapToIndex()
+    - scale()
+  Properties (3):
+    - _inverseFactor
+    - _scale
+    - _scaleFactor
+
+Class xG1:
+  Methods (2):
+    - end()
+    - rpcCall()
+
+Class xLB:
+  Methods (24):
+    - B()
+    - addStatusWatcher()
+    - cancelWithStatus()
+    - getCallNumber()
+    - getConfig()
+    - getPeer()
+    - halfClose()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - outputStatus()
+    - reportResolverError()
+    - runDeadlineTimer()
+    - sendMessageOnChild()
+    - sendMessageWithContext()
+    - setCredentials()
+    - start()
+    - startRead()
+    - trace()
+  Properties (23):
+    - callNumber
+    - channel
+    - child
+    - childStartTime
+    - configReceivedTime
+    - credentials
+    - deadline
+    - deadlineStartTime
+    - deadlineTimer
+    - ended
+    - filterStack
+    - filterStackFactory
+    - host
+    - listener
+    - metadata
+    - method
+    - pendingChildStatus
+    - pendingHalfClose
+    - pendingMessage
+    - readFilterPending
+    - readPending
+    - statusWatchers
+    - writeFilterPending
+
+Class xQ0:
+  Methods (2):
+    - clear()
+    - refresh()
+  Properties (5):
+    - _idleStart
+    - _idleTimeout
+    - _onTimeout
+    - _state
+    - _timerArg
+
+Class xQ1:
+  Extends: h4
+  Methods (1):
+    - _parse()
+
+Class xR1:
+  Methods (2):
+    - equals()
+    - length()
+  Properties (4):
+    - endsWithNewline
+    - isPrecededByNewline
+    - startOffset
+    - text
+
+Class xUB:
+  Methods (4):
+    - _loadUtils()
+    - if()
+    - send()
+    - shutdown()
+  Properties (2):
+    - _parameters
+    - _utils
+
+Class xV0:
+  Methods (1):
+    - equal()
+
+Class xc0:
+  Methods (4):
+    - close()
+    - flush()
+    - if()
+    - if()
+  Properties (3):
+    - _buckets
+    - _client
+    - _interval
+
+Class xdB:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+
+Class xk:
+  Extends: Event
+  Methods (5):
+    - colno()
+    - error()
+    - filename()
+    - lineno()
+    - message()
+
+Class xl:
+  Methods (40):
+    - _notifyScopeListeners()
+    - addAttachment()
+    - addBreadcrumb()
+    - addEventProcessor()
+    - addScopeListener()
+    - applyToEvent()
+    - captureEvent()
+    - captureException()
+    - captureMessage()
+    - clear()
+    - clearAttachments()
+    - clearBreadcrumbs()
+    - clone()
+    - getAttachments()
+    - getClient()
+    - getLastBreadcrumb()
+    - getPropagationContext()
+    - getRequestSession()
+    - getScopeData()
+    - getSession()
+    - getSpan()
+    - getTransaction()
+    - getUser()
+    - if()
+    - setClient()
+    - setContext()
+    - setExtra()
+    - setExtras()
+    - setFingerprint()
+    - setLevel()
+    - setPropagationContext()
+    - setRequestSession()
+    - setSDKProcessingMetadata()
+    - setSession()
+    - setSpan()
+    - setTag()
+    - setTags()
+    - setTransactionName()
+    - setUser()
+    - update()
+  Static Methods (1):
+    - static clone()
+  Properties (18):
+    - _attachments
+    - _breadcrumbs
+    - _client
+    - _contexts
+    - _eventProcessors
+    - _extra
+    - _fingerprint
+    - _level
+    - _notifyingListeners
+    - _propagationContext
+    - _requestSession
+    - _scopeListeners
+    - _sdkProcessingMetadata
+    - _session
+    - _span
+    - _tags
+    - _transactionName
+    - _user
+
+Class xq0:
+  Extends: S11
+  Methods (7):
+    - _addWatcher()
+    - _equals()
+    - _removeWatcher()
+    - calculateSecureContextOptions()
+    - finalizeUpdate()
+    - handleCaCertificateUpdate()
+    - handleIdentityCertitificateUpdate()
+  Properties (7):
+    - caCertificateProvider
+    - caCertificateUpdateListener
+    - identityCertificateProvider
+    - identityCertificateUpdateListener
+    - latestCaUpdate
+    - latestIdentityUpdate
+    - requireClientCertificate
+
+Class xt2:
+  Extends: RM6
+  Methods (5):
+    - _bootstrap()
+    - _err()
+    - _getOverriddenMethods()
+    - _processInputToken()
+    - _setErrorLocation()
+  Properties (3):
+    - ctLoc
+    - locBeforeToken
+    - opts
+
+Class xzB:
+  Methods (3):
+    - getNameFilter()
+    - getSchemaUrlFilter()
+    - getVersionFilter()
+  Properties (3):
+    - _nameFilter
+    - _schemaUrlFilter
+    - _versionFilter
+
+Class yD0:
+  Methods (30):
+    - _authThenStart()
+    - _commonHeaders()
+    - _getNextReconnectionDelay()
+    - _handleSseStream()
+    - _normalizeHeaders()
+    - _scheduleReconnection()
+    - _startOrAuthSse()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - catch()
+    - close()
+    - finishAuth()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - protocolVersion()
+    - send()
+    - sessionId()
+    - setProtocolVersion()
+    - start()
+    - terminateSession()
+    - while()
+  Properties (9):
+    - _abortController
+    - _authProvider
+    - _fetch
+    - _protocolVersion
+    - _reconnectionOptions
+    - _requestInit
+    - _resourceMetadataUrl
+    - _sessionId
+    - _url
+
+Class yE:
+  Methods (15):
+    - A()
+    - Q()
+    - _findMatches()
+    - _searchLogical()
+    - _searchObjectList()
+    - _searchStringList()
+    - add()
+    - for()
+    - for()
+    - getIndex()
+    - if()
+    - if()
+    - removeAt()
+    - search()
+    - setCollection()
+  Properties (4):
+    - _docs
+    - _keyStore
+    - _myIndex
+    - options
+
+Class yFB:
+  Methods (5):
+    - call()
+    - catch()
+    - if()
+    - isCalled()
+    - promise()
+  Properties (3):
+    - _callback
+    - _isCalled
+    - _that
+
+Class yKB:
+  Methods (1):
+    - detect()
+
+Class yN0:
+  Methods (5):
+    - debug()
+    - error()
+    - info()
+    - verbose()
+    - warn()
+
+Class yR:
+  Extends: h4
+  Methods (2):
+    - _parse()
+    - unwrap()
+
+Class yR1:
+  Methods (25):
+    - calculateLayout()
+    - clear()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - onRender()
+    - patchConsole()
+    - rejectExitPromise()
+    - render()
+    - resetLineCount()
+    - resized()
+    - resolveExitPromise()
+    - setTheme()
+    - unmount()
+    - unsubscribeExit()
+    - unsubscribeResize()
+    - waitUntilExit()
+    - writeToStderr()
+    - writeToStdout()
+  Properties (14):
+    - container
+    - fullStaticOutput
+    - isUnmounted
+    - lastOutput
+    - lastOutputHeight
+    - log
+    - options
+    - rejectExitPromise
+    - resolveExitPromise
+    - restoreConsole
+    - rootNode
+    - throttledLog
+    - unsubscribeExit
+    - unsubscribeResize
+
+Class yZ1:
+  Methods (3):
+    - append()
+    - clear()
+    - readMessage()
+  Properties (1):
+    - _buffer
+
+Class ydB:
+  Extends: bS
+  Methods (4):
+    - multiRegex()
+    - search()
+    - singleRegex()
+    - type()
+
+Class yi:
+  Extends: h4
+  Methods (4):
+    - _parse()
+    - catchValue()
+    - catchValue()
+    - removeCatch()
+
+Class yi2:
+  Extends: M31
+  Methods (2):
+    - makeLogger()
+    - setFilters()
+  Properties (1):
+    - upstream
+
+Class ykB:
+  Methods (1):
+    - serializeToString()
+
+Class z6B:
+  Methods (4):
+    - getDelegate()
+    - getDelegateTracer()
+    - getTracer()
+    - setDelegate()
+  Properties (1):
+    - _delegate
+
+Class z90:
+
+Class zD0:
+  Extends: Event
+  Properties (2):
+    - code
+    - message
+
+Class zE0:
+  Methods (8):
+    - _clone()
+    - _keys()
+    - _parse()
+    - get()
+    - if()
+    - serialize()
+    - set()
+    - unset()
+  Properties (1):
+    - _internalState
+
+Class zG1:
+  Methods (3):
+    - record()
+    - setStartTime()
+    - toPointValue()
+  Properties (4):
+    - _boundaries
+    - _current
+    - _recordMinMax
+    - startTime
+
+Class zK:
+  Methods (10):
+    - _performRequest()
+    - _processResponse()
+    - _sanitizeOptions()
+    - abort()
+    - destroy()
+    - end()
+    - removeHeader()
+    - setHeader()
+    - setTimeout()
+    - write()
+
+Class zN:
+  Methods (8):
+    - if()
+    - if()
+    - iterate()
+    - iterateSync()
+    - stream()
+    - streamSync()
+    - walk()
+    - walkSync()
+  Properties (27):
+    - absolute
+    - cwd
+    - dot
+    - dotRelative
+    - follow
+    - ignore
+    - includeChildMatches
+    - magicalBraces
+    - mark
+    - matchBase
+    - maxDepth
+    - nobrace
+    - nocase
+    - nodir
+    - noext
+    - noglobstar
+    - opts
+    - pattern
+    - patterns
+    - platform
+    - realpath
+    - root
+    - scurry
+    - signal
+    - stat
+    - windowsPathsNoEscape
+    - withFileTypes
+
+Class zj1:
+  Methods (2):
+    - end()
+    - write()
+
+Class zk1:
+  Extends: aI
+
+Class znA:
+  Extends: NG
+  Properties (6):
+    - code
+    - data
+    - headers
+    - message
+    - name
+    - statusCode
+
+Class zo0:
+  Extends: op1
+  Methods (10):
+    - F()
+    - X()
+    - catch()
+    - catch()
+    - emit()
+    - if()
+    - load()
+    - onExit()
+    - reallyExit()
+    - unload()
+
+Class zo1:
+  Methods (19):
+    - W()
+    - _addToNodeFs()
+    - _boundHandleError()
+    - _handleDir()
+    - _handleFile()
+    - _handleRead()
+    - _handleSymlink()
+    - _watchWithNodeFs()
+    - catch()
+    - catch()
+    - catch()
+    - filterDir()
+    - filterPath()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+    - if()
+  Properties (2):
+    - _boundHandleError
+    - fsw
+
+Class zs:
+  Extends: Event
+  Methods (3):
+    - code()
+    - reason()
+    - wasClean()
+
+Class zzB:
+  Methods (5):
+    - _registerMetricStorage()
+    - collect()
+    - if()
+    - registerAsyncMetricStorage()
+    - registerMetricStorage()
+  Properties (3):
+    - _instrumentationScope
+    - _meterProviderSharedState
+    - meter
+
+=== Standalone Functions ===
+isPrime
+
+=== Exports ===
+Gb, NS5, PARAMS_CONTAINS, RequestHandler, _enoent, _parse, ascending, callCount, check, checkSync, default, descending, f, humanize, isPathValid, isValidUTF8, load, lock, lockSync, mask, parse, push, qS5, signals, spawn, stringify, sync, unload, unlock, unlockSync, unmask, wrap

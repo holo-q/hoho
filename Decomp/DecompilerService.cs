@@ -52,16 +52,29 @@ public static class DecompilerService
             {
                 await ConcatScriptGenerator.GenerateScriptAsync(agent, agentDir);
                 
-                // Generate symbol index
-                Console.WriteLine("Generating symbol index...");
+                // Generate symbol map
+                Console.WriteLine("Generating symbol map...");
                 await TreeSitterIndexer.GenerateIndexScriptAsync(agentDir);
-                var symbolIndex = await TreeSitterIndexer.GenerateIndexAsync(agentDir);
+                var symbolMap = await TreeSitterIndexer.GenerateIndexAsync(agentDir);
                 
-                if (!string.IsNullOrEmpty(symbolIndex))
+                if (!string.IsNullOrEmpty(symbolMap))
                 {
-                    var indexPath = Path.Combine(agentDir, "symbol-index.md");
-                    await File.WriteAllTextAsync(indexPath, symbolIndex);
-                    Console.WriteLine($"✓ Symbol index saved to {indexPath}");
+                    var mapPath = Path.Combine(agentDir, "symbol-map.md");
+                    await File.WriteAllTextAsync(mapPath, symbolMap);
+                    Console.WriteLine($"✓ Symbol map saved to {mapPath}");
+                }
+                
+                // Analyze webpack bundle structure
+                var cliPath = Path.Combine(agentDir, "package", "cli.js");
+                if (File.Exists(cliPath))
+                {
+                    Console.WriteLine("Analyzing webpack bundle structure...");
+                    var bundleAnalysis = await WebpackBundleAnalyzer.AnalyzeBundleAsync(cliPath);
+                    var report = bundleAnalysis.GenerateReport();
+                    
+                    var reportPath = Path.Combine(agentDir, "bundle-analysis.txt");
+                    await File.WriteAllTextAsync(reportPath, report);
+                    Console.WriteLine($"✓ Bundle analysis saved to {reportPath}");
                 }
             }
         }
