@@ -90,6 +90,95 @@ namespace Hoho.Decomp {
 	}
 
 	/// <summary>
+	/// Cross-version consistency analysis command
+	/// </summary>
+	public class ConsistencyCommand : Command {
+		public ConsistencyCommand() : base("consistency", "Analyze consistency between bundle versions") {
+			var version1Arg = new Argument<string>("version1", "First version name/path");
+			var version2Arg = new Argument<string>("version2", "Second version name/path");
+
+			this.AddArgument(version1Arg);
+			this.AddArgument(version2Arg);
+
+			this.SetHandler(async (version1, version2) => {
+				// Determine paths - support both version names and full paths
+				string version1Path = File.Exists(version1) ? version1 : Path.Combine("decomp", version1, "bundle.js");
+				string version2Path = File.Exists(version2) ? version2 : Path.Combine("decomp", version2, "bundle.js");
+
+				if (!File.Exists(version1Path)) {
+					Logger.Error($"Version 1 bundle not found: {version1Path}");
+					return;
+				}
+
+				if (!File.Exists(version2Path)) {
+					Logger.Error($"Version 2 bundle not found: {version2Path}");
+					return;
+				}
+
+				// Extract version names from paths if needed
+				string version1Name = Path.GetFileNameWithoutExtension(version1);
+				string version2Name = Path.GetFileNameWithoutExtension(version2);
+				
+				if (version1.Contains("/") || version1.Contains("\\")) {
+					version1Name = Path.GetFileName(Path.GetDirectoryName(version1Path)) ?? "v1";
+				}
+				if (version2.Contains("/") || version2.Contains("\\")) {
+					version2Name = Path.GetFileName(Path.GetDirectoryName(version2Path)) ?? "v2";
+				}
+
+				// Perform consistency analysis
+				var analysis = await CrossVersionConsistencyChecker.AnalyzeConsistencyAsync(
+					version1Path, version2Path, version1Name, version2Name);
+
+				// Display summary
+				Logger.Success($"Consistency analysis complete: {version1Name} vs {version2Name}");
+				Logger.Info("");
+				Logger.Info("📊 Consistency Summary:");
+				Logger.Info($"  - Common Symbols: {analysis.CommonSymbolCount:N0}");
+				Logger.Info($"  - Consistent Symbols: {analysis.ConsistentSymbols.Count:N0}");
+				Logger.Info($"  - Inconsistent Symbols: {analysis.InconsistentSymbols.Count:N0}");
+				
+				double consistencyPercentage = analysis.CommonSymbolCount > 0 ? 
+					(double)analysis.ConsistentSymbols.Count / analysis.CommonSymbolCount * 100 : 100;
+				Logger.Info($"  - Overall Consistency: {consistencyPercentage:F1}%");
+
+				if (analysis.PotentialRenames.Any()) {
+					Logger.Info($"  - Potential Renames: {analysis.PotentialRenames.Count}");
+					Logger.Info("  - Top Potential Renames:");
+					foreach (var rename in analysis.PotentialRenames.Take(3)) {
+						Logger.Info($"    • {rename.OldSymbol} → {rename.NewSymbol} ({rename.Confidence:P1})");
+					}
+				}
+
+				// Show high-confidence recommendations
+				var safeRenames = analysis.Recommendations
+					.Where(r => r.Type == RecommendationType.SafeRename && r.Priority == "High")
+					.Take(5)
+					.ToList();
+
+				if (safeRenames.Any()) {
+					Logger.Info("");
+					Logger.Info("✅ High-Confidence Safe Renames:");
+					foreach (var rec in safeRenames) {
+						Logger.Info($"  - {rec.Symbol} (confidence: {rec.Confidence:P1})");
+					}
+				}
+
+				// Generate and save report
+				string reportContent = CrossVersionConsistencyChecker.GenerateConsistencyReport(analysis);
+				string reportPath = Path.Combine("decomp", $"consistency-{version1Name}-vs-{version2Name}.md");
+				Directory.CreateDirectory("decomp");
+				await File.WriteAllTextAsync(reportPath, reportContent);
+
+				Logger.Info("");
+				Logger.Info($"📄 Full Report: {reportPath}");
+				Logger.Info($"🗃️  Consistency Database: decomp/consistency.json");
+
+			}, version1Arg, version2Arg);
+		}
+	}
+
+	/// <summary>
 	/// Auto-detect version and rename
 	/// </summary>
 	public class SmartRenameCommand : Command {
