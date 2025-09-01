@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Hoho.Core;
 
@@ -38,6 +39,9 @@ namespace Hoho.Decomp {
 
 			// Map minified to likely original names
 			analysis.SymbolMap = BuildSymbolMap(content);
+
+			// Calculate enhanced statistics
+			CalculateEnhancedStatistics(content, analysis);
 
 			return analysis;
 		}
@@ -182,6 +186,116 @@ namespace Hoho.Decomp {
 			return wasm;
 		}
 
+		/// <summary>
+		/// Calculate enhanced bundle statistics for comprehensive analysis
+		/// </summary>
+		private static void CalculateEnhancedStatistics(string content, BundleAnalysis analysis) {
+			// Size statistics
+			analysis.SizeStats.TotalCharacters = content.Length;
+			analysis.SizeStats.TotalBytes = Encoding.UTF8.GetByteCount(content);
+			analysis.SizeStats.WhitespaceCharacters = content.Count(char.IsWhiteSpace);
+			analysis.SizeStats.AlphanumericCharacters = content.Count(char.IsLetterOrDigit);
+			analysis.SizeStats.SymbolCharacters = content.Length - analysis.SizeStats.WhitespaceCharacters - analysis.SizeStats.AlphanumericCharacters;
+			analysis.SizeStats.EstimatedGzipSize = (long)(analysis.SizeStats.TotalBytes * 0.3); // ~30% compression typical for minified JS
+			analysis.SizeStats.MinificationRatio = CalculateMinificationRatio(content);
+
+			// Symbol statistics  
+			var identifiers = ExtractAllIdentifiers(content);
+			analysis.SymbolStats.TotalUniqueSymbols = identifiers.Count;
+			analysis.SymbolStats.TotalSymbolOccurrences = identifiers.Values.Sum();
+			analysis.SymbolStats.MostUsedSymbols = identifiers.OrderByDescending(kvp => kvp.Value).Take(20).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			
+			// Analyze symbol patterns
+			var obfuscatedPattern = @"^[A-Z][a-z0-9]{0,2}[0-9]*$"; // Wu1, Ct1, pA1, etc.
+			analysis.SymbolStats.ShortSymbols = identifiers.Keys.Count(id => id.Length <= 3);
+			analysis.SymbolStats.ObfuscatedSymbols = identifiers.Keys.Count(id => Regex.IsMatch(id, obfuscatedPattern));
+			analysis.SymbolStats.ReadableSymbols = identifiers.Count - analysis.SymbolStats.ObfuscatedSymbols - analysis.SymbolStats.ShortSymbols;
+			analysis.SymbolStats.ObfuscationRatio = identifiers.Count > 0 ? (double)analysis.SymbolStats.ObfuscatedSymbols / identifiers.Count : 0.0;
+
+			// Complexity statistics
+			analysis.ComplexityStats.MaxNestingLevel = CalculateMaxNestingLevel(content);
+			analysis.ComplexityStats.AverageNestingLevel = CalculateAverageNestingLevel(content);
+			analysis.ComplexityStats.ConditionalStatements = Regex.Matches(content, @"\b(if|switch)\s*\(").Count;
+			analysis.ComplexityStats.LoopStatements = Regex.Matches(content, @"\b(for|while|do)\s*[\s\(]").Count;
+			analysis.ComplexityStats.FunctionCount = Regex.Matches(content, @"\bfunction\s+\w+\s*\(").Count;
+			analysis.ComplexityStats.ClassCount = Regex.Matches(content, @"\bclass\s+\w+").Count;
+			analysis.ComplexityStats.TotalStatements = analysis.ComplexityStats.ConditionalStatements + analysis.ComplexityStats.LoopStatements;
+		}
+
+		/// <summary>
+		/// Extract all identifiers and their usage counts
+		/// </summary>
+		private static Dictionary<string, int> ExtractAllIdentifiers(string content) {
+			var identifierPattern = @"\b[A-Za-z_$][A-Za-z0-9_$]*\b";
+			var identifiers = Regex.Matches(content, identifierPattern)
+				.Cast<Match>()
+				.Select(m => m.Value)
+				.Where(id => !IsJavaScriptKeyword(id))
+				.GroupBy(id => id)
+				.ToDictionary(g => g.Key, g => g.Count());
+			return identifiers;
+		}
+
+		/// <summary>
+		/// Calculate minification ratio heuristic
+		/// </summary>
+		private static double CalculateMinificationRatio(string content) {
+			var avgLineLength = content.Length / (double)content.Split('\n').Length;
+			var whitespaceRatio = content.Count(char.IsWhiteSpace) / (double)content.Length;
+			return whitespaceRatio < 0.1 && avgLineLength > 100 ? 0.85 : 0.3;
+		}
+
+		/// <summary>
+		/// Calculate maximum nesting level in the code
+		/// </summary>
+		private static int CalculateMaxNestingLevel(string content) {
+			int maxLevel = 0;
+			int currentLevel = 0;
+			
+			foreach (char c in content) {
+				if (c == '{') {
+					currentLevel++;
+					maxLevel = Math.Max(maxLevel, currentLevel);
+				} else if (c == '}') {
+					currentLevel--;
+				}
+			}
+			
+			return maxLevel;
+		}
+
+		/// <summary>
+		/// Calculate average nesting level in the code
+		/// </summary>
+		private static int CalculateAverageNestingLevel(string content) {
+			var levels = new List<int>();
+			int currentLevel = 0;
+			
+			foreach (char c in content) {
+				if (c == '{') {
+					currentLevel++;
+				} else if (c == '}') {
+					levels.Add(currentLevel);
+					currentLevel--;
+				}
+			}
+			
+			return levels.Any() ? (int)levels.Average() : 0;
+		}
+
+		/// <summary>
+		/// Check if identifier is a JavaScript keyword
+		/// </summary>
+		private static bool IsJavaScriptKeyword(string identifier) {
+			var keywords = new HashSet<string> {
+				"var", "let", "const", "function", "return", "if", "else", "for", "while", "do", "break", "continue",
+				"switch", "case", "default", "try", "catch", "finally", "throw", "new", "this", "super", "class",
+				"extends", "import", "export", "from", "as", "async", "await", "yield", "typeof", "instanceof",
+				"in", "of", "delete", "void", "null", "undefined", "true", "false", "NaN", "Infinity"
+			};
+			return keywords.Contains(identifier);
+		}
+
 		private static Dictionary<string, string> BuildSymbolMap(string content) {
 			Dictionary<string, string> map = new Dictionary<string, string>();
 
@@ -257,16 +371,62 @@ namespace Hoho.Decomp {
 			public Dictionary<string, List<string>> ToolImplementations { get; set; } = new Dictionary<string, List<string>>();
 			public WasmIntegration                  WasmIntegration     { get; set; } = new WasmIntegration();
 			public Dictionary<string, string>       SymbolMap           { get; set; } = new Dictionary<string, string>();
+			
+			// Enhanced analysis statistics
+			public SizeStatistics       SizeStats       { get; set; } = new SizeStatistics();
+			public SymbolStatistics     SymbolStats     { get; set; } = new SymbolStatistics();
+			public ComplexityStatistics ComplexityStats { get; set; } = new ComplexityStatistics();
+			public DateTime             AnalysisTime    { get; set; } = DateTime.UtcNow;
 
 			public string GenerateReport() {
 				StringBuilder sb = new StringBuilder();
 
-				sb.AppendLine("WEBPACK BUNDLE ANALYSIS REPORT");
+				sb.AppendLine("# WEBPACK BUNDLE ANALYSIS REPORT");
 				sb.AppendLine("=".PadRight(80, '='));
-				sb.AppendLine($"File: {Path.GetFileName(FilePath)}");
-				sb.AppendLine($"Size: {FileSize:N0} bytes");
-				sb.AppendLine($"Lines: {TotalLines:N0}");
-				sb.AppendLine($"Bundle Type: {BundleType}");
+				sb.AppendLine($"**File:** {Path.GetFileName(FilePath)}");
+				sb.AppendLine($"**Analysis Date:** {AnalysisTime:yyyy-MM-dd HH:mm:ss}");
+				sb.AppendLine($"**Bundle Type:** {BundleType}");
+				sb.AppendLine();
+
+				// Enhanced Size Statistics
+				sb.AppendLine("## 📊 SIZE STATISTICS");
+				sb.AppendLine($"- **File Size:** {FormatBytes(FileSize)}");
+				sb.AppendLine($"- **Total Lines:** {TotalLines:N0}");
+				sb.AppendLine($"- **Total Characters:** {SizeStats.TotalCharacters:N0}");
+				sb.AppendLine($"- **Total Bytes:** {FormatBytes(SizeStats.TotalBytes)}");
+				sb.AppendLine($"- **Whitespace:** {SizeStats.WhitespaceCharacters:N0} ({(double)SizeStats.WhitespaceCharacters/SizeStats.TotalCharacters*100:F1}%)");
+				sb.AppendLine($"- **Alphanumeric:** {SizeStats.AlphanumericCharacters:N0} ({(double)SizeStats.AlphanumericCharacters/SizeStats.TotalCharacters*100:F1}%)");
+				sb.AppendLine($"- **Symbols:** {SizeStats.SymbolCharacters:N0} ({(double)SizeStats.SymbolCharacters/SizeStats.TotalCharacters*100:F1}%)");
+				sb.AppendLine($"- **Estimated Gzip Size:** {FormatBytes(SizeStats.EstimatedGzipSize)}");
+				sb.AppendLine($"- **Minification Ratio:** {SizeStats.MinificationRatio:P1}");
+				sb.AppendLine();
+
+				// Enhanced Symbol Statistics
+				sb.AppendLine("## 🔤 SYMBOL STATISTICS");
+				sb.AppendLine($"- **Total Unique Symbols:** {SymbolStats.TotalUniqueSymbols:N0}");
+				sb.AppendLine($"- **Total Symbol Occurrences:** {SymbolStats.TotalSymbolOccurrences:N0}");
+				sb.AppendLine($"- **Short Symbols (≤3 chars):** {SymbolStats.ShortSymbols:N0}");
+				sb.AppendLine($"- **Obfuscated Symbols:** {SymbolStats.ObfuscatedSymbols:N0}");
+				sb.AppendLine($"- **Readable Symbols:** {SymbolStats.ReadableSymbols:N0}");
+				sb.AppendLine($"- **Obfuscation Ratio:** {SymbolStats.ObfuscationRatio:P1}");
+				sb.AppendLine();
+
+				// Most Used Symbols
+				sb.AppendLine("### Most Used Symbols");
+				foreach (var symbol in SymbolStats.MostUsedSymbols.Take(15)) {
+					sb.AppendLine($"- `{symbol.Key}`: {symbol.Value:N0} occurrences");
+				}
+				sb.AppendLine();
+
+				// Complexity Statistics
+				sb.AppendLine("## 🧩 COMPLEXITY STATISTICS");
+				sb.AppendLine($"- **Max Nesting Level:** {ComplexityStats.MaxNestingLevel}");
+				sb.AppendLine($"- **Average Nesting Level:** {ComplexityStats.AverageNestingLevel}");
+				sb.AppendLine($"- **Function Count:** {ComplexityStats.FunctionCount:N0}");
+				sb.AppendLine($"- **Class Count:** {ComplexityStats.ClassCount:N0}");
+				sb.AppendLine($"- **Conditional Statements:** {ComplexityStats.ConditionalStatements:N0}");
+				sb.AppendLine($"- **Loop Statements:** {ComplexityStats.LoopStatements:N0}");
+				sb.AppendLine($"- **Total Control Flow:** {ComplexityStats.TotalStatements:N0}");
 				sb.AppendLine();
 
 				sb.AppendLine("MODULE STRUCTURE");
@@ -322,6 +482,20 @@ namespace Hoho.Decomp {
 
 				return sb.ToString();
 			}
+
+			/// <summary>
+			/// Format bytes into human readable format
+			/// </summary>
+			private static string FormatBytes(long bytes) {
+				string[] sizes = { "B", "KB", "MB", "GB" };
+				double len = bytes;
+				int order = 0;
+				while (len >= 1024 && order < sizes.Length - 1) {
+					order++;
+					len /= 1024;
+				}
+				return $"{len:0.##} {sizes[order]}";
+			}
 		}
 
 		public class ModuleInfo {
@@ -336,6 +510,45 @@ namespace Hoho.Decomp {
 			public bool         UsesYogaLayout      { get; set; }
 			public List<string> EmscriptenFunctions { get; set; } = new List<string>();
 			public List<string> TreeSitterFunctions { get; set; } = new List<string>();
+		}
+
+		/// <summary>
+		/// Enhanced size statistics for comprehensive bundle analysis
+		/// </summary>
+		public class SizeStatistics {
+			public int TotalCharacters { get; set; }
+			public long TotalBytes { get; set; }
+			public int WhitespaceCharacters { get; set; }
+			public int AlphanumericCharacters { get; set; }
+			public int SymbolCharacters { get; set; }
+			public long EstimatedGzipSize { get; set; }
+			public double MinificationRatio { get; set; }
+		}
+
+		/// <summary>
+		/// Enhanced symbol statistics for obfuscation analysis
+		/// </summary>
+		public class SymbolStatistics {
+			public int TotalUniqueSymbols { get; set; }
+			public int TotalSymbolOccurrences { get; set; }
+			public int ShortSymbols { get; set; }
+			public int ObfuscatedSymbols { get; set; }
+			public int ReadableSymbols { get; set; }
+			public double ObfuscationRatio { get; set; }
+			public Dictionary<string, int> MostUsedSymbols { get; set; } = new Dictionary<string, int>();
+		}
+
+		/// <summary>
+		/// Code complexity statistics for deobfuscation planning
+		/// </summary>
+		public class ComplexityStatistics {
+			public int MaxNestingLevel { get; set; }
+			public int AverageNestingLevel { get; set; }
+			public int ConditionalStatements { get; set; }
+			public int LoopStatements { get; set; }
+			public int FunctionCount { get; set; }
+			public int ClassCount { get; set; }
+			public int TotalStatements { get; set; }
 		}
 	}
 }

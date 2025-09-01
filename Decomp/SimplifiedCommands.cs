@@ -24,12 +24,40 @@ namespace Hoho.Decomp {
 				Logger.Success($"Extracted {result.ModuleCount} modules");
 				Logger.Info($"Original: {result.OriginalDir}");
 				Logger.Info($"Dev: {result.DevDir}");
+
+				// Show bundle analysis summary
+				if (result.BundleAnalysis != null) {
+					var analysis = result.BundleAnalysis;
+					Logger.Info("");
+					Logger.Info("📊 Bundle Analysis:");
+					Logger.Info($"  - File Size: {FormatBytes(analysis.FileSize)}");
+					Logger.Info($"  - Bundle Type: {analysis.BundleType}");
+					Logger.Info($"  - Total Symbols: {analysis.SymbolStats.TotalUniqueSymbols:N0}");
+					Logger.Info($"  - Obfuscation Ratio: {analysis.SymbolStats.ObfuscationRatio:P1}");
+					Logger.Info($"  - Complexity (Max Nesting): {analysis.ComplexityStats.MaxNestingLevel}");
+					Logger.Info($"  - Full Report: {Path.Combine(result.OriginalDir, "bundle-analysis.md")}");
+				}
+
 				Logger.Info("");
 				Logger.Info("Next steps:");
 				Logger.Info($"1. Edit files in {result.DevDir}");
 				Logger.Info("2. Run: hoho decomp rename-all");
 				Logger.Info($"3. Run: hoho decomp finalize {version}");
 			}, bundleArg, versionArg, autoDeobfuscateOpt);
+		}
+
+		/// <summary>
+		/// Format bytes into human readable format
+		/// </summary>
+		private static string FormatBytes(long bytes) {
+			string[] sizes = { "B", "KB", "MB", "GB" };
+			double len = bytes;
+			int order = 0;
+			while (len >= 1024 && order < sizes.Length - 1) {
+				order++;
+				len /= 1024;
+			}
+			return $"{len:0.##} {sizes[order]}";
 		}
 	}
 

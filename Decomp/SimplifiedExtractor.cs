@@ -58,6 +58,12 @@ namespace Hoho.Decomp {
 			string                                   symbolMapPath = Path.Combine(versionDir, "symbol-map.md");
 			await File.WriteAllTextAsync(symbolMapPath, symbolReport);
 
+			// Generate comprehensive bundle analysis
+			WebpackBundleAnalyzer.BundleAnalysis bundleAnalysis = await WebpackBundleAnalyzer.AnalyzeBundleAsync(bundlePath);
+			string                                analysisReport = bundleAnalysis.GenerateReport();
+			string                                analysisPath   = Path.Combine(versionDir, "bundle-analysis.md");
+			await File.WriteAllTextAsync(analysisPath, analysisReport);
+
 			// Create dev version
 			if (autoDeobfuscate && File.Exists(MAPPINGS_DB)) {
 				Logger.Info("Applying known mappings to create dev version...");
@@ -77,11 +83,12 @@ namespace Hoho.Decomp {
 			await File.WriteAllTextAsync(Path.Combine(devDir, "README.md"), readme);
 
 			return new ExtractResult {
-				Version     = version,
-				ModuleCount = modules.Count,
-				OriginalDir = versionDir,
-				DevDir      = devDir,
-				FinalDir    = finalDir
+				Version        = version,
+				ModuleCount    = modules.Count,
+				OriginalDir    = versionDir,
+				DevDir         = devDir,
+				FinalDir       = finalDir,
+				BundleAnalysis = bundleAnalysis
 			};
 		}
 
@@ -309,6 +316,7 @@ hoho decomp finalize {version}
 			public string OriginalDir { get; set; } = "";
 			public string DevDir      { get; set; } = "";
 			public string FinalDir    { get; set; } = "";
+			public WebpackBundleAnalyzer.BundleAnalysis? BundleAnalysis { get; set; }
 		}
 
 		public class ModuleInfo {
