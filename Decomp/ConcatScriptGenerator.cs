@@ -7,9 +7,8 @@ namespace Hoho.Decomp;
 /// Generates concatenation scripts for one-shot codebase injection.
 /// HIGH-PERFORMANCE script generation with minification support.
 /// </summary>
-public static class ConcatScriptGenerator
-{
-    private const string ScriptTemplate = @"#!/bin/bash
+public static class ConcatScriptGenerator {
+	private const string ScriptTemplate = @"#!/bin/bash
 
 # {AGENT_NAME} Codebase Concatenation Script
 # Outputs all decompiled code as a single stream for one-shot injection
@@ -56,56 +55,52 @@ echo ""END OF CODEBASE""
 echo ""═══════════════════════════════════════════════════════════════════════════════""
 ";
 
-    /// <summary>
-    /// Generate concatenation script for a decompiled agent.
-    /// </summary>
-    public static async Task GenerateScriptAsync(string agentName, string agentDir)
-    {
-        using var timer = Logger.TimeOperation($"Generate concat script for {agentName}");
-        
-        var scriptPath = Path.Combine(agentDir, "concat-codebase.sh");
-        var packageDir = Path.Combine(agentDir, "package");
-        
-        // Build file processing commands based on what exists
-        var commands = new StringBuilder();
-        
-        if (Directory.Exists(packageDir))
-        {
-            await AddPackageFilesAsync(commands, packageDir);
-        }
-        
-        // Generate the script
-        var script = ScriptTemplate
-            .Replace("{AGENT_NAME}", agentName.ToUpper())
-            .Replace("{PACKAGE_PATH}", "package")
-            .Replace("{FILE_PROCESSING_COMMANDS}", commands.ToString());
-        
-        await File.WriteAllTextAsync(scriptPath, script);
-        
-        // Make executable on Unix
-        if (!OperatingSystem.IsWindows())
-        {
-            await MakeExecutableAsync(scriptPath);
-        }
-        
-        Logger.Info($"Generated concatenation script: {scriptPath}");
-    }
-    
-    /// <summary>
-    /// Add package file processing commands to the script.
-    /// </summary>
-    private static async Task AddPackageFilesAsync(StringBuilder commands, string packageDir)
-    {
-        // Process package.json
-        commands.AppendLine(@"
+	/// <summary>
+	/// Generate concatenation script for a decompiled agent.
+	/// </summary>
+	public static async Task GenerateScriptAsync(string agentName, string agentDir) {
+		using var timer = Logger.TimeOperation($"Generate concat script for {agentName}");
+
+		var scriptPath = Path.Combine(agentDir, "concat-codebase.sh");
+		var packageDir = Path.Combine(agentDir, "package");
+
+		// Build file processing commands based on what exists
+		var commands = new StringBuilder();
+
+		if (Directory.Exists(packageDir)) {
+			await AddPackageFilesAsync(commands, packageDir);
+		}
+
+		// Generate the script
+		var script = ScriptTemplate
+			.Replace("{AGENT_NAME}", agentName.ToUpper())
+			.Replace("{PACKAGE_PATH}", "package")
+			.Replace("{FILE_PROCESSING_COMMANDS}", commands.ToString());
+
+		await File.WriteAllTextAsync(scriptPath, script);
+
+		// Make executable on Unix
+		if (!OperatingSystem.IsWindows()) {
+			await MakeExecutableAsync(scriptPath);
+		}
+
+		Logger.Info($"Generated concatenation script: {scriptPath}");
+	}
+
+	/// <summary>
+	/// Add package file processing commands to the script.
+	/// </summary>
+	private static async Task AddPackageFilesAsync(StringBuilder commands, string packageDir) {
+		// Process package.json
+		commands.AppendLine(@"
 # Process package.json
 if [ -f ""$PACKAGE_DIR/package.json"" ]; then
     print_header ""package.json"" ""$(stat -c%s ""$PACKAGE_DIR/package.json"" 2>/dev/null || stat -f%z ""$PACKAGE_DIR/package.json"" 2>/dev/null || echo 'unknown')""
     cat ""$PACKAGE_DIR/package.json""
 fi");
 
-        // Process TypeScript definitions
-        commands.AppendLine(@"
+		// Process TypeScript definitions
+		commands.AppendLine(@"
 # Process TypeScript definitions (keep readable)
 for dts_file in ""$PACKAGE_DIR""/*.d.ts; do
     if [ -f ""$dts_file"" ]; then
@@ -116,8 +111,8 @@ for dts_file in ""$PACKAGE_DIR""/*.d.ts; do
     fi
 done");
 
-        // Process JavaScript modules
-        commands.AppendLine(@"
+		// Process JavaScript modules
+		commands.AppendLine(@"
 # Process JavaScript modules
 for js_file in ""$PACKAGE_DIR""/*.mjs ""$PACKAGE_DIR""/*.js; do
     if [ -f ""$js_file"" ]; then
@@ -139,8 +134,8 @@ for js_file in ""$PACKAGE_DIR""/*.mjs ""$PACKAGE_DIR""/*.js; do
     fi
 done");
 
-        // Process other files
-        commands.AppendLine(@"
+		// Process other files
+		commands.AppendLine(@"
 # Process documentation
 for doc_file in ""$PACKAGE_DIR""/README.md ""$PACKAGE_DIR""/LICENSE.md; do
     if [ -f ""$doc_file"" ]; then
@@ -151,8 +146,8 @@ for doc_file in ""$PACKAGE_DIR""/README.md ""$PACKAGE_DIR""/LICENSE.md; do
     fi
 done");
 
-        // Add binary asset summary
-        commands.AppendLine(@"
+		// Add binary asset summary
+		commands.AppendLine(@"
 # Binary assets summary
 echo """"
 echo ""═══════════════════════════════════════════════════════════════════════════════""
@@ -178,45 +173,38 @@ if [ -d ""$PACKAGE_DIR/vendor"" ]; then
         echo ""  - $relpath: $size bytes""
     done
 fi");
-    }
-    
-    /// <summary>
-    /// Make a script executable on Unix systems.
-    /// </summary>
-    private static async Task MakeExecutableAsync(string scriptPath)
-    {
-        try
-        {
-            var process = new System.Diagnostics.Process
-            {
-                StartInfo = new System.Diagnostics.ProcessStartInfo
-                {
-                    FileName = "chmod",
-                    Arguments = $"+x \"{scriptPath}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
-            };
-            
-            process.Start();
-            await process.WaitForExitAsync();
-        }
-        catch (Exception ex)
-        {
-            Logger.Warn($"Could not make script executable: {ex.Message}");
-        }
-    }
-    
-    /// <summary>
-    /// Generate a master concatenation script in the root decomp directory.
-    /// </summary>
-    public static async Task GenerateMasterScriptAsync(string decompDir)
-    {
-        using var timer = Logger.TimeOperation("Generate master concat script");
-        
-        var scriptPath = Path.Combine(decompDir, "concat-all.sh");
-        
-        var script = @"#!/bin/bash
+	}
+
+	/// <summary>
+	/// Make a script executable on Unix systems.
+	/// </summary>
+	private static async Task MakeExecutableAsync(string scriptPath) {
+		try {
+			var process = new System.Diagnostics.Process {
+				StartInfo = new System.Diagnostics.ProcessStartInfo {
+					FileName        = "chmod",
+					Arguments       = $"+x \"{scriptPath}\"",
+					UseShellExecute = false,
+					CreateNoWindow  = true
+				}
+			};
+
+			process.Start();
+			await process.WaitForExitAsync();
+		} catch (Exception ex) {
+			Logger.Warn($"Could not make script executable: {ex.Message}");
+		}
+	}
+
+	/// <summary>
+	/// Generate a master concatenation script in the root decomp directory.
+	/// </summary>
+	public static async Task GenerateMasterScriptAsync(string decompDir) {
+		using var timer = Logger.TimeOperation("Generate master concat script");
+
+		var scriptPath = Path.Combine(decompDir, "concat-all.sh");
+
+		var script = @"#!/bin/bash
 
 # HOHO Master Concatenation Script
 # Runs all agent concatenation scripts
@@ -246,13 +234,12 @@ echo ""║                           ALL AGENTS PROCESSED                       
 echo ""╚══════════════════════════════════════════════════════════════════════════════╝""
 ";
 
-        await File.WriteAllTextAsync(scriptPath, script);
-        
-        if (!OperatingSystem.IsWindows())
-        {
-            await MakeExecutableAsync(scriptPath);
-        }
-        
-        Logger.Info($"Generated master concatenation script: {scriptPath}");
-    }
+		await File.WriteAllTextAsync(scriptPath, script);
+
+		if (!OperatingSystem.IsWindows()) {
+			await MakeExecutableAsync(scriptPath);
+		}
+
+		Logger.Info($"Generated master concatenation script: {scriptPath}");
+	}
 }
