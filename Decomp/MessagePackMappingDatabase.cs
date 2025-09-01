@@ -30,7 +30,7 @@ public class MessagePackMappingDatabase
             Original = original,
             Mapped = mapped,
             Type = type,
-            Context = context,
+            Context = context ?? "global", // Normalize null context to "global"
             Confidence = confidence,
             LastUpdated = DateTime.UtcNow,
             UsageCount = 1
@@ -66,17 +66,23 @@ public class MessagePackMappingDatabase
     /// </summary>
     public MessagePackSymbolMapping? GetMapping(string original, string? context = null)
     {
+        // Convert null context to "global" for consistency
+        var normalizedContext = context ?? "global";
+        
         // Try exact context match first
-        if (context != null)
+        var contextMapping = _mappings.Mappings.FirstOrDefault(m => 
+            m.Original == original && m.Context == normalizedContext);
+        
+        if (contextMapping != null) return contextMapping;
+        
+        // If not found and not looking for global, fallback to global context
+        if (normalizedContext != "global")
         {
-            var contextMapping = _mappings.Mappings.FirstOrDefault(m => 
-                m.Original == original && m.Context == context);
-            if (contextMapping != null) return contextMapping;
+            return _mappings.Mappings.FirstOrDefault(m => 
+                m.Original == original && m.Context == "global");
         }
-
-        // Fallback to global context
-        return _mappings.Mappings.FirstOrDefault(m => 
-            m.Original == original && m.Context == "global");
+        
+        return null;
     }
 
     /// <summary>
@@ -100,11 +106,19 @@ public class MessagePackMappingDatabase
     /// </summary>
     public IEnumerable<MessagePackSymbolMapping> SearchMappings(string pattern)
     {
-        var regex = new System.Text.RegularExpressions.Regex(pattern, 
-            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-        
-        return _mappings.Mappings.Where(m => 
-            regex.IsMatch(m.Original) || regex.IsMatch(m.Mapped));
+        try
+        {
+            var regex = new System.Text.RegularExpressions.Regex(pattern, 
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            
+            return _mappings.Mappings.Where(m => 
+                regex.IsMatch(m.Original) || regex.IsMatch(m.Mapped));
+        }
+        catch (System.Text.RegularExpressions.RegexParseException)
+        {
+            // Invalid regex pattern - return empty results instead of throwing
+            return Enumerable.Empty<MessagePackSymbolMapping>();
+        }
     }
 
     /// <summary>
@@ -418,19 +432,19 @@ public class SymbolMappingCollection
 }
 
 /// <summary>
-/// MessagePack serializable symbol mapping (extends existing SymbolMapping)
+/// MessagePack serializable symbol mapping
 /// </summary>
 [MessagePackObject]
-public class MessagePackSymbolMapping : SymbolMapping
+public class MessagePackSymbolMapping
 {
     [Key(0)]
-    public new string Original { get; set; } = "";
+    public string Original { get; set; } = "";
     
     [Key(1)]
-    public new string Mapped { get; set; } = "";
+    public string Mapped { get; set; } = "";
     
     [Key(2)]
-    public new SymbolType Type { get; set; }
+    public SymbolType Type { get; set; }
     
     [Key(3)]
     public string? Context { get; set; }
@@ -439,7 +453,7 @@ public class MessagePackSymbolMapping : SymbolMapping
     public double Confidence { get; set; } = 1.0;
     
     [Key(5)]
-    public new DateTime LastUpdated { get; set; }
+    public DateTime LastUpdated { get; set; }
     
     [Key(6)]
     public int UsageCount { get; set; } = 1;
@@ -449,16 +463,16 @@ public class MessagePackSymbolMapping : SymbolMapping
 }
 
 /// <summary>
-/// MessagePack serializable naming pattern (extends existing NamingPattern)
+/// MessagePack serializable naming pattern
 /// </summary>
 [MessagePackObject]
-public class MessagePackNamingPattern : NamingPattern
+public class MessagePackNamingPattern
 {
     [Key(0)]
-    public new string Pattern { get; set; } = "";
+    public string Pattern { get; set; } = "";
     
     [Key(1)]
-    public new string Description { get; set; } = "";
+    public string Description { get; set; } = "";
     
     [Key(2)]
     public SymbolType TargetType { get; set; }

@@ -12,7 +12,7 @@ namespace Hoho.Decomp {
 		private readonly string    _mapPath;
 		private readonly SymbolMap _symbolMap = new SymbolMap();
 
-		public DecompilationMapper(string mapPath = "decomp/learned-mappings.json") {
+		public DecompilationMapper(string mapPath = "decomp/mappings.msgpack") {
 			_mapPath = mapPath;
 			LoadMappings();
 		}

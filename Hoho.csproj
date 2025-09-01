@@ -59,9 +59,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Exclude test files from main project compilation -->
+    <!-- Exclude test files and benchmarks from main project compilation -->
     <Compile Remove="Decomp.Tests/**/*.cs" />
     <None Remove="Decomp.Tests/**/*" />
+    <Compile Remove="Hoho.Benchmarks/**/*.cs" />
+    <None Remove="Hoho.Benchmarks/**/*" />
   </ItemGroup>
 
 </Project>

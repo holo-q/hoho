@@ -9,7 +9,7 @@ namespace Hoho.Decomp {
 	/// </summary>
 	public class SimplifiedExtractor {
 		private const string BASE_DIR    = "decomp";
-		private const string MAPPINGS_DB = "decomp/mappings.json";
+		private const string MAPPINGS_DB = "decomp/mappings.msgpack";
 
 		/// <summary>
 		/// Extract modules from a webpack bundle with simplified structure

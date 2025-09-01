@@ -8,7 +8,7 @@ namespace Hoho.Decomp {
 	/// </summary>
 	public class LspRenameCommand : Command {
 		// Single mapping database for everything
-		private const string DEFAULT_MAPPING_DB = "decomp/mappings.json";
+		private const string DEFAULT_MAPPING_DB = "decomp/mappings.msgpack";
 
 		public LspRenameCommand() : base("rename", "Rename symbols using TypeScript LSP") {
 			Argument<string> fileArg = new Argument<string>(
@@ -104,7 +104,7 @@ namespace Hoho.Decomp {
 	/// Batch rename all modules in a version
 	/// </summary>
 	public class LspBatchRenameCommand : Command {
-		private const string DEFAULT_MAPPING_DB = "decomp/mappings.json";
+		private const string DEFAULT_MAPPING_DB = "decomp/mappings.msgpack";
 
 		public LspBatchRenameCommand() : base("rename-all", "Rename symbols in all modules") {
 			Argument<string> versionArg = new Argument<string>(
@@ -196,7 +196,7 @@ namespace Hoho.Decomp {
     /// Add new symbol mappings to the database
     /// </summary>
     public class AddMappingCommand : Command {
-		private const string DEFAULT_MAPPING_DB = "decomp/mappings.json";
+		private const string DEFAULT_MAPPING_DB = "decomp/mappings.msgpack";
 
 		public AddMappingCommand() : base("add-mapping", "Add symbol mapping to database") {
 			Argument<string> oldNameArg = new Argument<string>("old", "Obfuscated symbol name");
@@ -245,7 +245,7 @@ namespace Hoho.Decomp {
 	/// Show current mappings
 	/// </summary>
 	public class ShowMappingsCommand : Command {
-		private const string DEFAULT_MAPPING_DB = "decomp/mappings.json";
+		private const string DEFAULT_MAPPING_DB = "decomp/mappings.msgpack";
 
 		public ShowMappingsCommand() : base("mappings", "Show current symbol mappings") {
 			this.SetHandler(async () => {

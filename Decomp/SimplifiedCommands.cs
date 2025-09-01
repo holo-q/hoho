@@ -182,7 +182,7 @@ namespace Hoho.Decomp {
 	/// Auto-detect version and rename
 	/// </summary>
 	public class SmartRenameCommand : Command {
-		private const string MAPPINGS_DB = "decomp/mappings.json";
+		private const string MAPPINGS_DB = "decomp/mappings.msgpack";
 
 		public SmartRenameCommand() : base("rename", "Rename symbols in a file") {
 			Argument<string> fileArg = new Argument<string>("file", "File to rename (auto-detects version)");
@@ -257,7 +257,7 @@ namespace Hoho.Decomp {
 	/// Rename all files in latest dev version
 	/// </summary>
 	public class RenameAllCommand : Command {
-		private const string MAPPINGS_DB = "decomp/mappings.json";
+		private const string MAPPINGS_DB = "decomp/mappings.msgpack";
 
 		public RenameAllCommand() : base("rename-all", "Rename all files in latest dev version") {
 			Option<string?> versionOpt = new Option<string?>("--version", "Specific version (default: latest)");
