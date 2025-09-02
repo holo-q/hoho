@@ -97,25 +97,23 @@ public abstract class CliIntegrationTestBase : IDisposable {
 	/// Create a test JSON mapping file for migration testing
 	/// </summary>
 	protected async Task CreateSampleJsonMappingsAsync(int mappingCount = 50) {
-		var mappings = new Dictionary<string, object>();
+		var mappings = new Dictionary<string, JsonMapping>();
 
 		for (int i = 0; i < mappingCount; i++) {
 			var key = $"json_obf_{i:D3}";
-			mappings[key] = new {
+			mappings[key] = new JsonMapping {
 				Original    = key,
 				Mapped      = $"json_readable_{i:D3}",
-				Type        = 1, // SymbolType.Function
+				Type        = SymbolType.Function,
 				LastUpdated = DateTime.UtcNow
 			};
 		}
 
-		var jsonData = new {
+		var jsonData = new JsonMappingData {
 			Mappings = mappings
 		};
 
-		var json = System.Text.Json.JsonSerializer.Serialize(jsonData, new System.Text.Json.JsonSerializerOptions {
-			WriteIndented = true
-		});
+		var json = System.Text.Json.JsonSerializer.Serialize(jsonData, JsonContext.Default.JsonMappingData);
 
 		await File.WriteAllTextAsync(TestJsonPath, json);
 	}
@@ -151,6 +149,20 @@ public abstract class CliIntegrationTestBase : IDisposable {
 	/// </summary>
 	protected async Task CreateCorruptedDatabaseAsync() {
 		await File.WriteAllBytesAsync(TestDbPath, new byte[] { 0x00, 0x01, 0x02, 0xFF });
+	}
+
+	/// <summary>
+	/// Extract JSON content from CLI output, ignoring log lines
+	/// </summary>
+	protected string ExtractJsonFromOutput(string output) {
+		var jsonStart = output.IndexOf('{');
+		var jsonEnd = output.LastIndexOf('}');
+		
+		if (jsonStart < 0 || jsonEnd <= jsonStart) {
+			throw new InvalidOperationException($"No valid JSON found in output: {output}");
+		}
+		
+		return output.Substring(jsonStart, jsonEnd - jsonStart + 1);
 	}
 
 	public virtual void Dispose() {

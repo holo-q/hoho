@@ -83,6 +83,13 @@ What makes hoho the 'last' CLI agent
 	* Our own HUD is simple and debuggy: solid black rectangles with red text on top
 * Quote messages
 	* up/down in action mode navigate message history and makes it possible to quote
+* Reactive UX:
+	* The terminal UX runs at 60 fps and retains high performance, allowing real-time vfx and juicing in a demoscene kind of way, animating colors, characters, etc. some use cases are given below
+	* Clear UX indicating that the model is working (entire program has bordered or lights up)
+	* Clear UX to route human attention when awaiting on things, using video game telegraphing and signaling techniques, the same things you would see being done for invincibility blinking i-frames, etc.
+	* Short burst of fast blinking pulses to direct or notify attention to UI elements
+	* ASCII-space cellular automaton
+		* We port the cellular automaton of the holoq.ai monument demo from typescript which allows us to do natural cellular reactive diffusion of colors and breathing coursing like electricity through the window's text, which could activate during inference/work while the agent is working
 
 ### Input
 

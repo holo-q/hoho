@@ -506,7 +506,7 @@ public class MessagePackMappingDatabaseTests : IDisposable {
 			}
 		};
 
-		var jsonString = System.Text.Json.JsonSerializer.Serialize(legacyData, new JsonSerializerOptions { WriteIndented = true });
+		var jsonString = System.Text.Json.JsonSerializer.Serialize(legacyData, JsonContext.Default.JsonMappingData);
 		await File.WriteAllTextAsync(jsonPath, jsonString);
 
 		// Act

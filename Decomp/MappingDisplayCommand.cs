@@ -221,30 +221,26 @@ public class MappingDisplayCommand : Command {
 		var mappings = GetFilteredMappings(db, context, type, search, minConfidence).Take(limit);
 		var stats    = db.GetStatistics();
 
-		var jsonOutput = new {
-			database = new {
-				totalMappings     = stats.TotalMappings,
-				averageConfidence = stats.AverageConfidence,
-				lastModified      = stats.LastModified,
-				byType            = stats.ByType,
-				byContext         = stats.ByContext
+		var jsonOutput = new MappingDisplayJson {
+			Database = new DatabaseJson {
+				TotalMappings     = stats.TotalMappings,
+				AverageConfidence = stats.AverageConfidence,
+				LastModified      = stats.LastModified,
+				ByType            = stats.ByType,
+				ByContext         = stats.ByContext
 			},
-			mappings = mappings.Select(m => new {
-				original    = m.Original,
-				mapped      = m.Mapped,
-				type        = m.Type.ToString(),
-				context     = m.Context,
-				confidence  = m.Confidence,
-				usageCount  = m.UsageCount,
-				lastUpdated = m.LastUpdated
+			Mappings = mappings.Select(m => new MappingJson {
+				Original    = m.Original,
+				Mapped      = m.Mapped,
+				Type        = m.Type.ToString(),
+				Context     = m.Context,
+				Confidence  = m.Confidence,
+				UsageCount  = m.UsageCount,
+				LastUpdated = m.LastUpdated
 			}).ToArray()
 		};
 
-		var json = System.Text.Json.JsonSerializer.Serialize(jsonOutput, new System.Text.Json.JsonSerializerOptions {
-			WriteIndented        = true,
-			PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
-		});
-
+		var json = System.Text.Json.JsonSerializer.Serialize(jsonOutput, JsonContext.Default.MappingDisplayJson);
 		Console.WriteLine(json);
 	}
 
@@ -361,4 +357,28 @@ public class MappingDisplayCommand : Command {
 			_      => "🔴"
 		};
 	}
+}
+
+// JSON serialization types for AOT compatibility
+public class MappingDisplayJson {
+	public DatabaseJson Database { get; set; } = new();
+	public MappingJson[] Mappings { get; set; } = Array.Empty<MappingJson>();
+}
+
+public class DatabaseJson {
+	public int TotalMappings { get; set; }
+	public double AverageConfidence { get; set; }
+	public DateTime LastModified { get; set; }
+	public Dictionary<SymbolType, int> ByType { get; set; } = new();
+	public Dictionary<string, int> ByContext { get; set; } = new();
+}
+
+public class MappingJson {
+	public string Original { get; set; } = "";
+	public string Mapped { get; set; } = "";
+	public string Type { get; set; } = "";
+	public string? Context { get; set; }
+	public double Confidence { get; set; }
+	public int UsageCount { get; set; }
+	public DateTime LastUpdated { get; set; }
 }

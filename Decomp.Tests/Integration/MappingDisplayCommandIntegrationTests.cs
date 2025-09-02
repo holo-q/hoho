@@ -77,8 +77,9 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 		// Assert
 		result.Success.Should().BeTrue();
 
-		// Should be valid JSON
-		var jsonDocument = JsonDocument.Parse(result.StandardOutput);
+		// Extract JSON from CLI output (ignore log lines)
+		var jsonContent = ExtractJsonFromOutput(result.StandardOutput);
+		var jsonDocument = JsonDocument.Parse(jsonContent);
 		jsonDocument.Should().NotBeNull();
 
 		// Should have expected structure
