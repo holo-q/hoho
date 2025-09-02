@@ -102,15 +102,18 @@ public abstract class CliIntegrationTestBase : IDisposable {
 		for (int i = 0; i < mappingCount; i++) {
 			var key = $"json_obf_{i:D3}";
 			mappings[key] = new {
-				mapped     = $"json_readable_{i:D3}",
-				type       = "function",
-				context    = "global",
-				confidence = 0.8,
-				usageCount = i + 1
+				Original    = key,
+				Mapped      = $"json_readable_{i:D3}",
+				Type        = 1, // SymbolType.Function
+				LastUpdated = DateTime.UtcNow
 			};
 		}
 
-		var json = System.Text.Json.JsonSerializer.Serialize(mappings, new System.Text.Json.JsonSerializerOptions {
+		var jsonData = new {
+			Mappings = mappings
+		};
+
+		var json = System.Text.Json.JsonSerializer.Serialize(jsonData, new System.Text.Json.JsonSerializerOptions {
 			WriteIndented = true
 		});
 

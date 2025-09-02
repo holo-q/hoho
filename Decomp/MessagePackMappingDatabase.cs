@@ -208,7 +208,7 @@ public class MessagePackMappingDatabase {
 
 		try {
 			var jsonContent = await File.ReadAllTextAsync(jsonPath);
-			var jsonData    = System.Text.Json.JsonSerializer.Deserialize<JsonMappingData>(jsonContent);
+			var jsonData    = System.Text.Json.JsonSerializer.Deserialize(jsonContent, JsonContext.Default.JsonMappingData);
 
 			if (jsonData?.Mappings != null) {
 				foreach (var kvp in jsonData.Mappings) {

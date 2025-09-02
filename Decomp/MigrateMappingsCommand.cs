@@ -157,7 +157,7 @@ public class MigrateMappingsCommand : Command {
 			// JSON deserialization test
 			stopwatch.Restart();
 			for (int i = 0; i < 100; i++) {
-				System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(jsonContent);
+				System.Text.Json.JsonSerializer.Deserialize(jsonContent, JsonContext.Default.DictionaryStringObject);
 			}
 			var jsonTime = stopwatch.ElapsedMilliseconds;
 

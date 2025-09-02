@@ -17,6 +17,12 @@ namespace Hoho.Decomp {
 	/// <summary>
 	/// AOT-compatible JSON source generation context.
 	/// </summary>
-	[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower), JsonSerializable(typeof(NpmPackageInfo)), JsonSerializable(typeof(DistTagsInfo))]
+	[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower), 
+	 JsonSerializable(typeof(NpmPackageInfo)), 
+	 JsonSerializable(typeof(DistTagsInfo)),
+	 JsonSerializable(typeof(JsonMappingData)),
+	 JsonSerializable(typeof(JsonMapping)),
+	 JsonSerializable(typeof(Dictionary<string, JsonMapping>)),
+	 JsonSerializable(typeof(Dictionary<string, object>))]
 	public partial class JsonContext : JsonSerializerContext { }
 }
