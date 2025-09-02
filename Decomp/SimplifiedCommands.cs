@@ -45,18 +45,18 @@ namespace Hoho.Decomp {
 					Logger.Info("🎯 Symbol Frequency Analysis:");
 					Logger.Info($"  - Total Unique Symbols: {freqAnalysis.TotalUniqueSymbols:N0}");
 					Logger.Info($"  - Total Occurrences: {freqAnalysis.TotalOccurrences:N0}");
-					var highPriorityCount = freqAnalysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.High);
+					var highPriorityCount   = freqAnalysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.High);
 					var mediumPriorityCount = freqAnalysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.Medium);
 					Logger.Info($"  - High Priority Symbols: {highPriorityCount} (rename first)");
 					Logger.Info($"  - Medium Priority Symbols: {mediumPriorityCount}");
 					Logger.Info($"  - Priority Report: {Path.Combine(result.OriginalDir, "frequency-analysis.md")}");
-					
+
 					// Show top 3 high priority symbols
 					var topRecommendations = freqAnalysis.PrioritizedRecommendations
 						.Where(r => r.Priority == RenamingPriority.High)
 						.Take(3)
 						.ToList();
-					
+
 					if (topRecommendations.Any()) {
 						Logger.Info("  - Top Priority Symbols:");
 						foreach (var rec in topRecommendations) {
@@ -79,8 +79,8 @@ namespace Hoho.Decomp {
 		/// </summary>
 		private static string FormatBytes(long bytes) {
 			string[] sizes = { "B", "KB", "MB", "GB" };
-			double len = bytes;
-			int order = 0;
+			double   len   = bytes;
+			int      order = 0;
 			while (len >= 1024 && order < sizes.Length - 1) {
 				order++;
 				len /= 1024;
@@ -118,7 +118,7 @@ namespace Hoho.Decomp {
 				// Extract version names from paths if needed
 				string version1Name = Path.GetFileNameWithoutExtension(version1);
 				string version2Name = Path.GetFileNameWithoutExtension(version2);
-				
+
 				if (version1.Contains("/") || version1.Contains("\\")) {
 					version1Name = Path.GetFileName(Path.GetDirectoryName(version1Path)) ?? "v1";
 				}
@@ -137,9 +137,8 @@ namespace Hoho.Decomp {
 				Logger.Info($"  - Common Symbols: {analysis.CommonSymbolCount:N0}");
 				Logger.Info($"  - Consistent Symbols: {analysis.ConsistentSymbols.Count:N0}");
 				Logger.Info($"  - Inconsistent Symbols: {analysis.InconsistentSymbols.Count:N0}");
-				
-				double consistencyPercentage = analysis.CommonSymbolCount > 0 ? 
-					(double)analysis.ConsistentSymbols.Count / analysis.CommonSymbolCount * 100 : 100;
+
+				double consistencyPercentage = analysis.CommonSymbolCount > 0 ? (double)analysis.ConsistentSymbols.Count / analysis.CommonSymbolCount * 100 : 100;
 				Logger.Info($"  - Overall Consistency: {consistencyPercentage:F1}%");
 
 				if (analysis.PotentialRenames.Any()) {
@@ -166,14 +165,13 @@ namespace Hoho.Decomp {
 
 				// Generate and save report
 				string reportContent = CrossVersionConsistencyChecker.GenerateConsistencyReport(analysis);
-				string reportPath = Path.Combine("decomp", $"consistency-{version1Name}-vs-{version2Name}.md");
+				string reportPath    = Path.Combine("decomp", $"consistency-{version1Name}-vs-{version2Name}.md");
 				Directory.CreateDirectory("decomp");
 				await File.WriteAllTextAsync(reportPath, reportContent);
 
 				Logger.Info("");
 				Logger.Info($"📄 Full Report: {reportPath}");
 				Logger.Info($"🗃️  Consistency Database: decomp/consistency.json");
-
 			}, version1Arg, version2Arg);
 		}
 	}

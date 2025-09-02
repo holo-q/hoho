@@ -19,38 +19,38 @@ namespace Hoho.Decomp {
 			LoadVersionRegistry();
 		}
 
-        /// <summary>
-        /// Directory structure:
-        /// claude-code-dev/
-        /// mappings/
-        /// global-mappings.json      - All learned mappings
-        /// version-mappings/         - Per-version specific mappings
-        /// versions/
-        /// 1.0.98/
-        /// original/              - Original obfuscated code
-        /// cli.js
-        /// sdk.mjs
-        /// modules/
-        /// Wu1.js
-        /// Bx2.js
-        /// manual/                - Your manual edits
-        /// cli.js
-        /// sdk.mjs
-        /// modules/
-        /// ReactModule.js     - Wu1 renamed
-        /// FileUtils.js       - Bx2 renamed
-        /// automated/             - Tool-generated deobfuscation
-        /// analysis/              - Reports and analysis
-        /// 1.0.99/
-        /// original/
-        /// manual/
-        /// automated/
-        /// registry.json              - Version tracking
-        /// </summary>
-        /// <summary>
-        /// Setup a new version for decompilation
-        /// </summary>
-        public async Task<string> SetupVersionAsync(string version, string? sourcePath = null) {
+		/// <summary>
+		/// Directory structure:
+		/// claude-code-dev/
+		/// mappings/
+		/// global-mappings.json      - All learned mappings
+		/// version-mappings/         - Per-version specific mappings
+		/// versions/
+		/// 1.0.98/
+		/// original/              - Original obfuscated code
+		/// cli.js
+		/// sdk.mjs
+		/// modules/
+		/// Wu1.js
+		/// Bx2.js
+		/// manual/                - Your manual edits
+		/// cli.js
+		/// sdk.mjs
+		/// modules/
+		/// ReactModule.js     - Wu1 renamed
+		/// FileUtils.js       - Bx2 renamed
+		/// automated/             - Tool-generated deobfuscation
+		/// analysis/              - Reports and analysis
+		/// 1.0.99/
+		/// original/
+		/// manual/
+		/// automated/
+		/// registry.json              - Version tracking
+		/// </summary>
+		/// <summary>
+		/// Setup a new version for decompilation
+		/// </summary>
+		public async Task<string> SetupVersionAsync(string version, string? sourcePath = null) {
 			string versionDir   = Path.Combine(_baseDir, "versions", version);
 			string originalDir  = Path.Combine(versionDir, "original");
 			string manualDir    = Path.Combine(versionDir, "manual");

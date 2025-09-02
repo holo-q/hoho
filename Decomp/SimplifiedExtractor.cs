@@ -60,8 +60,8 @@ namespace Hoho.Decomp {
 
 			// Generate comprehensive bundle analysis
 			WebpackBundleAnalyzer.BundleAnalysis bundleAnalysis = await WebpackBundleAnalyzer.AnalyzeBundleAsync(bundlePath);
-			string                                analysisReport = bundleAnalysis.GenerateReport();
-			string                                analysisPath   = Path.Combine(versionDir, "bundle-analysis.md");
+			string                               analysisReport = bundleAnalysis.GenerateReport();
+			string                               analysisPath   = Path.Combine(versionDir, "bundle-analysis.md");
 			await File.WriteAllTextAsync(analysisPath, analysisReport);
 
 			// Generate symbol frequency analysis for prioritized renaming
@@ -318,13 +318,13 @@ hoho decomp finalize {version}
 ";
 
 		public class ExtractResult {
-			public string Version     { get; set; } = "";
-			public int    ModuleCount { get; set; }
-			public string OriginalDir { get; set; } = "";
-			public string DevDir      { get; set; } = "";
-			public string FinalDir    { get; set; } = "";
-			public WebpackBundleAnalyzer.BundleAnalysis? BundleAnalysis { get; set; }
-			public FrequencyAnalysis? FrequencyAnalysis { get; set; }
+			public string                                Version           { get; set; } = "";
+			public int                                   ModuleCount       { get; set; }
+			public string                                OriginalDir       { get; set; } = "";
+			public string                                DevDir            { get; set; } = "";
+			public string                                FinalDir          { get; set; } = "";
+			public WebpackBundleAnalyzer.BundleAnalysis? BundleAnalysis    { get; set; }
+			public FrequencyAnalysis?                    FrequencyAnalysis { get; set; }
 		}
 
 		public class ModuleInfo {

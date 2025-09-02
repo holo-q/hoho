@@ -24,10 +24,10 @@ namespace Hoho.Decomp {
 			string content2 = await File.ReadAllTextAsync(version2Path);
 
 			var analysis = new ConsistencyAnalysis {
-				Version1Name = version1Name,
-				Version2Name = version2Name,
-				Version1Path = version1Path,
-				Version2Path = version2Path,
+				Version1Name      = version1Name,
+				Version2Name      = version2Name,
+				Version1Path      = version1Path,
+				Version2Path      = version2Path,
 				AnalysisTimestamp = DateTime.UtcNow
 			};
 
@@ -39,7 +39,7 @@ namespace Hoho.Decomp {
 			AnalyzeSymbolConsistency(symbols1, symbols2, analysis);
 			AnalyzeStructuralConsistency(content1, content2, analysis);
 			AnalyzeMappingConsistency(analysis);
-			
+
 			// Generate consistency recommendations
 			GenerateConsistencyRecommendations(analysis);
 
@@ -55,22 +55,22 @@ namespace Hoho.Decomp {
 		/// Extract symbol metadata for consistency analysis
 		/// </summary>
 		private static Dictionary<string, SymbolMetadata> ExtractSymbolMetadata(string content) {
-			var symbols = new Dictionary<string, SymbolMetadata>();
+			var symbols           = new Dictionary<string, SymbolMetadata>();
 			var identifierPattern = @"\b([A-Za-z_$][A-Za-z0-9_$]*)\b";
-			var matches = Regex.Matches(content, identifierPattern);
+			var matches           = Regex.Matches(content, identifierPattern);
 
 			foreach (Match match in matches) {
 				string symbol = match.Value;
-				
+
 				// Skip JavaScript keywords and very short symbols
 				if (IsJavaScriptKeyword(symbol) || symbol.Length == 1) continue;
 
 				if (!symbols.ContainsKey(symbol)) {
 					symbols[symbol] = new SymbolMetadata {
-						Symbol = symbol,
+						Symbol        = symbol,
 						FirstPosition = match.Index,
-						Occurrences = new List<int>(),
-						Contexts = new List<string>()
+						Occurrences   = new List<int>(),
+						Contexts      = new List<string>()
 					};
 				}
 
@@ -79,26 +79,26 @@ namespace Hoho.Decomp {
 				metadata.TotalCount++;
 
 				// Extract context around symbol
-				int contextStart = Math.Max(0, match.Index - 30);
-				int contextLength = Math.Min(60, content.Length - contextStart);
-				string context = content.Substring(contextStart, contextLength);
-				
+				int    contextStart  = Math.Max(0, match.Index - 30);
+				int    contextLength = Math.Min(60, content.Length - contextStart);
+				string context       = content.Substring(contextStart, contextLength);
+
 				// Only store unique contexts to avoid duplicates
 				if (!metadata.Contexts.Contains(context)) {
 					metadata.Contexts.Add(context);
 				}
 
 				// Determine symbol characteristics
-				metadata.IsObfuscated = IsObfuscatedSymbol(symbol);
-				metadata.Role = DetermineSymbolRole(context, symbol, match.Index - contextStart);
+				metadata.IsObfuscated   = IsObfuscatedSymbol(symbol);
+				metadata.Role           = DetermineSymbolRole(context, symbol, match.Index - contextStart);
 				metadata.IsLikelyGlobal = DetermineIfGlobal(context, symbol);
 			}
 
 			// Calculate additional metrics
 			foreach (var metadata in symbols.Values) {
-				metadata.SpreadScore = CalculateSpread(metadata.Occurrences, content.Length);
+				metadata.SpreadScore      = CalculateSpread(metadata.Occurrences, content.Length);
 				metadata.ContextDiversity = metadata.Contexts.Count;
-				metadata.Signature = GenerateSymbolSignature(metadata);
+				metadata.Signature        = GenerateSymbolSignature(metadata);
 			}
 
 			return symbols;
@@ -110,10 +110,10 @@ namespace Hoho.Decomp {
 		private static void AnalyzeSymbolConsistency(Dictionary<string, SymbolMetadata> symbols1, Dictionary<string, SymbolMetadata> symbols2, ConsistencyAnalysis analysis) {
 			// Find symbols present in both versions
 			var commonSymbols = symbols1.Keys.Intersect(symbols2.Keys).ToList();
-			var uniqueToV1 = symbols1.Keys.Except(symbols2.Keys).ToList();
-			var uniqueToV2 = symbols2.Keys.Except(symbols1.Keys).ToList();
+			var uniqueToV1    = symbols1.Keys.Except(symbols2.Keys).ToList();
+			var uniqueToV2    = symbols2.Keys.Except(symbols1.Keys).ToList();
 
-			analysis.CommonSymbolCount = commonSymbols.Count;
+			analysis.CommonSymbolCount     = commonSymbols.Count;
 			analysis.UniqueToVersion1Count = uniqueToV1.Count;
 			analysis.UniqueToVersion2Count = uniqueToV2.Count;
 
@@ -123,12 +123,12 @@ namespace Hoho.Decomp {
 				var meta2 = symbols2[symbol];
 
 				var consistency = new SymbolConsistencyInfo {
-					Symbol = symbol,
-					FrequencyChange = meta2.TotalCount - meta1.TotalCount,
-					RoleConsistent = meta1.Role == meta2.Role,
+					Symbol            = symbol,
+					FrequencyChange   = meta2.TotalCount - meta1.TotalCount,
+					RoleConsistent    = meta1.Role == meta2.Role,
 					ContextSimilarity = CalculateContextSimilarity(meta1.Contexts, meta2.Contexts),
-					SpreadChange = meta2.SpreadScore - meta1.SpreadScore,
-					ConsistencyScore = CalculateConsistencyScore(meta1, meta2)
+					SpreadChange      = meta2.SpreadScore - meta1.SpreadScore,
+					ConsistencyScore  = CalculateConsistencyScore(meta1, meta2)
 				};
 
 				if (consistency.ConsistencyScore > 0.7) {
@@ -147,22 +147,22 @@ namespace Hoho.Decomp {
 		/// </summary>
 		private static void AnalyzeStructuralConsistency(string content1, string content2, ConsistencyAnalysis analysis) {
 			// Extract structural elements from both versions
-			var modules1 = ExtractModules(content1);
-			var modules2 = ExtractModules(content2);
-			var classes1 = ExtractClasses(content1);
-			var classes2 = ExtractClasses(content2);
+			var modules1   = ExtractModules(content1);
+			var modules2   = ExtractModules(content2);
+			var classes1   = ExtractClasses(content1);
+			var classes2   = ExtractClasses(content2);
 			var functions1 = ExtractFunctions(content1);
 			var functions2 = ExtractFunctions(content2);
 
 			analysis.StructuralConsistency = new StructuralConsistencyInfo {
-				ModuleConsistency = CalculateStructuralConsistency(modules1, modules2),
-				ClassConsistency = CalculateStructuralConsistency(classes1, classes2),
-				FunctionConsistency = CalculateStructuralConsistency(functions1, functions2),
+				ModuleConsistency      = CalculateStructuralConsistency(modules1, modules2),
+				ClassConsistency       = CalculateStructuralConsistency(classes1, classes2),
+				FunctionConsistency    = CalculateStructuralConsistency(functions1, functions2),
 				OverallStructuralScore = 0.0 // Will be calculated below
 			};
 
 			// Calculate overall structural score
-			analysis.StructuralConsistency.OverallStructuralScore = 
+			analysis.StructuralConsistency.OverallStructuralScore =
 				(analysis.StructuralConsistency.ModuleConsistency +
 				 analysis.StructuralConsistency.ClassConsistency +
 				 analysis.StructuralConsistency.FunctionConsistency) / 3.0;
@@ -180,11 +180,11 @@ namespace Hoho.Decomp {
 			}
 
 			try {
-				string json = File.ReadAllText(mappingsPath);
-				var existingMappings = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? new Dictionary<string, string>();
+				string json             = File.ReadAllText(mappingsPath);
+				var    existingMappings = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? new Dictionary<string, string>();
 
 				int consistentMappings = 0;
-				int totalMappings = existingMappings.Count;
+				int totalMappings      = existingMappings.Count;
 
 				foreach (var mapping in existingMappings) {
 					// Check if both source and target symbols appear consistently
@@ -217,11 +217,11 @@ namespace Hoho.Decomp {
 
 			foreach (var symbol in highConfidenceSymbols) {
 				recommendations.Add(new ConsistencyRecommendation {
-					Type = RecommendationType.SafeRename,
-					Symbol = symbol.Key,
+					Type       = RecommendationType.SafeRename,
+					Symbol     = symbol.Key,
 					Confidence = symbol.Value.ConsistencyScore,
-					Rationale = $"Highly consistent across versions (score: {symbol.Value.ConsistencyScore:F2}), safe to rename",
-					Priority = symbol.Value.ConsistencyScore > 0.9 ? "High" : "Medium"
+					Rationale  = $"Highly consistent across versions (score: {symbol.Value.ConsistencyScore:F2}), safe to rename",
+					Priority   = symbol.Value.ConsistencyScore > 0.9 ? "High" : "Medium"
 				});
 			}
 
@@ -232,23 +232,23 @@ namespace Hoho.Decomp {
 
 			foreach (var symbol in versionSpecificSymbols.Take(10)) {
 				recommendations.Add(new ConsistencyRecommendation {
-					Type = RecommendationType.InvestigateChange,
-					Symbol = symbol.Key,
+					Type       = RecommendationType.InvestigateChange,
+					Symbol     = symbol.Key,
 					Confidence = 1.0 - symbol.Value.ConsistencyScore,
-					Rationale = $"Significant frequency change ({symbol.Value.FrequencyChange:+#;-#;0}) between versions",
-					Priority = "Medium"
+					Rationale  = $"Significant frequency change ({symbol.Value.FrequencyChange:+#;-#;0}) between versions",
+					Priority   = "Medium"
 				});
 			}
 
 			// Potential renames (symbols that disappeared in one version but similar ones appeared)
 			foreach (var rename in analysis.PotentialRenames.Take(5)) {
 				recommendations.Add(new ConsistencyRecommendation {
-					Type = RecommendationType.PotentialRename,
-					Symbol = rename.OldSymbol,
-					NewSymbol = rename.NewSymbol,
+					Type       = RecommendationType.PotentialRename,
+					Symbol     = rename.OldSymbol,
+					NewSymbol  = rename.NewSymbol,
 					Confidence = rename.Confidence,
-					Rationale = $"Possible rename: {rename.OldSymbol} → {rename.NewSymbol} (confidence: {rename.Confidence:F2})",
-					Priority = rename.Confidence > 0.7 ? "High" : "Low"
+					Rationale  = $"Possible rename: {rename.OldSymbol} → {rename.NewSymbol} (confidence: {rename.Confidence:F2})",
+					Priority   = rename.Confidence > 0.7 ? "High" : "Low"
 				});
 			}
 
@@ -316,9 +316,9 @@ namespace Hoho.Decomp {
 			database.SymbolReliabilityScores.Clear();
 			foreach (var symbol in symbolScores) {
 				double averageScore = symbol.Value.Average();
-				double consistency = 1.0 - (symbol.Value.Max() - symbol.Value.Min()); // Penalize high variance
-				double reliability = (averageScore * 0.7) + (consistency * 0.3);
-				
+				double consistency  = 1.0 - (symbol.Value.Max() - symbol.Value.Min()); // Penalize high variance
+				double reliability  = (averageScore * 0.7) + (consistency * 0.3);
+
 				database.SymbolReliabilityScores[symbol.Key] = reliability;
 			}
 		}
@@ -347,7 +347,7 @@ namespace Hoho.Decomp {
 			if (items1.Count == 0 || items2.Count == 0) return 0.0;
 
 			int common = items1.Intersect(items2).Count();
-			int total = items1.Union(items2).Count();
+			int total  = items1.Union(items2).Count();
 			return (double)common / total;
 		}
 
@@ -379,7 +379,7 @@ namespace Hoho.Decomp {
 			if (contexts1.Count == 0 || contexts2.Count == 0) return 0.0;
 
 			int commonPatterns = 0;
-			int totalPatterns = contexts1.Count + contexts2.Count;
+			int totalPatterns  = contexts1.Count + contexts2.Count;
 
 			foreach (var context1 in contexts1) {
 				foreach (var context2 in contexts2) {
@@ -397,7 +397,7 @@ namespace Hoho.Decomp {
 			if (string.IsNullOrEmpty(s1) && string.IsNullOrEmpty(s2)) return 1.0;
 			if (string.IsNullOrEmpty(s1) || string.IsNullOrEmpty(s2)) return 0.0;
 
-			int maxLen = Math.Max(s1.Length, s2.Length);
+			int maxLen   = Math.Max(s1.Length, s2.Length);
 			int distance = CalculateLevenshteinDistance(s1, s2);
 			return 1.0 - ((double)distance / maxLen);
 		}
@@ -418,15 +418,17 @@ namespace Hoho.Decomp {
 			return d[s1.Length, s2.Length];
 		}
 
-		private static List<PotentialRename> FindPotentialRenames(List<string> uniqueToV1, List<string> uniqueToV2, 
-			Dictionary<string, SymbolMetadata> symbols1, Dictionary<string, SymbolMetadata> symbols2) {
+		private static List<PotentialRename> FindPotentialRenames(List<string>                       uniqueToV1,
+		                                                          List<string>                       uniqueToV2,
+		                                                          Dictionary<string, SymbolMetadata> symbols1,
+		                                                          Dictionary<string, SymbolMetadata> symbols2) {
 			var potentialRenames = new List<PotentialRename>();
 
 			foreach (string oldSymbol in uniqueToV1) {
 				if (!symbols1.ContainsKey(oldSymbol)) continue;
 				var oldMeta = symbols1[oldSymbol];
 
-				var bestMatch = string.Empty;
+				var    bestMatch      = string.Empty;
 				double bestConfidence = 0.0;
 
 				foreach (string newSymbol in uniqueToV2) {
@@ -436,15 +438,15 @@ namespace Hoho.Decomp {
 					// Calculate similarity based on characteristics
 					double confidence = CalculateRenameConfidence(oldMeta, newMeta);
 					if (confidence > bestConfidence && confidence > 0.5) {
-						bestMatch = newSymbol;
+						bestMatch      = newSymbol;
 						bestConfidence = confidence;
 					}
 				}
 
 				if (!string.IsNullOrEmpty(bestMatch)) {
 					potentialRenames.Add(new PotentialRename {
-						OldSymbol = oldSymbol,
-						NewSymbol = bestMatch,
+						OldSymbol  = oldSymbol,
+						NewSymbol  = bestMatch,
 						Confidence = bestConfidence
 					});
 				}
@@ -480,8 +482,8 @@ namespace Hoho.Decomp {
 
 		private static SymbolRole DetermineSymbolRole(string context, string symbol, int symbolPos) {
 			string beforeSymbol = symbolPos > 0 ? context.Substring(0, symbolPos) : "";
-			string afterSymbol = symbolPos + symbol.Length < context.Length ? context.Substring(symbolPos + symbol.Length) : "";
-			
+			string afterSymbol  = symbolPos + symbol.Length < context.Length ? context.Substring(symbolPos + symbol.Length) : "";
+
 			if (Regex.IsMatch(beforeSymbol, @"var\s+$") && Regex.IsMatch(afterSymbol, @"^\s*=\s*U\s*\(")) {
 				return SymbolRole.ModuleName;
 			}
@@ -497,21 +499,21 @@ namespace Hoho.Decomp {
 			if (Regex.IsMatch(beforeSymbol, @"\.$") || Regex.IsMatch(afterSymbol, @"^\s*:")) {
 				return SymbolRole.PropertyName;
 			}
-			
+
 			return SymbolRole.VariableName;
 		}
 
 		private static bool DetermineIfGlobal(string context, string symbol) {
 			// Heuristic: if symbol appears in module definition or class definition, it's likely global
 			return Regex.IsMatch(context, @"var\s+" + Regex.Escape(symbol) + @"\s*=") ||
-				   Regex.IsMatch(context, @"class\s+" + Regex.Escape(symbol)) ||
-				   Regex.IsMatch(context, @"function\s+" + Regex.Escape(symbol));
+			       Regex.IsMatch(context, @"class\s+" + Regex.Escape(symbol)) ||
+			       Regex.IsMatch(context, @"function\s+" + Regex.Escape(symbol));
 		}
 
 		private static double CalculateSpread(List<int> positions, int totalLength) {
 			if (positions.Count <= 1) return 0.0;
-			
-			var sorted = positions.OrderBy(p => p).ToList();
+
+			var    sorted = positions.OrderBy(p => p).ToList();
 			double spread = sorted.Last() - sorted.First();
 			return Math.Min(1.0, spread / totalLength);
 		}
@@ -541,7 +543,7 @@ namespace Hoho.Decomp {
 		/// </summary>
 		public static string GenerateConsistencyReport(ConsistencyAnalysis analysis) {
 			var report = new StringBuilder();
-			
+
 			report.AppendLine("# Cross-Version Consistency Analysis Report");
 			report.AppendLine($"**Versions:** {analysis.Version1Name} vs {analysis.Version2Name}");
 			report.AppendLine($"**Analysis Date:** {analysis.AnalysisTimestamp:yyyy-MM-dd HH:mm:ss}");
@@ -555,10 +557,9 @@ namespace Hoho.Decomp {
 			report.AppendLine($"- **Unique to {analysis.Version1Name}:** {analysis.UniqueToVersion1Count:N0}");
 			report.AppendLine($"- **Unique to {analysis.Version2Name}:** {analysis.UniqueToVersion2Count:N0}");
 			report.AppendLine($"- **Potential Renames:** {analysis.PotentialRenames.Count:N0}");
-			
+
 			// Calculate consistency percentage
-			double consistencyPercentage = analysis.CommonSymbolCount > 0 ? 
-				(double)analysis.ConsistentSymbols.Count / analysis.CommonSymbolCount * 100 : 100;
+			double consistencyPercentage = analysis.CommonSymbolCount > 0 ? (double)analysis.ConsistentSymbols.Count / analysis.CommonSymbolCount * 100 : 100;
 			report.AppendLine($"- **Overall Consistency:** {consistencyPercentage:F1}%");
 			report.AppendLine();
 
@@ -577,7 +578,7 @@ namespace Hoho.Decomp {
 			var topConsistent = analysis.ConsistentSymbols.Values
 				.OrderByDescending(s => s.ConsistencyScore)
 				.Take(15);
-			
+
 			foreach (var symbol in topConsistent) {
 				report.AppendLine($"- **`{symbol.Symbol}`**: {symbol.ConsistencyScore:P1} consistency");
 				if (symbol.FrequencyChange != 0) {
@@ -602,10 +603,10 @@ namespace Hoho.Decomp {
 			if (analysis.Recommendations.Any()) {
 				report.AppendLine("## 💡 Consistency Recommendations");
 				var groupedRecs = analysis.Recommendations.GroupBy(r => r.Type);
-				
+
 				foreach (var group in groupedRecs) {
 					report.AppendLine($"### {group.Key} ({group.Count()} items)");
-					
+
 					foreach (var rec in group.Take(8)) {
 						report.AppendLine($"- **{rec.Priority} Priority**: {rec.Rationale}");
 						if (!string.IsNullOrEmpty(rec.NewSymbol)) {
@@ -630,73 +631,73 @@ namespace Hoho.Decomp {
 
 	// Data structures for consistency analysis
 	public class ConsistencyAnalysis {
-		public string Version1Name { get; set; } = "";
-		public string Version2Name { get; set; } = "";
-		public string Version1Path { get; set; } = "";
-		public string Version2Path { get; set; } = "";
+		public string   Version1Name      { get; set; } = "";
+		public string   Version2Name      { get; set; } = "";
+		public string   Version1Path      { get; set; } = "";
+		public string   Version2Path      { get; set; } = "";
 		public DateTime AnalysisTimestamp { get; set; }
-		
-		public int CommonSymbolCount { get; set; }
+
+		public int CommonSymbolCount     { get; set; }
 		public int UniqueToVersion1Count { get; set; }
 		public int UniqueToVersion2Count { get; set; }
-		
-		public Dictionary<string, SymbolConsistencyInfo> ConsistentSymbols { get; set; } = new();
+
+		public Dictionary<string, SymbolConsistencyInfo> ConsistentSymbols   { get; set; } = new();
 		public Dictionary<string, SymbolConsistencyInfo> InconsistentSymbols { get; set; } = new();
-		public List<PotentialRename> PotentialRenames { get; set; } = new();
-		
-		public StructuralConsistencyInfo? StructuralConsistency { get; set; }
-		public double MappingConsistencyScore { get; set; }
-		public List<ConsistencyRecommendation> Recommendations { get; set; } = new();
+		public List<PotentialRename>                     PotentialRenames    { get; set; } = new();
+
+		public StructuralConsistencyInfo?      StructuralConsistency   { get; set; }
+		public double                          MappingConsistencyScore { get; set; }
+		public List<ConsistencyRecommendation> Recommendations         { get; set; } = new();
 	}
 
 	public class SymbolMetadata {
-		public string Symbol { get; set; } = "";
-		public int FirstPosition { get; set; }
-		public List<int> Occurrences { get; set; } = new();
-		public List<string> Contexts { get; set; } = new();
-		public int TotalCount { get; set; }
-		public bool IsObfuscated { get; set; }
-		public SymbolRole Role { get; set; }
-		public bool IsLikelyGlobal { get; set; }
-		public double SpreadScore { get; set; }
-		public int ContextDiversity { get; set; }
-		public string Signature { get; set; } = "";
+		public string       Symbol           { get; set; } = "";
+		public int          FirstPosition    { get; set; }
+		public List<int>    Occurrences      { get; set; } = new();
+		public List<string> Contexts         { get; set; } = new();
+		public int          TotalCount       { get; set; }
+		public bool         IsObfuscated     { get; set; }
+		public SymbolRole   Role             { get; set; }
+		public bool         IsLikelyGlobal   { get; set; }
+		public double       SpreadScore      { get; set; }
+		public int          ContextDiversity { get; set; }
+		public string       Signature        { get; set; } = "";
 	}
 
 	public class SymbolConsistencyInfo {
-		public string Symbol { get; set; } = "";
-		public int FrequencyChange { get; set; }
-		public bool RoleConsistent { get; set; }
+		public string Symbol            { get; set; } = "";
+		public int    FrequencyChange   { get; set; }
+		public bool   RoleConsistent    { get; set; }
 		public double ContextSimilarity { get; set; }
-		public double SpreadChange { get; set; }
-		public double ConsistencyScore { get; set; }
+		public double SpreadChange      { get; set; }
+		public double ConsistencyScore  { get; set; }
 	}
 
 	public class StructuralConsistencyInfo {
-		public double ModuleConsistency { get; set; }
-		public double ClassConsistency { get; set; }
-		public double FunctionConsistency { get; set; }
+		public double ModuleConsistency      { get; set; }
+		public double ClassConsistency       { get; set; }
+		public double FunctionConsistency    { get; set; }
 		public double OverallStructuralScore { get; set; }
 	}
 
 	public class PotentialRename {
-		public string OldSymbol { get; set; } = "";
-		public string NewSymbol { get; set; } = "";
+		public string OldSymbol  { get; set; } = "";
+		public string NewSymbol  { get; set; } = "";
 		public double Confidence { get; set; }
 	}
 
 	public class ConsistencyRecommendation {
-		public RecommendationType Type { get; set; }
-		public string Symbol { get; set; } = "";
-		public string NewSymbol { get; set; } = "";
-		public double Confidence { get; set; }
-		public string Rationale { get; set; } = "";
-		public string Priority { get; set; } = "";
+		public RecommendationType Type       { get; set; }
+		public string             Symbol     { get; set; } = "";
+		public string             NewSymbol  { get; set; } = "";
+		public double             Confidence { get; set; }
+		public string             Rationale  { get; set; } = "";
+		public string             Priority   { get; set; } = "";
 	}
 
 	public class ConsistencyDatabase {
-		public DateTime LastUpdated { get; set; }
-		public List<ConsistencyAnalysis> Analyses { get; set; } = new();
+		public DateTime                   LastUpdated             { get; set; }
+		public List<ConsistencyAnalysis>  Analyses                { get; set; } = new();
 		public Dictionary<string, double> SymbolReliabilityScores { get; set; } = new();
 	}
 

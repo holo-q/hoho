@@ -17,7 +17,7 @@ namespace Hoho.Decomp {
 			AddCommand(new FinalizeCommand());
 			AddCommand(new CleanupCommand());
 			AddCommand(new ListVersionsCommand());
-			
+
 			// Analysis commands
 			AddCommand(new ConsistencyCommand());
 

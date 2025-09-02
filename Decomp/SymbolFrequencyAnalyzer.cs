@@ -17,27 +17,27 @@ namespace Hoho.Decomp {
 			}
 
 			using var timer = Logger.TimeOperation("Symbol frequency analysis");
-			
+
 			string content = await File.ReadAllTextAsync(bundlePath);
 			var analysis = new FrequencyAnalysis {
-				FilePath = bundlePath,
+				FilePath          = bundlePath,
 				AnalysisTimestamp = DateTime.UtcNow
 			};
 
 			// Extract all symbol occurrences with context
 			var symbolOccurrences = ExtractSymbolOccurrences(content);
-			
+
 			// Calculate frequency metrics
 			CalculateFrequencyMetrics(symbolOccurrences, analysis);
-			
+
 			// Analyze symbol roles and importance
 			AnalyzeSymbolRoles(content, symbolOccurrences, analysis);
-			
+
 			// Generate prioritized recommendations
 			GeneratePrioritizedRecommendations(analysis);
 
 			Logger.Info($"Analyzed {analysis.TotalUniqueSymbols} symbols with {analysis.TotalOccurrences} total occurrences");
-			
+
 			return analysis;
 		}
 
@@ -45,16 +45,16 @@ namespace Hoho.Decomp {
 		/// Extract all symbol occurrences with their contexts
 		/// </summary>
 		private static Dictionary<string, List<SymbolOccurrence>> ExtractSymbolOccurrences(string content) {
-			var occurrences = new Dictionary<string, List<SymbolOccurrence>>();
+			var occurrences       = new Dictionary<string, List<SymbolOccurrence>>();
 			var identifierPattern = @"\b([A-Za-z_$][A-Za-z0-9_$]*)\b";
-			var matches = Regex.Matches(content, identifierPattern);
+			var matches           = Regex.Matches(content, identifierPattern);
 
 			foreach (Match match in matches) {
 				string symbol = match.Value;
-				
+
 				// Skip JavaScript keywords
 				if (IsJavaScriptKeyword(symbol)) continue;
-				
+
 				// Skip very short symbols that are likely parameters
 				if (symbol.Length == 1) continue;
 
@@ -63,19 +63,19 @@ namespace Hoho.Decomp {
 				}
 
 				// Extract context around the symbol
-				int contextStart = Math.Max(0, match.Index - 50);
-				int contextLength = Math.Min(100, content.Length - contextStart);
-				string context = content.Substring(contextStart, contextLength);
+				int    contextStart  = Math.Max(0, match.Index - 50);
+				int    contextLength = Math.Min(100, content.Length - contextStart);
+				string context       = content.Substring(contextStart, contextLength);
 
 				// Determine symbol role from context
 				var role = DetermineSymbolRole(context, symbol, match.Index - contextStart);
 
 				occurrences[symbol].Add(new SymbolOccurrence {
-					Position = match.Index,
-					Context = context,
-					Role = role,
+					Position      = match.Index,
+					Context       = context,
+					Role          = role,
 					IsDeclaration = IsDeclaration(context, symbol, match.Index - contextStart),
-					LineNumber = content.Substring(0, match.Index).Count(c => c == '\n') + 1
+					LineNumber    = content.Substring(0, match.Index).Count(c => c == '\n') + 1
 				});
 			}
 
@@ -87,7 +87,7 @@ namespace Hoho.Decomp {
 		/// </summary>
 		private static void CalculateFrequencyMetrics(Dictionary<string, List<SymbolOccurrence>> occurrences, FrequencyAnalysis analysis) {
 			analysis.TotalUniqueSymbols = occurrences.Count;
-			analysis.TotalOccurrences = occurrences.Values.Sum(list => list.Count);
+			analysis.TotalOccurrences   = occurrences.Values.Sum(list => list.Count);
 
 			// Calculate frequency distribution
 			var frequencyGroups = occurrences
@@ -103,36 +103,36 @@ namespace Hoho.Decomp {
 
 			analysis.MostUsedSymbols = sortedByFreq.Take(50)
 				.ToDictionary(kvp => kvp.Key, kvp => new SymbolFrequencyInfo {
-					Symbol = kvp.Key,
-					TotalOccurrences = kvp.Value.Count,
-					DeclarationCount = kvp.Value.Count(occ => occ.IsDeclaration),
-					Roles = kvp.Value.Select(occ => occ.Role).Distinct().ToList(),
+					Symbol               = kvp.Key,
+					TotalOccurrences     = kvp.Value.Count,
+					DeclarationCount     = kvp.Value.Count(occ => occ.IsDeclaration),
+					Roles                = kvp.Value.Select(occ => occ.Role).Distinct().ToList(),
 					AverageContextLength = kvp.Value.Average(occ => occ.Context.Length),
-					SpreadScore = CalculateSpreadScore(kvp.Value)
+					SpreadScore          = CalculateSpreadScore(kvp.Value)
 				});
 
 			analysis.LeastUsedSymbols = sortedByFreq.TakeLast(20)
 				.Where(kvp => kvp.Value.Count > 1) // Skip single-use symbols
 				.ToDictionary(kvp => kvp.Key, kvp => new SymbolFrequencyInfo {
-					Symbol = kvp.Key,
-					TotalOccurrences = kvp.Value.Count,
-					DeclarationCount = kvp.Value.Count(occ => occ.IsDeclaration),
-					Roles = kvp.Value.Select(occ => occ.Role).Distinct().ToList(),
+					Symbol               = kvp.Key,
+					TotalOccurrences     = kvp.Value.Count,
+					DeclarationCount     = kvp.Value.Count(occ => occ.IsDeclaration),
+					Roles                = kvp.Value.Select(occ => occ.Role).Distinct().ToList(),
 					AverageContextLength = kvp.Value.Average(occ => occ.Context.Length),
-					SpreadScore = CalculateSpreadScore(kvp.Value)
+					SpreadScore          = CalculateSpreadScore(kvp.Value)
 				});
 
 			// Calculate symbol complexity scores
 			foreach (var kvp in occurrences) {
-				string symbol = kvp.Key;
-				var occList = kvp.Value;
-				
+				string symbol  = kvp.Key;
+				var    occList = kvp.Value;
+
 				double complexityScore = CalculateSymbolComplexity(symbol, occList);
-				double impactScore = CalculateImpactScore(symbol, occList);
-				
+				double impactScore     = CalculateImpactScore(symbol, occList);
+
 				if (analysis.MostUsedSymbols.ContainsKey(symbol)) {
 					analysis.MostUsedSymbols[symbol].ComplexityScore = complexityScore;
-					analysis.MostUsedSymbols[symbol].ImpactScore = impactScore;
+					analysis.MostUsedSymbols[symbol].ImpactScore     = impactScore;
 				}
 			}
 		}
@@ -141,12 +141,12 @@ namespace Hoho.Decomp {
 		/// Analyze symbol roles and categorize by importance
 		/// </summary>
 		private static void AnalyzeSymbolRoles(string content, Dictionary<string, List<SymbolOccurrence>> occurrences, FrequencyAnalysis analysis) {
-			var roleCategories = new Dictionary<SymbolRole, List<string>>();
+			var roleCategories       = new Dictionary<SymbolRole, List<string>>();
 			var importanceCategories = new Dictionary<SymbolImportance, List<string>>();
 
 			foreach (var kvp in occurrences) {
-				string symbol = kvp.Key;
-				var occList = kvp.Value;
+				string symbol  = kvp.Key;
+				var    occList = kvp.Value;
 
 				// Determine primary role
 				var primaryRole = occList.GroupBy(occ => occ.Role)
@@ -166,18 +166,18 @@ namespace Hoho.Decomp {
 				importanceCategories[importance].Add(symbol);
 			}
 
-			analysis.SymbolsByRole = roleCategories;
+			analysis.SymbolsByRole       = roleCategories;
 			analysis.SymbolsByImportance = importanceCategories;
 
 			// Generate role-based statistics
 			analysis.RoleStatistics = roleCategories.ToDictionary(
-				kvp => kvp.Key, 
+				kvp => kvp.Key,
 				kvp => new RoleStatistics {
-					Role = kvp.Key,
-					SymbolCount = kvp.Value.Count,
+					Role             = kvp.Key,
+					SymbolCount      = kvp.Value.Count,
 					TotalOccurrences = kvp.Value.Sum(symbol => occurrences[symbol].Count),
 					AverageFrequency = kvp.Value.Average(symbol => occurrences[symbol].Count),
-					TopSymbols = kvp.Value.OrderByDescending(symbol => occurrences[symbol].Count).Take(5).ToList()
+					TopSymbols       = kvp.Value.OrderByDescending(symbol => occurrences[symbol].Count).Take(5).ToList()
 				});
 		}
 
@@ -194,12 +194,12 @@ namespace Hoho.Decomp {
 
 			foreach (var symbolInfo in highPrioritySymbols) {
 				recommendations.Add(new RenamingRecommendation {
-					Symbol = symbolInfo.Symbol,
-					Priority = RenamingPriority.High,
-					Frequency = symbolInfo.TotalOccurrences,
-					ImpactScore = symbolInfo.ImpactScore,
-					Rationale = $"High-impact symbol with {symbolInfo.TotalOccurrences} occurrences. Roles: {string.Join(", ", symbolInfo.Roles)}",
-					SuggestedNames = GenerateNameSuggestions(symbolInfo.Symbol, symbolInfo.Roles),
+					Symbol              = symbolInfo.Symbol,
+					Priority            = RenamingPriority.High,
+					Frequency           = symbolInfo.TotalOccurrences,
+					ImpactScore         = symbolInfo.ImpactScore,
+					Rationale           = $"High-impact symbol with {symbolInfo.TotalOccurrences} occurrences. Roles: {string.Join(", ", symbolInfo.Roles)}",
+					SuggestedNames      = GenerateNameSuggestions(symbolInfo.Symbol, symbolInfo.Roles),
 					EstimatedComplexity = symbolInfo.ComplexityScore > 0.5 ? "High" : "Medium"
 				});
 			}
@@ -211,12 +211,12 @@ namespace Hoho.Decomp {
 
 			foreach (var symbolInfo in mediumPrioritySymbols) {
 				recommendations.Add(new RenamingRecommendation {
-					Symbol = symbolInfo.Symbol,
-					Priority = RenamingPriority.Medium,
-					Frequency = symbolInfo.TotalOccurrences,
-					ImpactScore = symbolInfo.ImpactScore,
-					Rationale = $"Medium-impact symbol with {symbolInfo.TotalOccurrences} occurrences. Consider renaming for clarity.",
-					SuggestedNames = GenerateNameSuggestions(symbolInfo.Symbol, symbolInfo.Roles),
+					Symbol              = symbolInfo.Symbol,
+					Priority            = RenamingPriority.Medium,
+					Frequency           = symbolInfo.TotalOccurrences,
+					ImpactScore         = symbolInfo.ImpactScore,
+					Rationale           = $"Medium-impact symbol with {symbolInfo.TotalOccurrences} occurrences. Consider renaming for clarity.",
+					SuggestedNames      = GenerateNameSuggestions(symbolInfo.Symbol, symbolInfo.Roles),
 					EstimatedComplexity = symbolInfo.ComplexityScore > 0.3 ? "Medium" : "Low"
 				});
 			}
@@ -228,12 +228,12 @@ namespace Hoho.Decomp {
 
 			foreach (var symbolInfo in lowPrioritySymbols.Take(10)) {
 				recommendations.Add(new RenamingRecommendation {
-					Symbol = symbolInfo.Symbol,
-					Priority = RenamingPriority.Low,
-					Frequency = symbolInfo.TotalOccurrences,
-					ImpactScore = symbolInfo.ImpactScore,
-					Rationale = $"Low-frequency symbol ({symbolInfo.TotalOccurrences} occurrences). May be parameter or local variable.",
-					SuggestedNames = GenerateNameSuggestions(symbolInfo.Symbol, symbolInfo.Roles),
+					Symbol              = symbolInfo.Symbol,
+					Priority            = RenamingPriority.Low,
+					Frequency           = symbolInfo.TotalOccurrences,
+					ImpactScore         = symbolInfo.ImpactScore,
+					Rationale           = $"Low-frequency symbol ({symbolInfo.TotalOccurrences} occurrences). May be parameter or local variable.",
+					SuggestedNames      = GenerateNameSuggestions(symbolInfo.Symbol, symbolInfo.Roles),
 					EstimatedComplexity = "Low"
 				});
 			}
@@ -286,141 +286,141 @@ namespace Hoho.Decomp {
 		// Helper methods
 		private static string GetFrequencyGroup(int count) {
 			return count switch {
-				1 => "Single use",
-				<= 5 => "Low frequency (2-5)",
-				<= 15 => "Medium frequency (6-15)", 
+				1     => "Single use",
+				<= 5  => "Low frequency (2-5)",
+				<= 15 => "Medium frequency (6-15)",
 				<= 50 => "High frequency (16-50)",
-				_ => "Very high frequency (50+)"
+				_     => "Very high frequency (50+)"
 			};
 		}
 
 		private static double CalculateSpreadScore(List<SymbolOccurrence> occurrences) {
 			if (occurrences.Count <= 1) return 0.0;
-			
-			var positions = occurrences.Select(occ => occ.Position).OrderBy(p => p).ToList();
-			var spread = positions.Last() - positions.First();
+
+			var positions       = occurrences.Select(occ => occ.Position).OrderBy(p => p).ToList();
+			var spread          = positions.Last() - positions.First();
 			var averageDistance = spread / (double)(positions.Count - 1);
-			
+
 			return Math.Min(1.0, averageDistance / 1000.0); // Normalize to 0-1
 		}
 
 		private static double CalculateSymbolComplexity(string symbol, List<SymbolOccurrence> occurrences) {
 			double complexity = 0.0;
-			
+
 			// Length complexity (very short symbols are complex to understand)
-			if (symbol.Length <= 2) complexity += 0.4;
+			if (symbol.Length <= 2) complexity      += 0.4;
 			else if (symbol.Length == 3) complexity += 0.2;
-			
+
 			// Role diversity complexity
 			var roleCount = occurrences.Select(occ => occ.Role).Distinct().Count();
 			complexity += Math.Min(0.3, roleCount * 0.1);
-			
+
 			// Context complexity (symbols used in many different contexts)
 			var uniqueContexts = occurrences.Select(occ => occ.Context.Substring(0, Math.Min(20, occ.Context.Length))).Distinct().Count();
 			complexity += Math.Min(0.3, uniqueContexts * 0.02);
-			
+
 			return Math.Min(1.0, complexity);
 		}
 
 		private static double CalculateImpactScore(string symbol, List<SymbolOccurrence> occurrences) {
 			double impact = 0.0;
-			
+
 			// Frequency impact
 			impact += Math.Min(0.4, occurrences.Count * 0.02);
-			
+
 			// Role impact
 			var roles = occurrences.Select(occ => occ.Role).Distinct();
 			foreach (var role in roles) {
 				impact += role switch {
-					SymbolRole.ModuleName => 0.3,
-					SymbolRole.ClassName => 0.25,
+					SymbolRole.ModuleName   => 0.3,
+					SymbolRole.ClassName    => 0.25,
 					SymbolRole.FunctionName => 0.2,
 					SymbolRole.ConstantName => 0.15,
 					SymbolRole.PropertyName => 0.1,
 					SymbolRole.VariableName => 0.05,
-					_ => 0.0
+					_                       => 0.0
 				};
 			}
-			
+
 			// Declaration impact (symbols that are declared are more important)
 			var declarationRatio = occurrences.Count(occ => occ.IsDeclaration) / (double)occurrences.Count;
 			impact += declarationRatio * 0.2;
-			
+
 			return Math.Min(1.0, impact);
 		}
 
 		private static SymbolRole DetermineSymbolRole(string context, string symbol, int symbolPos) {
 			// Look for patterns around the symbol
 			string beforeSymbol = symbolPos > 0 ? context.Substring(0, symbolPos) : "";
-			string afterSymbol = symbolPos + symbol.Length < context.Length ? context.Substring(symbolPos + symbol.Length) : "";
-			
+			string afterSymbol  = symbolPos + symbol.Length < context.Length ? context.Substring(symbolPos + symbol.Length) : "";
+
 			// Module patterns: var MODULE = U(...)
 			if (Regex.IsMatch(beforeSymbol, @"var\s+$") && Regex.IsMatch(afterSymbol, @"^\s*=\s*U\s*\(")) {
 				return SymbolRole.ModuleName;
 			}
-			
+
 			// Class patterns: class CLASS extends/{ 
 			if (Regex.IsMatch(beforeSymbol, @"class\s+$")) {
 				return SymbolRole.ClassName;
 			}
-			
+
 			// Function patterns: function FUNC(
 			if (Regex.IsMatch(beforeSymbol, @"function\s+$") && Regex.IsMatch(afterSymbol, @"^\s*\(")) {
 				return SymbolRole.FunctionName;
 			}
-			
+
 			// Constant patterns: SYMBOL = "value" or {SYMBOL: 
 			if (Regex.IsMatch(afterSymbol, @"^\s*[:=]\s*[""'\d]") || char.IsUpper(symbol[0])) {
 				return SymbolRole.ConstantName;
 			}
-			
+
 			// Property patterns: .SYMBOL or SYMBOL:
 			if (Regex.IsMatch(beforeSymbol, @"\.$") || Regex.IsMatch(afterSymbol, @"^\s*:")) {
 				return SymbolRole.PropertyName;
 			}
-			
+
 			// Default to variable
 			return SymbolRole.VariableName;
 		}
 
 		private static bool IsDeclaration(string context, string symbol, int symbolPos) {
 			string beforeSymbol = symbolPos > 0 ? context.Substring(0, symbolPos) : "";
-			
+
 			// Variable declarations
 			if (Regex.IsMatch(beforeSymbol, @"(var|let|const)\s+$")) return true;
-			
+
 			// Function declarations  
 			if (Regex.IsMatch(beforeSymbol, @"function\s+$")) return true;
-			
+
 			// Class declarations
 			if (Regex.IsMatch(beforeSymbol, @"class\s+$")) return true;
-			
+
 			// Property assignments (first occurrence)
 			if (Regex.IsMatch(beforeSymbol, @"\w+\s*=\s*$")) return true;
-			
+
 			return false;
 		}
 
 		private static SymbolImportance DetermineSymbolImportance(string symbol, List<SymbolOccurrence> occurrences, string content) {
-			var frequency = occurrences.Count;
+			var frequency      = occurrences.Count;
 			var hasDeclaration = occurrences.Any(occ => occ.IsDeclaration);
-			var roles = occurrences.Select(occ => occ.Role).Distinct().ToList();
-			
+			var roles          = occurrences.Select(occ => occ.Role).Distinct().ToList();
+
 			// Critical: High frequency + important roles
 			if (frequency > 20 || roles.Any(r => r == SymbolRole.ModuleName || r == SymbolRole.ClassName)) {
 				return SymbolImportance.Critical;
 			}
-			
+
 			// High: Medium frequency + function/constant roles
 			if (frequency > 10 || roles.Any(r => r == SymbolRole.FunctionName || r == SymbolRole.ConstantName)) {
 				return SymbolImportance.High;
 			}
-			
+
 			// Medium: Some frequency + property roles
 			if (frequency > 5 || roles.Contains(SymbolRole.PropertyName)) {
 				return SymbolImportance.Medium;
 			}
-			
+
 			// Low: Low frequency variables
 			return SymbolImportance.Low;
 		}
@@ -440,7 +440,7 @@ namespace Hoho.Decomp {
 		/// </summary>
 		public static string GenerateFrequencyReport(FrequencyAnalysis analysis) {
 			var report = new StringBuilder();
-			
+
 			report.AppendLine("# Symbol Frequency Analysis Report");
 			report.AppendLine($"**File:** {Path.GetFileName(analysis.FilePath)}");
 			report.AppendLine($"**Analysis Date:** {analysis.AnalysisTimestamp:yyyy-MM-dd HH:mm:ss}");
@@ -493,9 +493,9 @@ namespace Hoho.Decomp {
 
 			// Recommendations Summary
 			report.AppendLine("## 💡 Deobfuscation Strategy");
-			var highPriorityCount = analysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.High);
+			var highPriorityCount   = analysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.High);
 			var mediumPriorityCount = analysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.Medium);
-			var lowPriorityCount = analysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.Low);
+			var lowPriorityCount    = analysis.PrioritizedRecommendations.Count(r => r.Priority == RenamingPriority.Low);
 
 			report.AppendLine($"1. **Phase 1 - High Priority:** Rename {highPriorityCount} critical symbols first");
 			report.AppendLine($"2. **Phase 2 - Medium Priority:** Rename {mediumPriorityCount} important symbols");
@@ -513,57 +513,57 @@ namespace Hoho.Decomp {
 
 	// Data structures for frequency analysis
 	public class FrequencyAnalysis {
-		public string FilePath { get; set; } = "";
-		public DateTime AnalysisTimestamp { get; set; }
-		public int TotalUniqueSymbols { get; set; }
-		public int TotalOccurrences { get; set; }
-		
-		public Dictionary<string, int> FrequencyDistribution { get; set; } = new();
-		public Dictionary<string, SymbolFrequencyInfo> MostUsedSymbols { get; set; } = new();
-		public Dictionary<string, SymbolFrequencyInfo> LeastUsedSymbols { get; set; } = new();
-		
-		public Dictionary<SymbolRole, List<string>> SymbolsByRole { get; set; } = new();
+		public string   FilePath           { get; set; } = "";
+		public DateTime AnalysisTimestamp  { get; set; }
+		public int      TotalUniqueSymbols { get; set; }
+		public int      TotalOccurrences   { get; set; }
+
+		public Dictionary<string, int>                 FrequencyDistribution { get; set; } = new();
+		public Dictionary<string, SymbolFrequencyInfo> MostUsedSymbols       { get; set; } = new();
+		public Dictionary<string, SymbolFrequencyInfo> LeastUsedSymbols      { get; set; } = new();
+
+		public Dictionary<SymbolRole, List<string>>       SymbolsByRole       { get; set; } = new();
 		public Dictionary<SymbolImportance, List<string>> SymbolsByImportance { get; set; } = new();
-		public Dictionary<SymbolRole, RoleStatistics> RoleStatistics { get; set; } = new();
-		
+		public Dictionary<SymbolRole, RoleStatistics>     RoleStatistics      { get; set; } = new();
+
 		public List<RenamingRecommendation> PrioritizedRecommendations { get; set; } = new();
 	}
 
 	public class SymbolFrequencyInfo {
-		public string Symbol { get; set; } = "";
-		public int TotalOccurrences { get; set; }
-		public int DeclarationCount { get; set; }
-		public List<SymbolRole> Roles { get; set; } = new();
-		public double AverageContextLength { get; set; }
-		public double SpreadScore { get; set; }
-		public double ComplexityScore { get; set; }
-		public double ImpactScore { get; set; }
+		public string           Symbol               { get; set; } = "";
+		public int              TotalOccurrences     { get; set; }
+		public int              DeclarationCount     { get; set; }
+		public List<SymbolRole> Roles                { get; set; } = new();
+		public double           AverageContextLength { get; set; }
+		public double           SpreadScore          { get; set; }
+		public double           ComplexityScore      { get; set; }
+		public double           ImpactScore          { get; set; }
 	}
 
 	public class SymbolOccurrence {
-		public int Position { get; set; }
-		public string Context { get; set; } = "";
-		public SymbolRole Role { get; set; }
-		public bool IsDeclaration { get; set; }
-		public int LineNumber { get; set; }
+		public int        Position      { get; set; }
+		public string     Context       { get; set; } = "";
+		public SymbolRole Role          { get; set; }
+		public bool       IsDeclaration { get; set; }
+		public int        LineNumber    { get; set; }
 	}
 
 	public class RoleStatistics {
-		public SymbolRole Role { get; set; }
-		public int SymbolCount { get; set; }
-		public int TotalOccurrences { get; set; }
-		public double AverageFrequency { get; set; }
-		public List<string> TopSymbols { get; set; } = new();
+		public SymbolRole   Role             { get; set; }
+		public int          SymbolCount      { get; set; }
+		public int          TotalOccurrences { get; set; }
+		public double       AverageFrequency { get; set; }
+		public List<string> TopSymbols       { get; set; } = new();
 	}
 
 	public class RenamingRecommendation {
-		public string Symbol { get; set; } = "";
-		public RenamingPriority Priority { get; set; }
-		public int Frequency { get; set; }
-		public double ImpactScore { get; set; }
-		public string Rationale { get; set; } = "";
-		public List<string> SuggestedNames { get; set; } = new();
-		public string EstimatedComplexity { get; set; } = "";
+		public string           Symbol              { get; set; } = "";
+		public RenamingPriority Priority            { get; set; }
+		public int              Frequency           { get; set; }
+		public double           ImpactScore         { get; set; }
+		public string           Rationale           { get; set; } = "";
+		public List<string>     SuggestedNames      { get; set; } = new();
+		public string           EstimatedComplexity { get; set; } = "";
 	}
 
 	public enum SymbolRole {
@@ -584,8 +584,8 @@ namespace Hoho.Decomp {
 	}
 
 	public enum RenamingPriority {
-		High = 3,
+		High   = 3,
 		Medium = 2,
-		Low = 1
+		Low    = 1
 	}
 }

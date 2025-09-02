@@ -191,35 +191,35 @@ namespace Hoho.Decomp {
 		/// </summary>
 		private static void CalculateEnhancedStatistics(string content, BundleAnalysis analysis) {
 			// Size statistics
-			analysis.SizeStats.TotalCharacters = content.Length;
-			analysis.SizeStats.TotalBytes = Encoding.UTF8.GetByteCount(content);
-			analysis.SizeStats.WhitespaceCharacters = content.Count(char.IsWhiteSpace);
+			analysis.SizeStats.TotalCharacters        = content.Length;
+			analysis.SizeStats.TotalBytes             = Encoding.UTF8.GetByteCount(content);
+			analysis.SizeStats.WhitespaceCharacters   = content.Count(char.IsWhiteSpace);
 			analysis.SizeStats.AlphanumericCharacters = content.Count(char.IsLetterOrDigit);
-			analysis.SizeStats.SymbolCharacters = content.Length - analysis.SizeStats.WhitespaceCharacters - analysis.SizeStats.AlphanumericCharacters;
-			analysis.SizeStats.EstimatedGzipSize = (long)(analysis.SizeStats.TotalBytes * 0.3); // ~30% compression typical for minified JS
-			analysis.SizeStats.MinificationRatio = CalculateMinificationRatio(content);
+			analysis.SizeStats.SymbolCharacters       = content.Length - analysis.SizeStats.WhitespaceCharacters - analysis.SizeStats.AlphanumericCharacters;
+			analysis.SizeStats.EstimatedGzipSize      = (long)(analysis.SizeStats.TotalBytes * 0.3); // ~30% compression typical for minified JS
+			analysis.SizeStats.MinificationRatio      = CalculateMinificationRatio(content);
 
 			// Symbol statistics  
 			var identifiers = ExtractAllIdentifiers(content);
-			analysis.SymbolStats.TotalUniqueSymbols = identifiers.Count;
+			analysis.SymbolStats.TotalUniqueSymbols     = identifiers.Count;
 			analysis.SymbolStats.TotalSymbolOccurrences = identifiers.Values.Sum();
-			analysis.SymbolStats.MostUsedSymbols = identifiers.OrderByDescending(kvp => kvp.Value).Take(20).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-			
+			analysis.SymbolStats.MostUsedSymbols        = identifiers.OrderByDescending(kvp => kvp.Value).Take(20).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
 			// Analyze symbol patterns
 			var obfuscatedPattern = @"^[A-Z][a-z0-9]{0,2}[0-9]*$"; // Wu1, Ct1, pA1, etc.
-			analysis.SymbolStats.ShortSymbols = identifiers.Keys.Count(id => id.Length <= 3);
+			analysis.SymbolStats.ShortSymbols      = identifiers.Keys.Count(id => id.Length <= 3);
 			analysis.SymbolStats.ObfuscatedSymbols = identifiers.Keys.Count(id => Regex.IsMatch(id, obfuscatedPattern));
-			analysis.SymbolStats.ReadableSymbols = identifiers.Count - analysis.SymbolStats.ObfuscatedSymbols - analysis.SymbolStats.ShortSymbols;
-			analysis.SymbolStats.ObfuscationRatio = identifiers.Count > 0 ? (double)analysis.SymbolStats.ObfuscatedSymbols / identifiers.Count : 0.0;
+			analysis.SymbolStats.ReadableSymbols   = identifiers.Count - analysis.SymbolStats.ObfuscatedSymbols - analysis.SymbolStats.ShortSymbols;
+			analysis.SymbolStats.ObfuscationRatio  = identifiers.Count > 0 ? (double)analysis.SymbolStats.ObfuscatedSymbols / identifiers.Count : 0.0;
 
 			// Complexity statistics
-			analysis.ComplexityStats.MaxNestingLevel = CalculateMaxNestingLevel(content);
-			analysis.ComplexityStats.AverageNestingLevel = CalculateAverageNestingLevel(content);
+			analysis.ComplexityStats.MaxNestingLevel       = CalculateMaxNestingLevel(content);
+			analysis.ComplexityStats.AverageNestingLevel   = CalculateAverageNestingLevel(content);
 			analysis.ComplexityStats.ConditionalStatements = Regex.Matches(content, @"\b(if|switch)\s*\(").Count;
-			analysis.ComplexityStats.LoopStatements = Regex.Matches(content, @"\b(for|while|do)\s*[\s\(]").Count;
-			analysis.ComplexityStats.FunctionCount = Regex.Matches(content, @"\bfunction\s+\w+\s*\(").Count;
-			analysis.ComplexityStats.ClassCount = Regex.Matches(content, @"\bclass\s+\w+").Count;
-			analysis.ComplexityStats.TotalStatements = analysis.ComplexityStats.ConditionalStatements + analysis.ComplexityStats.LoopStatements;
+			analysis.ComplexityStats.LoopStatements        = Regex.Matches(content, @"\b(for|while|do)\s*[\s\(]").Count;
+			analysis.ComplexityStats.FunctionCount         = Regex.Matches(content, @"\bfunction\s+\w+\s*\(").Count;
+			analysis.ComplexityStats.ClassCount            = Regex.Matches(content, @"\bclass\s+\w+").Count;
+			analysis.ComplexityStats.TotalStatements       = analysis.ComplexityStats.ConditionalStatements + analysis.ComplexityStats.LoopStatements;
 		}
 
 		/// <summary>
@@ -240,7 +240,7 @@ namespace Hoho.Decomp {
 		/// Calculate minification ratio heuristic
 		/// </summary>
 		private static double CalculateMinificationRatio(string content) {
-			var avgLineLength = content.Length / (double)content.Split('\n').Length;
+			var avgLineLength   = content.Length / (double)content.Split('\n').Length;
 			var whitespaceRatio = content.Count(char.IsWhiteSpace) / (double)content.Length;
 			return whitespaceRatio < 0.1 && avgLineLength > 100 ? 0.85 : 0.3;
 		}
@@ -249,9 +249,9 @@ namespace Hoho.Decomp {
 		/// Calculate maximum nesting level in the code
 		/// </summary>
 		private static int CalculateMaxNestingLevel(string content) {
-			int maxLevel = 0;
+			int maxLevel     = 0;
 			int currentLevel = 0;
-			
+
 			foreach (char c in content) {
 				if (c == '{') {
 					currentLevel++;
@@ -260,7 +260,7 @@ namespace Hoho.Decomp {
 					currentLevel--;
 				}
 			}
-			
+
 			return maxLevel;
 		}
 
@@ -268,9 +268,9 @@ namespace Hoho.Decomp {
 		/// Calculate average nesting level in the code
 		/// </summary>
 		private static int CalculateAverageNestingLevel(string content) {
-			var levels = new List<int>();
+			var levels       = new List<int>();
 			int currentLevel = 0;
-			
+
 			foreach (char c in content) {
 				if (c == '{') {
 					currentLevel++;
@@ -279,7 +279,7 @@ namespace Hoho.Decomp {
 					currentLevel--;
 				}
 			}
-			
+
 			return levels.Any() ? (int)levels.Average() : 0;
 		}
 
@@ -371,7 +371,7 @@ namespace Hoho.Decomp {
 			public Dictionary<string, List<string>> ToolImplementations { get; set; } = new Dictionary<string, List<string>>();
 			public WasmIntegration                  WasmIntegration     { get; set; } = new WasmIntegration();
 			public Dictionary<string, string>       SymbolMap           { get; set; } = new Dictionary<string, string>();
-			
+
 			// Enhanced analysis statistics
 			public SizeStatistics       SizeStats       { get; set; } = new SizeStatistics();
 			public SymbolStatistics     SymbolStats     { get; set; } = new SymbolStatistics();
@@ -394,9 +394,9 @@ namespace Hoho.Decomp {
 				sb.AppendLine($"- **Total Lines:** {TotalLines:N0}");
 				sb.AppendLine($"- **Total Characters:** {SizeStats.TotalCharacters:N0}");
 				sb.AppendLine($"- **Total Bytes:** {FormatBytes(SizeStats.TotalBytes)}");
-				sb.AppendLine($"- **Whitespace:** {SizeStats.WhitespaceCharacters:N0} ({(double)SizeStats.WhitespaceCharacters/SizeStats.TotalCharacters*100:F1}%)");
-				sb.AppendLine($"- **Alphanumeric:** {SizeStats.AlphanumericCharacters:N0} ({(double)SizeStats.AlphanumericCharacters/SizeStats.TotalCharacters*100:F1}%)");
-				sb.AppendLine($"- **Symbols:** {SizeStats.SymbolCharacters:N0} ({(double)SizeStats.SymbolCharacters/SizeStats.TotalCharacters*100:F1}%)");
+				sb.AppendLine($"- **Whitespace:** {SizeStats.WhitespaceCharacters:N0} ({(double)SizeStats.WhitespaceCharacters / SizeStats.TotalCharacters * 100:F1}%)");
+				sb.AppendLine($"- **Alphanumeric:** {SizeStats.AlphanumericCharacters:N0} ({(double)SizeStats.AlphanumericCharacters / SizeStats.TotalCharacters * 100:F1}%)");
+				sb.AppendLine($"- **Symbols:** {SizeStats.SymbolCharacters:N0} ({(double)SizeStats.SymbolCharacters / SizeStats.TotalCharacters * 100:F1}%)");
 				sb.AppendLine($"- **Estimated Gzip Size:** {FormatBytes(SizeStats.EstimatedGzipSize)}");
 				sb.AppendLine($"- **Minification Ratio:** {SizeStats.MinificationRatio:P1}");
 				sb.AppendLine();
@@ -488,8 +488,8 @@ namespace Hoho.Decomp {
 			/// </summary>
 			private static string FormatBytes(long bytes) {
 				string[] sizes = { "B", "KB", "MB", "GB" };
-				double len = bytes;
-				int order = 0;
+				double   len   = bytes;
+				int      order = 0;
 				while (len >= 1024 && order < sizes.Length - 1) {
 					order++;
 					len /= 1024;
@@ -516,39 +516,39 @@ namespace Hoho.Decomp {
 		/// Enhanced size statistics for comprehensive bundle analysis
 		/// </summary>
 		public class SizeStatistics {
-			public int TotalCharacters { get; set; }
-			public long TotalBytes { get; set; }
-			public int WhitespaceCharacters { get; set; }
-			public int AlphanumericCharacters { get; set; }
-			public int SymbolCharacters { get; set; }
-			public long EstimatedGzipSize { get; set; }
-			public double MinificationRatio { get; set; }
+			public int    TotalCharacters        { get; set; }
+			public long   TotalBytes             { get; set; }
+			public int    WhitespaceCharacters   { get; set; }
+			public int    AlphanumericCharacters { get; set; }
+			public int    SymbolCharacters       { get; set; }
+			public long   EstimatedGzipSize      { get; set; }
+			public double MinificationRatio      { get; set; }
 		}
 
 		/// <summary>
 		/// Enhanced symbol statistics for obfuscation analysis
 		/// </summary>
 		public class SymbolStatistics {
-			public int TotalUniqueSymbols { get; set; }
-			public int TotalSymbolOccurrences { get; set; }
-			public int ShortSymbols { get; set; }
-			public int ObfuscatedSymbols { get; set; }
-			public int ReadableSymbols { get; set; }
-			public double ObfuscationRatio { get; set; }
-			public Dictionary<string, int> MostUsedSymbols { get; set; } = new Dictionary<string, int>();
+			public int                     TotalUniqueSymbols     { get; set; }
+			public int                     TotalSymbolOccurrences { get; set; }
+			public int                     ShortSymbols           { get; set; }
+			public int                     ObfuscatedSymbols      { get; set; }
+			public int                     ReadableSymbols        { get; set; }
+			public double                  ObfuscationRatio       { get; set; }
+			public Dictionary<string, int> MostUsedSymbols        { get; set; } = new Dictionary<string, int>();
 		}
 
 		/// <summary>
 		/// Code complexity statistics for deobfuscation planning
 		/// </summary>
 		public class ComplexityStatistics {
-			public int MaxNestingLevel { get; set; }
-			public int AverageNestingLevel { get; set; }
+			public int MaxNestingLevel       { get; set; }
+			public int AverageNestingLevel   { get; set; }
 			public int ConditionalStatements { get; set; }
-			public int LoopStatements { get; set; }
-			public int FunctionCount { get; set; }
-			public int ClassCount { get; set; }
-			public int TotalStatements { get; set; }
+			public int LoopStatements        { get; set; }
+			public int FunctionCount         { get; set; }
+			public int ClassCount            { get; set; }
+			public int TotalStatements       { get; set; }
 		}
 	}
 }

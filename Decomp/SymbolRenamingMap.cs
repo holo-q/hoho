@@ -22,22 +22,22 @@ namespace Hoho.Decomp {
 			}
 		}
 
-        /// <summary>
-        /// Add a mapping for a symbol in a specific scope.
-        /// </summary>
-        /// <param name="originalName">The original obfuscated name (e.g., "A")</param>
-        /// <param name="newName">The meaningful name to replace it with</param>
-        /// <param name="scope">
-        /// The scope where this mapping applies (e.g.,
-        /// "Wu1.Component"). Use "global" for global scope.
-        /// </param>
-        public void AddMapping(string originalName, string newName, string scope) {
+		/// <summary>
+		/// Add a mapping for a symbol in a specific scope.
+		/// </summary>
+		/// <param name="originalName">The original obfuscated name (e.g., "A")</param>
+		/// <param name="newName">The meaningful name to replace it with</param>
+		/// <param name="scope">
+		/// The scope where this mapping applies (e.g.,
+		/// "Wu1.Component"). Use "global" for global scope.
+		/// </param>
+		public void AddMapping(string originalName, string newName, string scope) {
 			// Special handling for "global" scope
 			if (scope == "global") {
 				AddGlobalMapping(originalName, newName);
 				return;
 			}
-			
+
 			if (!_scopedMappings.ContainsKey(scope)) {
 				_scopedMappings[scope] = new Dictionary<string, string>();
 			}

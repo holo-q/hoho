@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Hoho.Decomp</RootNamespace>
+
+        <!-- PERFORMANCE OPTIMIZATIONS -->
+        <Optimize>true</Optimize>
+        <WarningLevel>5</WarningLevel>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+        <!-- LIBRARY INFO -->
+        <AssemblyTitle>Hoho Decompilation Library</AssemblyTitle>
+        <Product>Hoho Shadow Protocol - Decompilation Engine</Product>
+        <Version>0.1.0</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- ZERO-ALLOCATION STACK -->
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1"/>
+        <PackageReference Include="System.Text.Json" Version="8.0.5"/>
+        <PackageReference Include="System.Net.Http.Json" Version="8.0.0"/>
+        <PackageReference Include="System.Memory" Version="4.5.5"/>
+        <PackageReference Include="System.IO.Pipelines" Version="8.0.0"/>
+
+        <!-- HIGH-PERFORMANCE LOGGING -->
+        <PackageReference Include="Serilog" Version="3.1.1"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1"/>
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0"/>
+
+        <!-- ZERO-ALLOCATION LINQ & PERFORMANCE -->
+        <PackageReference Include="NetFabric.Hyperlinq" Version="3.0.0-beta48"/>
+        <PackageReference Include="Microsoft.Toolkit.HighPerformance" Version="7.1.2"/>
+        <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.0"/>
+
+        <!-- BINARY SERIALIZATION -->
+        <PackageReference Include="MessagePack" Version="3.1.4"/>
+        <PackageReference Include="MessagePack.Annotations" Version="3.1.4"/>
+
+        <!-- FILE SYSTEM OPERATIONS -->
+        <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="8.0.0"/>
+    </ItemGroup>
+
+
+</Project>

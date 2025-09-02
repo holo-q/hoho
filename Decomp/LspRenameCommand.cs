@@ -192,10 +192,10 @@ namespace Hoho.Decomp {
 		}
 	}
 
-    /// <summary>
-    /// Add new symbol mappings to the database
-    /// </summary>
-    public class AddMappingCommand : Command {
+	/// <summary>
+	/// Add new symbol mappings to the database
+	/// </summary>
+	public class AddMappingCommand : Command {
 		private const string DEFAULT_MAPPING_DB = "decomp/mappings.msgpack";
 
 		public AddMappingCommand() : base("add-mapping", "Add symbol mapping to database") {
