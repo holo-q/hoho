@@ -31,7 +31,7 @@ public abstract class CliIntegrationTestBase : IDisposable {
 	protected async Task<CliCommandResult> ExecuteCliCommandAsync(string command, string arguments = "", bool expectSuccess = true) {
 		var startInfo = new ProcessStartInfo {
 			FileName               = "dotnet",
-			Arguments              = $"run --project /home/nuck/holoq/repositories/hoho/Hoho.csproj -- {command} {arguments}",
+			Arguments              = $"run --project /home/nuck/holoq/repositories/hoho/Hoho/Hoho.csproj -- {command} {arguments}",
 			RedirectStandardOutput = true,
 			RedirectStandardError  = true,
 			RedirectStandardInput  = true,
