@@ -287,28 +287,37 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 	}
 
 	[Fact]
-	public async Task ShowMappings_NonExistentDatabase_ShowsError() {
+	public async Task ShowMappings_NonExistentDatabase_CreatesEmptyDatabase() {
 		// Act
 		var result = await ExecuteCliCommandAsync("decomp",
-			"show-mappings --db \"/non/existent/path.msgpack\"", expectSuccess: false);
+			"show-mappings --db \"/tmp/hoho-non-existent-test.msgpack\"", expectSuccess: true);
 
 		// Assert
-		result.Success.Should().BeFalse();
-		result.StandardError.Should().Contain("Failed to display mappings");
+		result.Success.Should().BeTrue();
+		result.StandardOutput.Should().Contain("No mappings found matching the specified criteria");
+		
+		// Cleanup
+		if (File.Exists("/tmp/hoho-non-existent-test.msgpack")) {
+			File.Delete("/tmp/hoho-non-existent-test.msgpack");
+		}
 	}
 
 	[Fact]
-	public async Task ShowMappings_CorruptedDatabase_ShowsError() {
+	public async Task ShowMappings_CorruptedDatabase_RecreatesDatabase() {
 		// Arrange
 		await CreateCorruptedDatabaseAsync();
 
 		// Act
 		var result = await ExecuteCliCommandAsync("decomp",
-			$"show-mappings --db \"{TestDbPath}\"", expectSuccess: false);
+			$"show-mappings --db \"{TestDbPath}\"", expectSuccess: true);
 
 		// Assert
-		result.Success.Should().BeFalse();
-		result.StandardError.Should().Contain("Failed to display mappings");
+		result.Success.Should().BeTrue();
+		result.StandardOutput.Should().Contain("No mappings found matching the specified criteria");
+		
+		// Should have logged the corruption and backup
+		var backupFiles = Directory.GetFiles(TestDirectory, "*.backup.*");
+		backupFiles.Should().HaveCountGreaterThan(0, "corrupted database should be backed up");
 	}
 
 	[Fact]

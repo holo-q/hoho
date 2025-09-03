@@ -18,6 +18,7 @@ Immediate improvements over Claude Code
 	* queue up (when claude is finished, proper queue not whatever the fake ass queue in claude code is doing)
 * Immediately preview tool card before the xml tag is closed, with live feedback as it's writing
 * Start multiple agents of the same type (LMFAOOO WTF ARE THEY DOING DUDE)
+* Remove scroll wheel that scrolls the message history (dude je suis pu capable, y sont dans lune ben raide ahahahah)
 
 ### hoho
 
