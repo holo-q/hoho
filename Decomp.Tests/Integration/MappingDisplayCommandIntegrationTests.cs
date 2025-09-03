@@ -110,7 +110,7 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 		// Assert
 		result.Success.Should().BeTrue();
 		result.StandardOutput.Should().Contain("#"); // Markdown headers
-		result.StandardOutput.Should().Contain("Symbol Mappings");
+		result.StandardOutput.Should().Contain("Symbol Mapping Database");
 	}
 
 	[Fact]
@@ -217,7 +217,8 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 		// Assert
 		result.Success.Should().BeTrue();
 
-		var jsonDocument = JsonDocument.Parse(result.StandardOutput);
+		var jsonContent = ExtractJsonFromOutput(result.StandardOutput);
+		var jsonDocument = JsonDocument.Parse(jsonContent);
 		jsonDocument.RootElement.TryGetProperty("mappings", out var mappings).Should().BeTrue();
 		mappings.GetArrayLength().Should().BeLessOrEqualTo(10);
 	}
@@ -233,7 +234,8 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 		// Assert
 		result.Success.Should().BeTrue();
 
-		var jsonDocument = JsonDocument.Parse(result.StandardOutput);
+		var jsonContent = ExtractJsonFromOutput(result.StandardOutput);
+		var jsonDocument = JsonDocument.Parse(jsonContent);
 		jsonDocument.RootElement.TryGetProperty("mappings", out var mappings).Should().BeTrue();
 
 		// Check that all returned mappings have confidence >= 0.8
@@ -255,7 +257,8 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 		// Assert
 		result.Success.Should().BeTrue();
 
-		var jsonDocument = JsonDocument.Parse(result.StandardOutput);
+		var jsonContent = ExtractJsonFromOutput(result.StandardOutput);
+		var jsonDocument = JsonDocument.Parse(jsonContent);
 		jsonDocument.RootElement.TryGetProperty("mappings", out var mappings).Should().BeTrue();
 		mappings.GetArrayLength().Should().BeLessOrEqualTo(5);
 
@@ -264,7 +267,7 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 			context.GetString().Should().Be("ReactModule");
 
 			mapping.TryGetProperty("type", out var type).Should().BeTrue();
-			type.GetString().Should().Be("function");
+			type.GetString().Should().Be("Function");
 
 			mapping.TryGetProperty("confidence", out var confidence).Should().BeTrue();
 			confidence.GetDouble().Should().BeGreaterOrEqualTo(0.7);
@@ -366,7 +369,8 @@ public class MappingDisplayCommandIntegrationTests : CliIntegrationTestBase {
 		tableResult.StandardOutput.Should().Contain("1000");
 
 		jsonResult.Success.Should().BeTrue();
-		var jsonDocument = JsonDocument.Parse(jsonResult.StandardOutput);
+		var jsonContent = ExtractJsonFromOutput(jsonResult.StandardOutput);
+		var jsonDocument = JsonDocument.Parse(jsonContent);
 		jsonDocument.RootElement.GetProperty("database").GetProperty("totalMappings").GetInt32().Should().Be(1000);
 
 		statsResult.Success.Should().BeTrue();

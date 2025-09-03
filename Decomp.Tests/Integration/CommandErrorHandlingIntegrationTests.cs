@@ -111,7 +111,8 @@ public class CommandErrorHandlingIntegrationTests : CliIntegrationTestBase {
 		statsResult.StandardOutput.Should().Contain("50000");
 
 		limitedResult.Success.Should().BeTrue();
-		var json = JsonDocument.Parse(limitedResult.StandardOutput);
+		var jsonContent = ExtractJsonFromOutput(limitedResult.StandardOutput);
+		var json = JsonDocument.Parse(jsonContent);
 		json.RootElement.GetProperty("mappings").GetArrayLength().Should().Be(100);
 	}
 
@@ -311,9 +312,12 @@ public class CommandErrorHandlingIntegrationTests : CliIntegrationTestBase {
 			$"show-mappings --format json --context ReactModule --type function --db \"{TestDbPath}\"");
 
 		// Assert
-		var allJson     = JsonDocument.Parse(allResult.StandardOutput);
-		var contextJson = JsonDocument.Parse(contextFilteredResult.StandardOutput);
-		var typeJson    = JsonDocument.Parse(typeFilteredResult.StandardOutput);
+		var allJsonContent = ExtractJsonFromOutput(allResult.StandardOutput);
+		var contextJsonContent = ExtractJsonFromOutput(contextFilteredResult.StandardOutput);
+		var typeJsonContent = ExtractJsonFromOutput(typeFilteredResult.StandardOutput);
+		var allJson     = JsonDocument.Parse(allJsonContent);
+		var contextJson = JsonDocument.Parse(contextJsonContent);
+		var typeJson    = JsonDocument.Parse(typeJsonContent);
 
 		var allCount     = allJson.RootElement.GetProperty("mappings").GetArrayLength();
 		var contextCount = contextJson.RootElement.GetProperty("mappings").GetArrayLength();
@@ -404,7 +408,8 @@ public class CommandErrorHandlingIntegrationTests : CliIntegrationTestBase {
 		tableResult.StandardOutput.Should().Contain("测试_chinese");
 
 		// JSON should be valid despite special characters
-		var json     = JsonDocument.Parse(jsonResult.StandardOutput);
+		var jsonContent = ExtractJsonFromOutput(jsonResult.StandardOutput);
+		var json     = JsonDocument.Parse(jsonContent);
 		var mappings = json.RootElement.GetProperty("mappings").EnumerateArray().ToList();
 		mappings.Should().Contain(m => m.GetProperty("original").GetString() == "🚀_rocket");
 	}

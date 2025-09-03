@@ -170,7 +170,7 @@ public class FullIntegrationTestSuite : CliIntegrationTestBase {
 		// Format-specific validations
 		switch (format.ToLower()) {
 			case "json":
-				var json = JsonDocument.Parse(result.StandardOutput);
+				var json = JsonDocument.Parse(ExtractJsonFromOutput(result.StandardOutput));
 				json.RootElement.TryGetProperty("mappings", out _).Should().BeTrue();
 				_output.WriteLine("   ✓ Valid JSON structure");
 				break;
@@ -206,7 +206,7 @@ public class FullIntegrationTestSuite : CliIntegrationTestBase {
 
 		result.Success.Should().BeTrue();
 
-		var json     = JsonDocument.Parse(result.StandardOutput);
+		var json     = JsonDocument.Parse(ExtractJsonFromOutput(result.StandardOutput));
 		var mappings = json.RootElement.GetProperty("mappings").EnumerateArray();
 
 		foreach (var mapping in mappings) {
@@ -222,7 +222,7 @@ public class FullIntegrationTestSuite : CliIntegrationTestBase {
 
 		result.Success.Should().BeTrue();
 
-		var json     = JsonDocument.Parse(result.StandardOutput);
+		var json     = JsonDocument.Parse(ExtractJsonFromOutput(result.StandardOutput));
 		var mappings = json.RootElement.GetProperty("mappings").EnumerateArray();
 
 		foreach (var mapping in mappings) {
@@ -238,7 +238,7 @@ public class FullIntegrationTestSuite : CliIntegrationTestBase {
 
 		result.Success.Should().BeTrue();
 
-		var json     = JsonDocument.Parse(result.StandardOutput);
+		var json     = JsonDocument.Parse(ExtractJsonFromOutput(result.StandardOutput));
 		var mappings = json.RootElement.GetProperty("mappings").EnumerateArray().ToList();
 
 		mappings.Should().NotBeEmpty();
@@ -255,7 +255,7 @@ public class FullIntegrationTestSuite : CliIntegrationTestBase {
 
 		result.Success.Should().BeTrue();
 
-		var json     = JsonDocument.Parse(result.StandardOutput);
+		var json     = JsonDocument.Parse(ExtractJsonFromOutput(result.StandardOutput));
 		var mappings = json.RootElement.GetProperty("mappings").EnumerateArray().ToList();
 
 		mappings.Should().HaveCountLessOrEqualTo(10);
@@ -275,7 +275,7 @@ public class FullIntegrationTestSuite : CliIntegrationTestBase {
 
 		result.Success.Should().BeTrue();
 
-		var json     = JsonDocument.Parse(result.StandardOutput);
+		var json     = JsonDocument.Parse(ExtractJsonFromOutput(result.StandardOutput));
 		var mappings = json.RootElement.GetProperty("mappings").EnumerateArray();
 
 		foreach (var mapping in mappings) {

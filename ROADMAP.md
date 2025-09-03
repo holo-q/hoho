@@ -20,6 +20,17 @@ Immediate improvements over Claude Code
 * Start multiple agents of the same type (LMFAOOO WTF ARE THEY DOING DUDE)
 * Remove scroll wheel that scrolls the message history (dude je suis pu capable, y sont dans lune ben raide ahahahah)
 
+### Verbs
+
+Three commands come with hoho installation
+
+* `hoho` main cli agent tui
+* `ho` run a single agent operation in the repository, like `hoho` but not interactive
+* `ok` for non-project version of `hoho` (personal general agent, ~/ok from anywhere and optionally can link obsidian vaults, all mcps work the same)
+* `ok prompt` for single llm query
+
+All can be used with --openrouter model, --anthropic model, --openai model etc. to immediately open into a specific model of operation
+
 ### hoho
 
 What makes hoho the 'last' CLI agent
@@ -91,6 +102,11 @@ What makes hoho the 'last' CLI agent
 	* Short burst of fast blinking pulses to direct or notify attention to UI elements
 	* ASCII-space cellular automaton
 		* We port the cellular automaton of the holoq.ai monument demo from typescript which allows us to do natural cellular reactive diffusion of colors and breathing coursing like electricity through the window's text, which could activate during inference/work while the agent is working
+* Modular & Hackable
+	* Create scripted actions that can be mapped to keys and appear in the UI contextually
+		* Take the entire context and pipe it
+		*
+	*
 
 ### Input
 
