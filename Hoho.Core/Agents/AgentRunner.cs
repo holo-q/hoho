@@ -15,9 +15,13 @@ public sealed class AgentRunner
         _store = store;
     }
 
-    public async Task RunOnceAsync(string sessionId, string userContent, Action<string>? onText = null, CancellationToken ct = default)
+    public async Task RunOnceAsync(string sessionId, string userContent, Action<string>? onText = null, string? systemPrompt = null, CancellationToken ct = default)
     {
         var history = new List<ChatMessage>();
+        if (!string.IsNullOrWhiteSpace(systemPrompt))
+        {
+            history.Add(new ChatMessage(Role.System, systemPrompt!));
+        }
         await foreach (var ev in _store.ReadAllAsync(sessionId, ct))
         {
             if (ev.Type == "message" && ev.Data is JsonElement el && el.TryGetProperty("Role", out _))

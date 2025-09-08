@@ -124,7 +124,13 @@ What makes hoho the 'last' CLI agent
 	* "Commit everything" --> auto-insert git log
 		* This could be done with a scriptable trigger instead
 * Multiline paste should be automatically boxed in --- ... --- and separated with empty newlines above and below, leaving the caret on newline
-* Double tap enter to send a continuation prompt at random: "let's keep going", "let's roll", "keep it comin", "now we're on a roll", "lets rock n roll", "keep it groovin", "continuous on our way to the dancefloor"
+* Continuation
+	* Some models don't wanna keep going (gpt-5)
+	* Double tap enter to send a continuation prompt at random: "let's keep going", "let's roll", "keep it comin", "now we're on a roll", "lets rock n roll", "keep it groovin", "continuous on our way to the dancefloor"
+* Shift-tab modes
+	* Normal:
+	* Plan: model cannot edit files, a prompt is injectd to specify that we're in planning mode
+	* 
 
 ### HUD
 

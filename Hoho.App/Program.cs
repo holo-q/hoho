@@ -29,7 +29,9 @@ public static class Program {
 		try {
 			Log.Information("🥋 HOHO Shadow Protocol - Startup initiated");
 
-            var rootCommand = new RootCommand("🥋 HOHO - The CLI Agent That Just Says 'OK.'");
+            // Codex parity: root runs TUI; optional initial prompt.
+            var initialPromptArg = new Argument<string?>(name: "prompt", description: "initial prompt for interactive TUI", getDefaultValue: () => null);
+            var rootCommand = new RootCommand("🥋 HOHO - The CLI Agent That Just Says 'OK.'") { initialPromptArg };
 
             // Home
             var homeCommand = new Command("home", "Show hoho home screen with Saitama face");
@@ -184,14 +186,50 @@ public static class Program {
             }, workdirOpt, new Option<int>("--depth"));
             rootCommand.AddCommand(tree);
 
-            // TUI
-            var tui = new Command("tui", "Launch Terminal.Gui TUI") { providerOpt, sessionOpt, workdirOpt };
-            tui.SetHandler((string provider, string? sid, string workdir) =>
+            // TUI default behavior
+            rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial) =>
             {
                 Environment.CurrentDirectory = workdir;
                 TuiApp.Run(workdir, provider, sid);
-            }, providerOpt, sessionOpt, workdirOpt);
-            rootCommand.AddCommand(tui);
+            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg);
+
+            // Exec (non-interactive automation mode)
+            var modelOpt = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");
+            var approvalsOpt = new Option<string>(name: "--ask-for-approval", description: "untrusted|on-failure|on-request|never", getDefaultValue: () => "on-failure");
+            var sandboxOpt = new Option<string>(name: "--sandbox", description: "read-only|workspace-write|danger-full-access", getDefaultValue: () => "workspace-write");
+            var exec = new Command("exec", "Non-interactive 'automation mode' like Codex") { providerOpt, modelOpt, approvalsOpt, sandboxOpt, sessionOpt, workdirOpt, promptArg };
+            exec.SetHandler(async (InvocationContext ctx) =>
+            {
+                var providerName = ctx.ParseResult.GetValueForOption(providerOpt)!;
+                var model = ctx.ParseResult.GetValueForOption(modelOpt)!;
+                var appro = ctx.ParseResult.GetValueForOption(approvalsOpt)!;
+                var sandbox = ctx.ParseResult.GetValueForOption(sandboxOpt)!;
+                var sid = ctx.ParseResult.GetValueForOption(sessionOpt);
+                var workdir = ctx.ParseResult.GetValueForOption(workdirOpt)!;
+                var prompt = ctx.ParseResult.GetValueForArgument(promptArg)!;
+
+                Environment.CurrentDirectory = workdir;
+
+                var config = HohoConfig.Load();
+                var store = new TranscriptStore();
+                if (string.IsNullOrWhiteSpace(sid))
+                {
+                    sid = store.CreateNewSessionId();
+                    Console.WriteLine($"session: {sid}");
+                }
+
+                IChatProvider provider = providerName.ToLowerInvariant() switch
+                {
+                    "echo" => new EchoProvider(),
+                    "openai" => ProviderFactory.CreateOpenAIProvider(config),
+                    _ => new EchoProvider(),
+                };
+
+                var guidance = Hoho.Core.Guidance.AgentsLoader.LoadMergedAgents(workdir);
+                var runner = new AgentRunner(provider, store);
+                await runner.RunOnceAsync(sid!, prompt, onText: s => Console.Write(s), systemPrompt: guidance);
+            });
+            rootCommand.AddCommand(exec);
 
             return await rootCommand.InvokeAsync(args);
         } catch (Exception ex) {
