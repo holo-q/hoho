@@ -78,3 +78,6 @@ GitHub Actions builds the solution on push/PR for Linux, macOS, and Windows. See
 - See `proposals/` for planned enhancements. Non‑parity UI stays behind the Experimental UI flag by default.
 - PRs and issue reports welcome.
 
+## Project Vision
+
+- For the extended vision and brand doc, see `docs/README.md`.

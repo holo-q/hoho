@@ -1,4 +1,4 @@
-![Hoho Banner](docs/holoq-hoho-wide.png)
+![Hoho Banner](holoq-hoho-wide.png)
 
 **THE CLI AGENT THAT JUST SAYS "OK."**
 
@@ -114,3 +114,4 @@ Join the movement. Help us build the CLI agent that corporate restrictions can't
 ```
 
 </div>
+
