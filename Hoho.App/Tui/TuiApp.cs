@@ -71,6 +71,33 @@ internal static class TuiApp
 
         System.Text.StringBuilder streamBuf = new();
         System.Threading.CancellationTokenSource? currentTurnCts = null;
+        bool flushIdleActive = false;
+        DateTime lastFlush = DateTime.MinValue;
+
+        void EnsureFlushIdle()
+        {
+            if (flushIdleActive) return;
+            flushIdleActive = true;
+            lastFlush = DateTime.UtcNow;
+            Application.MainLoop.AddIdle(() =>
+            {
+                // Called frequently on UI thread
+                if (currentTurnCts is null)
+                {
+                    flushIdleActive = false;
+                    return false; // stop idle callback
+                }
+                var now = DateTime.UtcNow;
+                if (streamBuf.Length > 0 && (now - lastFlush).TotalMilliseconds >= 33)
+                {
+                    var s = streamBuf.ToString();
+                    streamBuf.Clear();
+                    chat.AppendAssistantChunk(s);
+                    lastFlush = now;
+                }
+                return true; // keep callback
+            });
+        }
 
         async Task FlushStreamAsync()
         {
@@ -86,6 +113,7 @@ internal static class TuiApp
             chat.BeginAssistant();
             status.Text = "Running… (Ctrl-C to cancel)";
             currentTurnCts = new System.Threading.CancellationTokenSource();
+            EnsureFlushIdle();
             try
             {
                 await runner.RunOnceAsync(sid!, prompt, onText: s =>
