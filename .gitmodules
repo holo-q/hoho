@@ -1,0 +1,4 @@
+[submodule "Terminal.Gui"]
+	path = Terminal.Gui
+	url = git@github.com:oxysoft/Terminal.Gui.git
+	branch = ratatui-experiments
