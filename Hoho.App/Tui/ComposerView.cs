@@ -9,6 +9,8 @@ internal sealed class ComposerView : View
     private int _burstCount = 0;
     private bool _inBurst = false;
 
+    private readonly Label _placeholder;
+
     public ComposerView()
     {
         CanFocus = true;
@@ -21,14 +23,27 @@ internal sealed class ComposerView : View
             WordWrap = false,
             ReadOnly = false,
         };
-        Add(_text);
+        _placeholder = new Label("Type your message…")
+        {
+            X = 3,
+            Y = 0,
+            Width = Dim.Fill(),
+            Height = 1,
+            Visible = true,
+            ColorScheme = new ColorScheme { Normal = Application.Driver.MakeAttribute(Color.Gray, Color.Black) },
+        };
+        Add(_text, _placeholder);
         _text.KeyPress += (e) => OnKeyPress(e);
     }
 
     public string Text
     {
         get => _text.Text.ToString();
-        set => _text.Text = value ?? string.Empty;
+        set
+        {
+            _text.Text = value ?? string.Empty;
+            _placeholder.Visible = string.IsNullOrEmpty(_text.Text?.ToString());
+        }
     }
 
     public void Clear() => _text.Text = string.Empty;
@@ -65,6 +80,7 @@ internal sealed class ComposerView : View
             _inBurst = false;
             _burstCount = 0;
         }
+        _placeholder.Visible = string.IsNullOrEmpty(_text.Text?.ToString());
         KeyPressInner?.Invoke(e);
     }
 

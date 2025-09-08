@@ -55,15 +55,17 @@ public static class Program {
 
             // Common options
             var providerOpt = new Option<string>(name: "--provider", getDefaultValue: () => "echo", description: "chat provider (echo|openai)");
+            var modelOpt    = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");
             var sessionOpt  = new Option<string?>(name: "--session-id", description: "existing session id (optional)");
             var workdirOpt  = new Option<string>(name: "-C", description: "working directory", getDefaultValue: () => Environment.CurrentDirectory);
 
             // Chat
             var promptArg   = new Argument<string>(name: "prompt", description: "user prompt");
-            var chat = new Command("chat", "Send a prompt and stream the response") { providerOpt, sessionOpt, workdirOpt, promptArg };
+            var chat = new Command("chat", "Send a prompt and stream the response") { providerOpt, modelOpt, sessionOpt, workdirOpt, promptArg };
             chat.SetHandler(async (InvocationContext ctx) =>
             {
                 var providerName = ctx.ParseResult.GetValueForOption(providerOpt)!;
+                var model = ctx.ParseResult.GetValueForOption(modelOpt)!;
                 var sessionId = ctx.ParseResult.GetValueForOption(sessionOpt);
                 var prompt = ctx.ParseResult.GetValueForArgument(promptArg)!;
 
@@ -78,7 +80,7 @@ public static class Program {
                 IChatProvider provider = providerName.ToLowerInvariant() switch
                 {
                     "echo" => new EchoProvider(),
-                    "openai" => CreateOpenAIProvider(config),
+                    "openai" => CreateOpenAIProvider(config, model),
                     _ => new EchoProvider(),
                 };
 
@@ -221,7 +223,7 @@ public static class Program {
                 IChatProvider provider = providerName.ToLowerInvariant() switch
                 {
                     "echo" => new EchoProvider(),
-                    "openai" => ProviderFactory.CreateOpenAIProvider(config),
+                    "openai" => ProviderFactory.CreateOpenAIProvider(config, model),
                     _ => new EchoProvider(),
                 };
 
@@ -290,7 +292,7 @@ public static class Program {
 
 static class ProviderFactory
 {
-    public static IChatProvider CreateOpenAIProvider(Hoho.Core.Configuration.HohoConfig config)
+    public static IChatProvider CreateOpenAIProvider(Hoho.Core.Configuration.HohoConfig config, string model)
     {
         var key = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
         if (string.IsNullOrWhiteSpace(key))
@@ -298,6 +300,6 @@ static class ProviderFactory
             config.Secrets.TryGetValue("OPENAI_API_KEY", out key);
         }
         if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("OPENAI_API_KEY not set in env or config");
-        return new Hoho.Core.Providers.OpenAIProvider(key!);
+        return new Hoho.Core.Providers.OpenAIProvider(key!, model);
     }
 }

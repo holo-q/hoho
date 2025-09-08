@@ -52,6 +52,11 @@ internal static class TuiApp
             Height = 1,
             Text = $"Esc edit prev  |  Shift+Enter newline, Enter send  |  Provider: {provider.Name}  Workdir: {workdir}"
         };
+        // Cyan tips like Codex
+        info.ColorScheme = new ColorScheme
+        {
+            Normal = Application.Driver.MakeAttribute(Color.Cyan, Color.Black),
+        };
 
         var composer = new ComposerView
         {
@@ -112,6 +117,7 @@ internal static class TuiApp
             chat.AppendUser(prompt);
             chat.BeginAssistant();
             status.Text = "Running… (Ctrl-C to cancel)";
+            status.ColorScheme = new ColorScheme { Normal = Application.Driver.MakeAttribute(Color.Gray, Color.Black) };
             currentTurnCts = new System.Threading.CancellationTokenSource();
             EnsureFlushIdle();
             try
