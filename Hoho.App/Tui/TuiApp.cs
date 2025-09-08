@@ -142,7 +142,7 @@ internal static class TuiApp
             finally
             {
                 chat.EndAssistant();
-                status.;
+                status.Stop();
                 currentTurnCts?.Dispose();
                 currentTurnCts = null;
             }
@@ -158,9 +158,17 @@ internal static class TuiApp
                 {
                     currentTurnCts.Cancel();
                 }
-                composer.;
+                composer.Clear();
                 backtrackPrimed = false;
                 UpdateInfo();
+                return;
+            }
+
+            // Esc to interrupt if running
+            if (args.KeyEvent.Key == Key.Esc && currentTurnCts is not null)
+            {
+                args.Handled = true;
+                currentTurnCts.Cancel();
                 return;
             }
 
@@ -225,7 +233,7 @@ internal static class TuiApp
                 else
                 {
                     var prompt = composer.Text;
-                    composer.;
+                    composer.Clear();
                     await SendAsync(prompt);
                 }
                 return;
