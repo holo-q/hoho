@@ -271,14 +271,39 @@ internal static class TuiApp
             else if (e.KeyEvent.Key == Key.P && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 e.Handled = true;
-                var dlg = new ApplyPatchDialog();
+                var dlg = new ApplyPatchDialog(workdir, sandbox, approval);
                 Application.Run(dlg);
             }
             else if (e.KeyEvent.Key == Key.G && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 e.Handled = true;
-                var dlg = new CommitDialog(workdir);
+                var dlg = new CommitDialog(workdir, approval);
                 Application.Run(dlg);
+            }
+            else if (e.KeyEvent.Key == Key.M && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            {
+                e.Handled = true;
+                // Cycle sandbox mode
+                sandbox = sandbox switch
+                {
+                    Hoho.Core.Sandbox.SandboxMode.ReadOnly => Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite,
+                    Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite => Hoho.Core.Sandbox.SandboxMode.DangerFullAccess,
+                    _ => Hoho.Core.Sandbox.SandboxMode.ReadOnly,
+                };
+                UpdateInfo();
+            }
+            else if (e.KeyEvent.Key == Key.A && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            {
+                e.Handled = true;
+                // Cycle approval policy
+                approval = approval switch
+                {
+                    Hoho.Core.Sandbox.ApprovalPolicy.Never => Hoho.Core.Sandbox.ApprovalPolicy.OnFailure,
+                    Hoho.Core.Sandbox.ApprovalPolicy.OnFailure => Hoho.Core.Sandbox.ApprovalPolicy.OnRequest,
+                    Hoho.Core.Sandbox.ApprovalPolicy.OnRequest => Hoho.Core.Sandbox.ApprovalPolicy.Untrusted,
+                    _ => Hoho.Core.Sandbox.ApprovalPolicy.Never,
+                };
+                UpdateInfo();
             }
         };
 

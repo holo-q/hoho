@@ -8,8 +8,14 @@ internal sealed class ApplyPatchDialog : Window
 {
     private readonly TextView _input;
     private readonly Label _hint;
-    public ApplyPatchDialog() : base("Apply Patch", 0)
+    private readonly string _workdir;
+    private readonly Hoho.Core.Sandbox.SandboxMode _sandbox;
+    private readonly Hoho.Core.Sandbox.ApprovalPolicy _approval;
+
+    public ApplyPatchDialog(string workdir, Hoho.Core.Sandbox.SandboxMode sandbox, Hoho.Core.Sandbox.ApprovalPolicy approval)
+        : base("Apply Patch", 0)
     {
+        _workdir = workdir; _sandbox = sandbox; _approval = approval;
         Modal = true;
         Width = Dim.Percent(80);
         Height = Dim.Percent(70);
@@ -25,13 +31,19 @@ internal sealed class ApplyPatchDialog : Window
             if (e.KeyEvent.Key == Key.Enter)
             {
                 e.Handled = true;
-                var modal = new ApprovalModal("Confirm", "Apply patch to workspace?");
-                Application.Run(modal);
-                if (modal.Result == true)
+                var approved = _approval switch
+                {
+                    Hoho.Core.Sandbox.ApprovalPolicy.Never => true,
+                    Hoho.Core.Sandbox.ApprovalPolicy.OnFailure => true,
+                    Hoho.Core.Sandbox.ApprovalPolicy.OnRequest => Ask(),
+                    Hoho.Core.Sandbox.ApprovalPolicy.Untrusted => Ask(),
+                    _ => Ask(),
+                };
+                if (approved)
                 {
                     try
                     {
-                        var fs = new FileService(Environment.CurrentDirectory, SandboxMode.WorkspaceWrite);
+                        var fs = new FileService(_workdir, _sandbox);
                         var ps = new PatchService(fs);
                         var result = ps.ApplyAsync(_input.Text.ToString()).GetAwaiter().GetResult();
                         MessageBox.Query("Patch Applied", result.ToString(), "OK");
@@ -50,5 +62,11 @@ internal sealed class ApplyPatchDialog : Window
             }
         };
     }
-}
 
+    private static bool Ask()
+    {
+        var modal = new ApprovalModal("Confirm", "Apply patch to workspace?");
+        Application.Run(modal);
+        return modal.Result == true;
+    }
+}

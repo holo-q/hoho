@@ -160,6 +160,8 @@ public sealed class PatchService
                 if (baseLines[j] == ctx) return j;
             return -1;
         }
+        string Norm(string s) => s.Replace("\r", string.Empty);
+
         for (int i = 0; i < patch.Count; i++)
         {
             var ln = patch[i];
@@ -175,10 +177,10 @@ public sealed class PatchService
             {
                 case ' ':
                     // context: must match base
-                    if (idx >= baseLines.Count || baseLines[idx] != content)
+                    if (idx >= baseLines.Count || Norm(baseLines[idx]) != Norm(content))
                     {
                         // Attempt to resync to next matching context line
-                        var next = FindNextIndex(content, idx);
+                        var next = FindNextIndex(Norm(content), idx);
                         if (next < 0) throw new InvalidOperationException("Patch context mismatch");
                         // Append untouched lines to output to catch up
                         for (; idx < next; idx++) output.Add(baseLines[idx]);
@@ -188,9 +190,9 @@ public sealed class PatchService
                     break;
                 case '-':
                     // removal: base must match; skip it
-                    if (idx >= baseLines.Count || baseLines[idx] != content)
+                    if (idx >= baseLines.Count || Norm(baseLines[idx]) != Norm(content))
                     {
-                        var next = FindNextIndex(content, idx);
+                        var next = FindNextIndex(Norm(content), idx);
                         if (next < 0) throw new InvalidOperationException("Patch removal mismatch");
                         // Append intervening lines untouched, then remove
                         for (; idx < next; idx++) output.Add(baseLines[idx]);

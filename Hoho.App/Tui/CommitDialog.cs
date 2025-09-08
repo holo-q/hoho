@@ -5,9 +5,11 @@ namespace Hoho;
 
 internal sealed class CommitDialog : Window
 {
-    public CommitDialog(string workdir)
+    private readonly Hoho.Core.Sandbox.ApprovalPolicy _approval;
+    public CommitDialog(string workdir, Hoho.Core.Sandbox.ApprovalPolicy approval)
         : base("Commit All Changes", 0)
     {
+        _approval = approval;
         Modal = true;
         Width = Dim.Percent(70);
         Height = Dim.Percent(40);
@@ -21,9 +23,15 @@ internal sealed class CommitDialog : Window
 
         ok.Clicked += () =>
         {
-            var modal = new ApprovalModal("Confirm", "Commit all changes?");
-            Application.Run(modal);
-            if (modal.Result == true)
+            var approved = _approval switch
+            {
+                Hoho.Core.Sandbox.ApprovalPolicy.Never => true,
+                Hoho.Core.Sandbox.ApprovalPolicy.OnFailure => true,
+                Hoho.Core.Sandbox.ApprovalPolicy.OnRequest => AskCommit(),
+                Hoho.Core.Sandbox.ApprovalPolicy.Untrusted => AskCommit(),
+                _ => AskCommit(),
+            };
+            if (approved)
             {
                 try
                 {
@@ -47,5 +55,11 @@ internal sealed class CommitDialog : Window
             else if (e.KeyEvent.Key == Key.Esc) { Application.RequestStop(); e.Handled = true; }
         };
     }
-}
 
+    private static bool AskCommit()
+    {
+        var modal = new ApprovalModal("Confirm", "Commit all changes?");
+        Application.Run(modal);
+        return modal.Result == true;
+    }
+}
