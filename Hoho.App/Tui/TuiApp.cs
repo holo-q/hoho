@@ -192,6 +192,22 @@ internal static class TuiApp
                 return;
             }
 
+            // '@' file search trigger (ignore during paste-burst)
+            if (!composer.IsInPasteBurst && (uint)args.KeyEvent.Key <= 0x7E && (char)args.KeyEvent.Key == '@' && args.KeyEvent.KeyModifiers == 0)
+            {
+                args.Handled = true;
+                var sel = FileSearchPopup.Show(workdir);
+                if (!string.IsNullOrEmpty(sel))
+                {
+                    composer.InsertText(sel);
+                }
+                else
+                {
+                    composer.InsertText("@");
+                }
+                return;
+            }
+
             if (args.KeyEvent.Key == Key.Enter)
             {
                 args.Handled = true;

@@ -5,6 +5,10 @@ namespace Hoho;
 internal sealed class ComposerView : View
 {
     private readonly TextView _text;
+    private DateTime _lastCharAt = DateTime.MinValue;
+    private int _burstCount = 0;
+    private bool _inBurst = false;
+
     public ComposerView()
     {
         CanFocus = true;
@@ -37,9 +41,39 @@ internal sealed class ComposerView : View
         return base.OnKeyDown(key);
     }
 
+    public bool IsInPasteBurst => _inBurst;
+
     private void OnKeyPress(KeyEventEventArgs e)
     {
+        // Update a simple paste-burst detector: many printable chars in quick succession
+        if (IsPrintableChar(e) && (e.KeyEvent.KeyModifiers & (KeyModifiers.Ctrl | KeyModifiers.Alt)) == 0)
+        {
+            var now = DateTime.UtcNow;
+            if ((now - _lastCharAt).TotalMilliseconds <= 25)
+            {
+                _burstCount++;
+            }
+            else
+            {
+                _burstCount = 1;
+            }
+            _lastCharAt = now;
+            _inBurst = _burstCount >= 5; // enter burst after a few rapid chars
+        }
+        else
+        {
+            _inBurst = false;
+            _burstCount = 0;
+        }
         KeyPressInner?.Invoke(e);
+    }
+
+    private static bool IsPrintableChar(KeyEventEventArgs e)
+    {
+        var code = (uint)e.KeyEvent.Key;
+        if (code > 0x7E) return false;
+        char c = (char)code;
+        return c >= ' ' && c <= '~';
     }
 
     public override void OnDrawContent(Rect bounds)
@@ -56,5 +90,6 @@ internal sealed class ComposerView : View
         Driver.SetAttribute(ColorScheme.Normal);
         base.OnDrawContent(bounds);
     }
-}
 
+    public void InsertText(string s) => _text.InsertText(s);
+}
