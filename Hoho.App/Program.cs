@@ -52,7 +52,7 @@ public static class Program {
             rootCommand.AddCommand(sessionNew);
 
             // Common options
-            var providerOpt = new Option<string>(name: "--provider", getDefaultValue: () => "echo", description: "chat provider (echo|chatgpt)");
+            var providerOpt = new Option<string>(name: "--provider", getDefaultValue: () => "echo", description: "chat provider (echo|openai)");
             var sessionOpt  = new Option<string?>(name: "--session-id", description: "existing session id (optional)");
             var workdirOpt  = new Option<string>(name: "-C", description: "working directory", getDefaultValue: () => Environment.CurrentDirectory);
 
@@ -76,7 +76,8 @@ public static class Program {
                 IChatProvider provider = providerName.ToLowerInvariant() switch
                 {
                     "echo" => new EchoProvider(),
-                    _ => new EchoProvider(), // TODO: ChatGPT provider
+                    "openai" => CreateOpenAIProvider(config),
+                    _ => new EchoProvider(),
                 };
 
                 var runner = new AgentRunner(provider, store);
@@ -237,5 +238,19 @@ public static class Program {
                 }
             }
         }
+    }
+}
+
+static class ProviderFactory
+{
+    public static IChatProvider CreateOpenAIProvider(Hoho.Core.Configuration.HohoConfig config)
+    {
+        var key = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            config.Secrets.TryGetValue("OPENAI_API_KEY", out key);
+        }
+        if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("OPENAI_API_KEY not set in env or config");
+        return new Hoho.Core.Providers.OpenAIProvider(key!);
     }
 }

@@ -33,10 +33,19 @@ public sealed class GitService
         return sb.ToString();
     }
 
+    public async Task<string> BlameAsync(string path, CancellationToken ct = default)
+    {
+        var sb = new System.Text.StringBuilder();
+        await foreach (var c in _shell.RunAsync(new[] { "git", "blame", "--", path }, new ShellOptions { WorkDir = _workdir }, ct))
+        {
+            if (c.Stream == "stdout") sb.Append(c.Data);
+        }
+        return sb.ToString();
+    }
+
     public async Task CommitAllAsync(string message, CancellationToken ct = default)
     {
         await foreach (var _ in _shell.RunAsync(new[] { "git", "add", "-A" }, new ShellOptions { WorkDir = _workdir }, ct)) { }
         await foreach (var _ in _shell.RunAsync(new[] { "git", "commit", "-m", message }, new ShellOptions { WorkDir = _workdir }, ct)) { }
     }
 }
-
