@@ -171,8 +171,21 @@ internal static class TuiApp
                     else
                     {
                         var last = chat.GetLastUserMessageText();
-                        composer.Text = last ?? string.Empty;
-                        backtrackPrimed = false;
+                        var preview = new BacktrackPreview(last);
+                        preview.Accepted += () =>
+                        {
+                            composer.Text = last ?? string.Empty;
+                            backtrackPrimed = false;
+                            UpdateInfo();
+                            Application.RequestStop();
+                        };
+                        preview.Canceled += () =>
+                        {
+                            backtrackPrimed = false;
+                            UpdateInfo();
+                            Application.RequestStop();
+                        };
+                        Application.Run(preview);
                     }
                     UpdateInfo();
                 }
@@ -191,6 +204,19 @@ internal static class TuiApp
                     var prompt = composer.Text;
                     composer.Text = string.Empty;
                     await SendAsync(prompt);
+                }
+                return;
+            }
+
+            // Ctrl+K opens file search popup and inserts selected path
+            if (args.KeyEvent.Key == Key.K && (args.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            {
+                args.Handled = true;
+                var sel = FileSearchPopup.Show(workdir);
+                if (!string.IsNullOrEmpty(sel))
+                {
+                    var t = composer.Text;
+                    composer.Text = (t.Length == 0 ? sel : t + sel);
                 }
                 return;
             }
