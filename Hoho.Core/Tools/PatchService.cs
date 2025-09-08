@@ -153,11 +153,11 @@ public sealed class PatchService
         var output = new System.Collections.Generic.List<string>();
         int idx = 0; int add = 0, rem = 0;
         // Helper: try to resynchronize idx to next occurrence of a context line within a small window
-        int FindNextIndex(string ctx, int start, int window = 200)
+        int FindNextIndex(string ctx, int start, int window = 80)
         {
             int end = System.Math.Min(baseLines.Count, start + window);
             for (int j = start; j < end; j++)
-                if (baseLines[j] == ctx) return j;
+                if (Norm(baseLines[j]) == ctx) return j;
             return -1;
         }
         string Norm(string s) => s.Replace("\r", string.Empty);
@@ -181,7 +181,7 @@ public sealed class PatchService
                     {
                         // Attempt to resync to next matching context line
                         var next = FindNextIndex(Norm(content), idx);
-                        if (next < 0) throw new InvalidOperationException("Patch context mismatch");
+                        if (next < 0) throw new InvalidOperationException($"Patch context mismatch in {path}");
                         // Append untouched lines to output to catch up
                         for (; idx < next; idx++) output.Add(baseLines[idx]);
                     }
@@ -193,7 +193,7 @@ public sealed class PatchService
                     if (idx >= baseLines.Count || Norm(baseLines[idx]) != Norm(content))
                     {
                         var next = FindNextIndex(Norm(content), idx);
-                        if (next < 0) throw new InvalidOperationException("Patch removal mismatch");
+                        if (next < 0) throw new InvalidOperationException($"Patch removal mismatch in {path}");
                         // Append intervening lines untouched, then remove
                         for (; idx < next; idx++) output.Add(baseLines[idx]);
                     }

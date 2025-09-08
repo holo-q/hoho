@@ -8,6 +8,7 @@ internal sealed class StatusIndicatorView : View
     private bool _active;
     private bool _idleHooked;
     public int QueuedCount { get; set; }
+    public string[] QueuedPreviews { get; set; } = Array.Empty<string>();
 
     public StatusIndicatorView()
     {
@@ -82,11 +83,29 @@ internal sealed class StatusIndicatorView : View
         if (!tail.EndsWith(")")) tail += ")";
         Driver.AddStr(tail);
 
+        // If there is room, render a couple of queued previews on the same line (compact)
+        if (QueuedCount > 0 && bounds.Width > (x + header.Length + tail.Length + 10))
+        {
+            var previews = string.Join(" | ", QueuedPreviews.Select(p => San(p)));
+            var prevText = $"  {previews}";
+            if (prevText.Length > bounds.Width - (x + header.Length + tail.Length))
+            {
+                prevText = prevText.Substring(0, Math.Max(0, bounds.Width - (x + header.Length + tail.Length) - 1)) + "…";
+            }
+            Driver.AddStr(prevText);
+        }
+
         // Pad rest of line
         var remaining = bounds.Width - (x + header.Length + tail.Length);
         if (remaining > 0)
         {
             Driver.AddStr(new string(' ', remaining));
         }
+    }
+
+    private static string San(string s)
+    {
+        s = s.Replace('\r', ' ').Replace('\n', ' ');
+        return s.Length <= 24 ? s : s.Substring(0, 23) + "…";
     }
 }

@@ -84,7 +84,9 @@ internal static class TuiApp
         var promptQueue = new System.Collections.Generic.Queue<string>();
         bool drainingQueue = false;
         var userHistory = new System.Collections.Generic.List<string>();
+        var persistentHistory = new Hoho.Core.Sessions.HistoryStore().LoadRecent(200).ToList();
         int historyIndex = 0; // points to next insert position
+        string? lastHistoryText = null;
 
         void EnsureFlushIdle()
         {
@@ -159,9 +161,11 @@ internal static class TuiApp
                     {
                         var next = promptQueue.Dequeue();
                         status.QueuedCount = promptQueue.Count;
+                        status.QueuedPreviews = promptQueue.Take(2).ToArray();
                         await SendAsync(next);
                     }
                     drainingQueue = false;
+                    status.QueuedPreviews = Array.Empty<string>();
                 }
             }
         }
@@ -182,9 +186,10 @@ internal static class TuiApp
                 return;
             }
 
-            // Esc to interrupt if running
+            // Esc to interrupt if running (and not in paste burst)
             if (args.KeyEvent.Key == Key.Esc && currentTurnCts is not null)
             {
+                if (composer.IsInPasteBurst) { args.Handled = true; return; }
                 args.Handled = true;
                 currentTurnCts.Cancel();
                 return;
@@ -245,16 +250,20 @@ internal static class TuiApp
             if ((args.KeyEvent.KeyModifiers & KeyModifiers.Alt) != 0 && (args.KeyEvent.Key == Key.CursorUp || args.KeyEvent.Key == Key.CursorDown))
             {
                 args.Handled = true;
-                if (userHistory.Count == 0) return;
+                // Build combined history: persistent first (oldest..newest), then session-local
+                var combined = new System.Collections.Generic.List<string>(persistentHistory);
+                combined.AddRange(userHistory);
+                if (combined.Count == 0) return;
                 if (args.KeyEvent.Key == Key.CursorUp)
                 {
                     historyIndex = System.Math.Max(0, historyIndex - 1);
                 }
                 else
                 {
-                    historyIndex = System.Math.Min(userHistory.Count - 1, historyIndex + 1);
+                    historyIndex = System.Math.Min(combined.Count - 1, historyIndex + 1);
                 }
-                composer.Text = userHistory[historyIndex];
+                composer.Text = combined[historyIndex];
+                lastHistoryText = composer.Text;
                 return;
             }
 
@@ -273,10 +282,20 @@ internal static class TuiApp
                     {
                         promptQueue.Enqueue(prompt);
                         status.QueuedCount = promptQueue.Count;
+                        status.QueuedPreviews = promptQueue.Take(2).ToArray();
                     }
                     else
                     {
-                        userHistory.Add(prompt);
+                        // Append to local and persistent history (avoid consecutive dupes)
+                        if (userHistory.Count == 0 || userHistory[^1] != prompt)
+                        {
+                            userHistory.Add(prompt);
+                        }
+                        if (persistentHistory.Count == 0 || persistentHistory[^1] != prompt)
+                        {
+                            new Hoho.Core.Sessions.HistoryStore().Append(prompt);
+                            persistentHistory.Add(prompt);
+                        }
                         historyIndex = userHistory.Count - 1;
                         await SendAsync(prompt);
                     }
