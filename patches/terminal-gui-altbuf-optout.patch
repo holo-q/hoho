@@ -1,0 +1,182 @@
+diff --git a/Terminal.Gui/Terminal.Gui/Drivers/EscSeqUtils/EscSeqUtils.cs b/Terminal.Gui/Terminal.Gui/Drivers/EscSeqUtils/EscSeqUtils.cs
+index 0a99fa8..0744909 100644
+--- a/Terminal.Gui/Terminal.Gui/Drivers/EscSeqUtils/EscSeqUtils.cs
++++ b/Terminal.Gui/Terminal.Gui/Drivers/EscSeqUtils/EscSeqUtils.cs
+@@ -21,6 +21,21 @@ namespace Terminal.Gui.Drivers;
+ /// </remarks>
+ public static class EscSeqUtils
+ {
++    // Allow host apps to opt out of using the terminal's alternate screen buffer.
++    // Set HOHO_TUI_ALTBUF to 0/false/no to disable. Default: enabled.
++    private static readonly bool _useAlternateBuffer = ReadAltBufEnv();
++    private static bool ReadAltBufEnv()
++    {
++        try
++        {
++            var s = Environment.GetEnvironmentVariable("HOHO_TUI_ALTBUF");
++            if (string.IsNullOrWhiteSpace(s)) return false; // default: do NOT use alt buffer
++            s = s.Trim().ToLowerInvariant();
++            return !(s == "0" || s == "false" || s == "no");
++        }
++        catch { return true; }
++    }
++    internal static bool UseAlternateBuffer => _useAlternateBuffer;
+     // TODO: One type per file - Move this enum to a separate file.
+     /// <summary>
+     ///     Options for ANSI ESC "[xJ" - Clears part of the screen.
+diff --git a/Terminal.Gui/Terminal.Gui/Drivers/NetDriver/NetDriver.cs b/Terminal.Gui/Terminal.Gui/Drivers/NetDriver/NetDriver.cs
+index fa2ccad..5d16768 100644
+--- a/Terminal.Gui/Terminal.Gui/Drivers/NetDriver/NetDriver.cs
++++ b/Terminal.Gui/Terminal.Gui/Drivers/NetDriver/NetDriver.cs
+@@ -29,16 +29,22 @@ internal class NetDriver : ConsoleDriver
+             Console.ResetColor ();
+             Console.Clear ();
+ 
+-            //Disable alternative screen buffer.
+-            Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++            //Disable alternative screen buffer
++            if (EscSeqUtils.UseAlternateBuffer)
++            {
++                Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++            }
+ 
+             //Set cursor key to cursor.
+             Console.Out.Write (EscSeqUtils.CSI_ShowCursor);
+ 
+             Platform.Suspend ();
+ 
+-            //Enable alternative screen buffer.
+-            Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++            //Enable alternative screen buffer (opt-out via HOHO_TUI_ALTBUF=0|false|no)
++            if (EscSeqUtils.UseAlternateBuffer)
++            {
++                Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++            }
+ 
+             SetContentsAsDirty ();
+             Refresh ();
+@@ -274,8 +280,11 @@ internal class NetDriver : ConsoleDriver
+             Cols = Console.WindowWidth;
+             Rows = Console.WindowHeight;
+ 
+-            //Enable alternative screen buffer.
+-            Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++            //Enable alternative screen buffer (opt-out via HOHO_TUI_ALTBUF)
++            if (EscSeqUtils.UseAlternateBuffer)
++            {
++                Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++            }
+ 
+             //Set cursor key to application.
+             Console.Out.Write (EscSeqUtils.CSI_HideCursor);
+@@ -367,12 +376,15 @@ internal class NetDriver : ConsoleDriver
+         {
+             Console.ResetColor ();
+ 
+-            //Disable alternative screen buffer.
+-            Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++            //Disable alternative screen buffer
++            if (EscSeqUtils.UseAlternateBuffer)
++            {
++                Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++            }
+ 
+             //Set cursor key to cursor.
+             Console.Out.Write (EscSeqUtils.CSI_ShowCursor);
+-            Console.Out.Close ();
++            try { Console.Out.Flush (); } catch { }
+         }
+     }
+ 
+@@ -792,4 +804,4 @@ internal class NetDriver : ConsoleDriver
+     }
+ 
+     #endregion Low-Level DotNet tuff
+-}
+\ No newline at end of file
++}
+diff --git a/Terminal.Gui/Terminal.Gui/Drivers/V2/NetInput.cs b/Terminal.Gui/Terminal.Gui/Drivers/V2/NetInput.cs
+index 10b5e1c..7767941 100644
+--- a/Terminal.Gui/Terminal.Gui/Drivers/V2/NetInput.cs
++++ b/Terminal.Gui/Terminal.Gui/Drivers/V2/NetInput.cs
+@@ -40,8 +40,11 @@ public class NetInput : ConsoleInput<ConsoleKeyInfo>, INetInput
+             }
+         }
+ 
+-        //Enable alternative screen buffer.
+-        Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++        //Enable alternative screen buffer (opt-out via HOHO_TUI_ALTBUF)
++        if (EscSeqUtils.UseAlternateBuffer)
++        {
++            Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++        }
+ 
+         //Set cursor key to application.
+         Console.Out.Write (EscSeqUtils.CSI_HideCursor);
+@@ -76,8 +79,11 @@ public class NetInput : ConsoleInput<ConsoleKeyInfo>, INetInput
+         base.Dispose ();
+         Console.Out.Write (EscSeqUtils.CSI_DisableMouseEvents);
+ 
+-        //Disable alternative screen buffer.
+-        Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++        //Disable alternative screen buffer
++        if (EscSeqUtils.UseAlternateBuffer)
++        {
++            Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++        }
+ 
+         //Set cursor key to cursor.
+         Console.Out.Write (EscSeqUtils.CSI_ShowCursor);
+diff --git a/Terminal.Gui/Terminal.Gui/Drivers/V2/WindowsOutput.cs b/Terminal.Gui/Terminal.Gui/Drivers/V2/WindowsOutput.cs
+index 5152d3a..891356f 100644
+--- a/Terminal.Gui/Terminal.Gui/Drivers/V2/WindowsOutput.cs
++++ b/Terminal.Gui/Terminal.Gui/Drivers/V2/WindowsOutput.cs
+@@ -117,8 +117,11 @@ internal partial class WindowsOutput : OutputBase, IConsoleOutput
+ 
+         if (_isVirtualTerminal)
+         {
+-            //Enable alternative screen buffer.
+-            Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++            //Enable alternative screen buffer (opt-out via HOHO_TUI_ALTBUF=0|false|no)
++            if (EscSeqUtils.UseAlternateBuffer)
++            {
++                Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++            }
+         }
+         else
+         {
+diff --git a/Terminal.Gui/Terminal.Gui/Drivers/WindowsDriver/WindowsDriver.cs b/Terminal.Gui/Terminal.Gui/Drivers/WindowsDriver/WindowsDriver.cs
+index 5994192..16011d9 100644
+--- a/Terminal.Gui/Terminal.Gui/Drivers/WindowsDriver/WindowsDriver.cs
++++ b/Terminal.Gui/Terminal.Gui/Drivers/WindowsDriver/WindowsDriver.cs
+@@ -408,7 +408,10 @@ internal class WindowsDriver : ConsoleDriver
+         if (!RunningUnitTests && _isWindowsTerminal)
+         {
+             // Disable alternative screen buffer.
+-            Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++            if (EscSeqUtils.UseAlternateBuffer)
++            {
++                Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
++            }
+         }
+     }
+ 
+@@ -434,7 +437,10 @@ internal class WindowsDriver : ConsoleDriver
+ 
+                 if (_isWindowsTerminal)
+                 {
+-                    Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++                    if (EscSeqUtils.UseAlternateBuffer)
++                    {
++                        Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
++                    }
+                 }
+             }
+             catch (Win32Exception e)
+@@ -1174,4 +1180,4 @@ internal class WindowsDriver : ConsoleDriver
+             Flags = mouseFlag
+         };
+     }
+-}
+\ No newline at end of file
++}

@@ -26,6 +26,14 @@ public static partial class Program {
 			.WriteTo.File("logs/hoho-.log", rollingInterval: RollingInterval.Day)
 			.CreateLogger();
 
+
+        // Ensure terminal is restored before any runtime-level crash prints a stack trace
+        AppDomain.CurrentDomain.UnhandledException += (_, __) =>
+        {
+            try { Terminal.Gui.App.Application.Shutdown(); } catch { }
+            try { ResetConsoleState(); } catch { }
+        };
+
 		try {
 			Log.Information("🥋 HOHO Shadow Protocol - Startup initiated");
 
@@ -64,6 +72,11 @@ public static partial class Program {
             var workdirOpt  = new Option<string>(name: "-C", description: "working directory", getDefaultValue: () => Environment.CurrentDirectory);
             var approvalsOpt= new Option<string>(name: "--ask-for-approval", getDefaultValue: () => "on-failure", description: "untrusted|on-failure|on-request|never");
             var sandboxOpt  = new Option<string>(name: "--sandbox", getDefaultValue: () => "workspace-write", description: "read-only|workspace-write|danger-full-access");
+
+            // Make these options available on the root command as well
+            rootCommand.AddOption(providerOpt);
+            rootCommand.AddOption(sessionOpt);
+            rootCommand.AddOption(workdirOpt);
 
             // Chat
             var promptArg   = new Argument<string>(name: "prompt", description: "user prompt");
@@ -282,7 +295,15 @@ public static partial class Program {
                     var sidLatest = SessionDiscovery.ListSessions(1).FirstOrDefault()?.Id;
                     if (!string.IsNullOrWhiteSpace(sidLatest)) sid = sidLatest;
                 }
-                TuiApp.Run(workdir!, provider, sid, initial);
+                try
+                {
+                    TuiApp.Run(workdir!, provider, sid, initial);
+                }
+                finally
+                {
+                    // Ensure terminal is back to a sane state before any error/stack output from System.CommandLine
+                    ResetConsoleState();
+                }
             }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt);
 
             // Exec (non-interactive automation mode)
@@ -344,6 +365,8 @@ public static partial class Program {
         Log.Error(ex, "Fatal error in HOHO Shadow Protocol");
         return 1;
     } finally {
+        // Best-effort restore terminal state in case a TUI run left margins/wrap/scroll-region altered.
+        try { ResetConsoleState(); } catch { /* ignore */ }
         Log.Information("🥋 HOHO Shadow Protocol - Shutdown complete");
         Log.CloseAndFlush();
     }
@@ -466,6 +489,33 @@ static class Fixers
 
 partial class Program
 {
+    private static void ResetConsoleState()
+    {
+        // Reset SGR and common private modes that affect line layout
+        var seq = string.Concat(
+            "\x1b[?1049l", // Restore main buffer (with backscroll)
+            "\x1b[?1047l", // Also restore older alt buffer if used
+            "\x1b[?47l",   // Fallback for some terminals
+            "\x1b[m",       // SGR0 (attributes)
+            "\x1b[?7h",    // DECAWM (auto-wrap on)
+            "\x1b[?6l",    // DECOM (origin mode off)
+            "\x1b[r",       // DECSTBM reset (full scroll region)
+            "\x1b[?69l",    // DECSLRM disable left/right margin mode
+            "\x1b[?25h"     // Show cursor
+        );
+        // Explicitly disable mouse tracking modes
+        var mouseOff = string.Concat(
+            "\x1b[?1000l", // X10 mouse
+            "\x1b[?1002l", // Button event mouse
+            "\x1b[?1003l", // Any event mouse
+            "\x1b[?1006l", // SGR mouse
+            "\x1b[?1015l"  // URXVT mouse
+        );
+        try { Console.Write(seq); } catch { }
+        try { Console.Error.Write(seq); } catch { }
+        try { Console.Write(mouseOff); } catch { }
+        try { Console.Error.Write(mouseOff); } catch { }
+    }
     private static async Task RunFixAsync(string workdir)
     {
         Fixers.EnsureGlobalUsings(workdir);

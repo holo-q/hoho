@@ -73,10 +73,6 @@ What makes hoho the 'last' CLI agent
 		* message-level extraction, then global context integration intermittently
 * `hoho list` command shows list of recent project paths which can be unfolded to see conversations, and search like fzf (maybe we can even integrate directly with it)
 * CLAUDE.md -> HOHO.md	
-* Resume / go key
-	* Auto-resume detection with hint
-	* Auto-hint on escape
-	* Auto-hint on error
 * Run shell commands directly inside
 	* RATIONALE: hoho should function like a shell augmentation
 	* IDEA: Shell mode? allowing the user to cd around, etc. instead of entering prompts
@@ -90,10 +86,6 @@ What makes hoho the 'last' CLI agent
 	* Long artifacts that are beyond the token limit (e.g. 30k) may be manually spliced by the user page by page
 	* SPACE splices the next page
 	* BS erases and returns to the previous page
-* x11 integration 
-	* HUD drawn on top of the entire system (sticky across workspace)
-	* Try doing it signal based with any custom specified binary so people can implement custom HUDs
-	* Our own HUD is simple and debuggy: solid black rectangles with red text on top
 * Quote messages
 	* up/down in action mode navigate message history and makes it possible to quote
 * Reactive UX:
@@ -103,11 +95,20 @@ What makes hoho the 'last' CLI agent
 	* Short burst of fast blinking pulses to direct or notify attention to UI elements
 	* ASCII-space cellular automaton
 		* We port the cellular automaton of the holoq.ai monument demo from typescript which allows us to do natural cellular reactive diffusion of colors and breathing coursing like electricity through the window's text, which could activate during inference/work while the agent is working
-* Modular & Hackable
+* Modularity / Hacking
 	* Create scripted actions that can be mapped to keys and appear in the UI contextually
 		* Take the entire context and pipe it
 		*
 	*
+* Modal Input
+	* COMMAND mode:
+		* Managing the system, navigating efficiently, and dispatching operations
+	* TEXT mode:
+		* entering text
+* Desktop / X11 integration 
+	* HUD drawn on top of the entire system (sticky across workspace)
+	* Try doing it signal based with any custom specified binary so people can implement custom HUDs
+	* Our own HUD is simple and debuggy: solid black rectangles with red text on top
 * Model call to enumerate possible commands and immediately ask in rapid succession for 30+ commands what might you might wanna allow the AI to yolo call
 * Dispatch prompt through a subagent worker with context up to this point (or a canon claude generates a detailed task report for null claude which is cheaper)
 * The model should know every single thing that have changed between messages
@@ -120,14 +121,19 @@ What makes hoho the 'last' CLI agent
 	* Topological discovery by crawling LSP reference usage network
 * Some mouse support
 	* Ability to click head/tail of diffs to reveal additional lines of code for more context (anywhere in context, scrolling up and still usable while agent is working)
-* Intent detection
+* Intent Detection
 	* Use light models e.g. haiku to detect user requests
 	* "Commit everything" --> auto-insert git log
 		* This could be done with a scriptable trigger instead
-* Multiline paste should be automatically boxed in --- ... --- and separated with empty newlines above and below, leaving the caret on newline
 * Continuation
 	* Some models don't wanna keep going (gpt-5)
-	* Double tap enter to send a continuation prompt at random: "let's keep going", "let's roll", "keep it comin", "now we're on a roll", "lets rock n roll", "keep it groovin", "continuous on our way to the dancefloor"
+	* Double tap ENTER to send a continuation prompt at random: "let's keep going", "let's roll", "keep it comin", "now we're on a roll", "lets rock n roll", "keep it groovin", "continuous on our way to the dancefloor"
+	* Continuation hints
+		* After an assistant message, perhaps based on intent detection, a specific key is suggested to be pressed with a more clear hint message of what is to be continued:
+			* Auto-resume detection with hint
+			* Auto-hint on escape
+			* Auto-hint on error
+			* The keys may be 1/2/3/4/5/6/7/8/9 which have contextual meaning in normal mode
 * Shift-tab modes
 	* Normal:
 	* Plan: model cannot edit files, a prompt is injectd to specify that we're in planning mode
@@ -138,8 +144,43 @@ What makes hoho the 'last' CLI agent
 		* sfx on fnish
 		* sfx on tool
 		* etc.
-* Streaming mode toggle in configuration (no streaming = more zen)
-* Queue up /commands like normal prompts (/compact currently says disabled while a task is in progress)
+* Output Dynamics
+	* Different ways to configure the output dynamic
+		* Streaming mode toggle in configuration (no streaming = more zen)
+		* Chunked streaming (chunks of N tokens at a time, making it less jumpy)
+* Scrolling Dynamics
+	* Different ways to configure the scrolling of the window while outputting
+		* 
+* Message Queue
+	* Queue up /commands like normal prompts (/compact currently says disabled while a task is in progress)
+	* ALT-UP like codex but upgraded
+		* ALT-UP pushes to a prompt stack
+		* ALT-DOWN enqueues the content of the textbox back at the end, and pops the next prompt into textbox
+		* 
+* Paste Dynamics
+	* Multiline paste should be automatically boxed in --- ... --- and separated with empty newlines above and below, leaving the caret on newline
+* Cursor's 'Keep Change' Workflow
+	* The app can split with a pane to cycle through every diff generated by the model
+	* The chat log is simplified and diffs are not shown in it while this pane is open
+	* TAB tabulates focus between conversation and diff pane
+	* UP/DOWN cycles between hunks in the open file
+	* ENTER/BKSP accepts and rejects diffs
+	* LEFT/RIGHT navigates between files with diffs
+	* Files remain open in the list (lower priority stack appended after) and can be navigated with LEFT/RIGHT all the same after the diffs are gone and it is the only remaining stack prior
+	* This doubles as a session's code view to remain in the flow with files, like 'open files'.
+* Airline
+	* Edited file stack
+		* Displays edited files in order of latest to oldest, can show last 5 (spatial awareness)
+		* Each file is like a block with a > nerd font ascii thing between
+		* 
+* Menubar
+	* Items accessible through ALT+_ keys, underlined accelerator letter
+	* ??? menu
+		* Hierarchical list of discovered parent/adjacent agent directories (AGENT.md, HOHO.md, CLAUDE.md, etc.)
+		* Choose option to open an agent session (new tab)
+* Multi-session Tabbing
+	* The main view has a tab system that allows opening many different sessions, forking from current, etc.
+
 
 ### HUD
 

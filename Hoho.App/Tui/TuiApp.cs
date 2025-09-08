@@ -11,23 +11,37 @@ namespace Hoho;
 
 internal static class TuiApp
 {
-	public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null)
-	{
-		Application.Init();
+    public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null)
+    {
+        // Prefer NetDriver on Unix to avoid curses' alternate screen behavior.
+        var driverPref = Environment.GetEnvironmentVariable("HOHO_TUI_DRIVER");
+        var driverName = string.IsNullOrWhiteSpace(driverPref) ? "net" : driverPref;
+        Application.Init(driver: null, driverName: driverName);
+        try
+        {
 
 		var store                               = new TranscriptStore();
 		var sid                                 = sessionId;
 		if (string.IsNullOrWhiteSpace(sid)) sid = store.CreateNewSessionId();
 
-		IChatProvider provider = providerName.ToLowerInvariant() switch
-		{
-			"echo" => new EchoProvider(),
-			_      => new EchoProvider(),
-		};
+        var providerKey = string.IsNullOrWhiteSpace(providerName) ? "echo" : providerName.ToLowerInvariant();
+        IChatProvider provider = providerKey switch
+        {
+            "echo" => new EchoProvider(),
+            _      => new EchoProvider(),
+        };
 		var runner = new AgentRunner(provider, store);
 		var system = AgentsLoader.LoadMergedAgents(workdir);
 
-		var top = Application.Top;
+    // In Terminal.Gui v2, Application.Top is null until you run a Toplevel.
+    // Create our own root to avoid null dereferences.
+    var top = new Toplevel
+    {
+        X = 0,
+        Y = 0,
+        Width = Dim.Fill(),
+        Height = Dim.Fill(),
+    };
 
 		// Single column chat list + composer + status + info line
 		var chat = new ChatView
@@ -214,8 +228,14 @@ internal static class TuiApp
             Application.AddTimeout(TimeSpan.Zero, () => { _ = SendAsync(initialPrompt!); return false; });
         }
 
-		Application.Run();
-		Application.Shutdown();
-		return 0;
-	}
+            Application.Run(top);
+            return 0;
+        }
+        finally
+        {
+            // Always restore terminal state so subsequent console output (e.g., stack traces)
+            // is formatted correctly.
+            try { Application.Shutdown(); } catch { }
+        }
+    }
 }
