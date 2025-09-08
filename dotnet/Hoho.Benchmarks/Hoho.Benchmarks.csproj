@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <!-- Reference main project -->
-    <ProjectReference Include="..\Hoho.csproj" />
+    <ProjectReference Include="..\Hoho\Hoho.csproj" />
   </ItemGroup>
 
 </Project>

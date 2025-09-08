@@ -107,6 +107,41 @@ What makes hoho the 'last' CLI agent
 		* Take the entire context and pipe it
 		*
 	*
+* Model call to enumerate possible commands and immediately ask in rapid succession for 30+ commands what might you might wanna allow the AI to yolo call
+* Dispatch prompt through a subagent worker with context up to this point (or a canon claude generates a detailed task report for null claude which is cheaper)
+* The model should know every single thing that have changed between messages
+	* When changing model, "the previous messages were not written by X and you are Y"
+	* All project files are watched for modified date and it is notified to the LLM in the next message if those files are in context
+* Reverb
+	* Words that are defined in .hoho/verb/*.txt are automatically replaced and tagged like @files allowing devs to grow their own ontology and meaning
+* Context insertion recommendations
+	* Use haiku to predict which files in the project are relevant to the current context and suggest them
+	* Topological discovery by crawling LSP reference usage network
+* Some mouse support
+	* Ability to click head/tail of diffs to reveal additional lines of code for more context (anywhere in context, scrolling up and still usable while agent is working)
+* Intent detection
+	* Use light models e.g. haiku to detect user requests
+	* "Commit everything" --> auto-insert git log
+		* This could be done with a scriptable trigger instead
+* Multiline paste should be automatically boxed in --- ... --- and separated with empty newlines above and below, leaving the caret on newline
+
+### HUD
+
+HUD is the subsystem which draws optimized drun style graphics on top of the entire computer, hijacking x11, wayland, etc. in the cleanest possible ways
+such that any opening of hoho command centers automatically upgrades the system to an integrative development spatialization and organization scheme,
+displaying information in hot-corners and sides of the screen and enabling things such as...
+
+1. Display the list of hoho sessions
+2. Signal by altering the color or showing an icon the state of the session
+	* Waiting for input
+	* Thinking
+	* Working
+	* Message about the state of the task
+
+### Thaum
+
+Thaum's integration
+
 
 ### Input
 
