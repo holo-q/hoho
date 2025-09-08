@@ -60,6 +60,8 @@ public static class Program {
             var modelOpt    = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");
             var sessionOpt  = new Option<string?>(name: "--session-id", description: "existing session id (optional)");
             var workdirOpt  = new Option<string>(name: "-C", description: "working directory", getDefaultValue: () => Environment.CurrentDirectory);
+            var approvalsOpt= new Option<string>(name: "--ask-for-approval", getDefaultValue: () => "on-failure", description: "untrusted|on-failure|on-request|never");
+            var sandboxOpt  = new Option<string>(name: "--sandbox", getDefaultValue: () => "workspace-write", description: "read-only|workspace-write|danger-full-access");
 
             // Chat
             var promptArg   = new Argument<string>(name: "prompt", description: "user prompt");
@@ -146,16 +148,27 @@ public static class Program {
             var patchApply = new Command("patch-apply", "Apply a simplified apply_patch envelope")
             {
                 workdirOpt,
+                approvalsOpt,
+                sandboxOpt,
                 new Option<string?>("--file", description: "patch file; omit to read stdin")
             };
-            patchApply.SetHandler(async (string workdir, string? file) =>
+            patchApply.SetHandler(async (string workdir, string approvals, string sandbox, string? file) =>
             {
-                var fs = new FileService(workdir);
+                var mode = sandbox.ToLowerInvariant() switch
+                {
+                    "read-only" => Hoho.Core.Sandbox.SandboxMode.ReadOnly,
+                    "danger-full-access" => Hoho.Core.Sandbox.SandboxMode.DangerFullAccess,
+                    _ => Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite,
+                };
+                var fs = new FileService(workdir, mode);
                 var ps = new PatchService(fs);
                 string text = file is { Length: > 0 } ? await File.ReadAllTextAsync(file) : await Console.In.ReadToEndAsync();
-                await ps.ApplyAsync(text);
-                Console.WriteLine("ok");
-            }, workdirOpt, new Option<string?>("--file"));
+                var ap = ParseApprovals(approvals);
+                var gate = new Hoho.Core.Approvals.ApprovalService(ap);
+                if (!gate.Confirm("Apply patch to workspace")) { Console.WriteLine("canceled"); return; }
+                var result = await ps.ApplyAsync(text);
+                Console.WriteLine(result.ToString());
+            }, workdirOpt, approvalsOpt, sandboxOpt, new Option<string?>("--file"));
             rootCommand.AddCommand(patchApply);
 
             // Repo helpers
@@ -175,13 +188,16 @@ public static class Program {
             }, workdirOpt, new Option<string?>("--path"));
             rootCommand.AddCommand(repoDiff);
 
-            var repoCommit = new Command("repo-commit", "git add -A && git commit -m <msg>") { workdirOpt, new Argument<string>("message") };
-            repoCommit.SetHandler(async (string workdir, string message) =>
+            var repoCommit = new Command("repo-commit", "git add -A && git commit -m <msg>") { workdirOpt, approvalsOpt, new Argument<string>("message") };
+            repoCommit.SetHandler(async (string workdir, string approvals, string message) =>
             {
                 var gs = new GitService(new Hoho.Core.Services.ShellRunner(), workdir);
+                var ap = ParseApprovals(approvals);
+                var gate = new Hoho.Core.Approvals.ApprovalService(ap);
+                if (!gate.Confirm("Commit all changes")) { Console.WriteLine("canceled"); return; }
                 await gs.CommitAllAsync(message);
                 Console.WriteLine("ok");
-            }, workdirOpt, new Argument<string>("message"));
+            }, workdirOpt, approvalsOpt, new Argument<string>("message"));
             rootCommand.AddCommand(repoCommit);
 
             // Tree
@@ -282,6 +298,17 @@ public static class Program {
             Log.Information("🥋 HOHO Shadow Protocol - Shutdown complete");
             Log.CloseAndFlush();
         }
+    }
+
+    private static Hoho.Core.Sandbox.ApprovalPolicy ParseApprovals(string s)
+    {
+        return s.ToLowerInvariant() switch
+        {
+            "never" => Hoho.Core.Sandbox.ApprovalPolicy.Never,
+            "on-request" => Hoho.Core.Sandbox.ApprovalPolicy.OnRequest,
+            "untrusted" => Hoho.Core.Sandbox.ApprovalPolicy.Untrusted,
+            _ => Hoho.Core.Sandbox.ApprovalPolicy.OnFailure,
+        };
     }
 
 	private static void ShowHome() {
