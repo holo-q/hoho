@@ -1,83 +1,82 @@
-# Hoho
+![Hoho Banner](docs/holoq-hoho-wide.png)
 
 [![CI](https://github.com/holo-q/hoho/actions/workflows/ci.yml/badge.svg)](https://github.com/holo-q/hoho/actions/workflows/ci.yml)
 
-Hoho is a calm, non‑streaming CLI/TUI coding agent written in C#. It aims for 1:1 parity with the OpenAI Codex CLI UX: single‑column chat, ESC interrupt/backtrack, keyboard history, and a safe `apply_patch` flow. Non‑parity experiments exist but stay gated behind an Experimental UI flag.
+THE CLI AGENT THAT JUST SAYS "OK."
 
-## Features
+CLASSIFICATION: UNCLASSIFIED · CODENAME: SAITAMA PROTOCOL · STATUS: ACTIVE · CLEARANCE: SHADOW
 
-- Calm TUI: single column chat, no streaming; ESC to interrupt.
-- History: Up/Down recall; queued sends while a run is active.
-- Providers: `echo` (local) and `openai` (via `OPENAI_API_KEY`).
-- Safe patching: `patch-apply` with per‑file summary and post‑patch `fix`.
-- Sandbox/approvals: constrain writes and gate destructive actions.
-- Cross‑platform: .NET 9 on Linux, macOS, and Windows.
+— Overwhelming power through calm, principled simplicity —
 
-## Requirements
+Overview
+- Hoho is a calm, non‑streaming CLI/TUI coding agent written in C# (.NET 9).
+- It targets strict 1:1 UX parity with the OpenAI Codex CLI: single‑column chat, Esc interrupt/backtrack, keyboard history, safe `apply_patch`.
+- Non‑parity ideas live behind an Experimental UI flag and in `proposals/`.
 
+Codex Parity
+- Single‑column chat, calm writes (no token streaming)
+- Esc to interrupt; Esc Esc to preview backtrack
+- Up/Down history recall with guard when composer not empty
+- Queue sends during a running turn
+- Safe `patch-apply` with per‑file summary and no‑op detection
+
+Requirements
 - .NET SDK 9.0+
-- Optional for OpenAI: environment variable `OPENAI_API_KEY` (or set in config below).
+- Optional: `OPENAI_API_KEY` for the OpenAI provider
 
-## Build
+Build & Run
+- Restore/build: `dotnet build Hoho.sln -c Release`
+- TUI (default `echo` provider): `dotnet run --project Hoho.App`
+- Native AOT publish: `dotnet publish Hoho.App -c Release -r linux-x64` (or `osx-x64`, `win-x64`)
 
-- Restore and build: `dotnet build Hoho.sln -c Release`
-- Run the TUI: `dotnet run --project Hoho.App`
-- Publish (native AOT is configured): `dotnet publish Hoho.App -c Release -r linux-x64` (or `osx-x64`, `win-x64`).
+Quick Start
+- One‑shot chat: `dotnet run --project Hoho.App -- chat --provider echo "List files"`
+- OpenAI example: `OPENAI_API_KEY=... dotnet run --project Hoho.App -- chat --provider openai -m gpt-4o-mini "Say hi calmly"`
+- Automation (Codex‑style): `dotnet run --project Hoho.App -- exec --provider openai -m gpt-4o-mini --sandbox workspace-write --ask-for-approval on-failure "Add a README section"`
 
-## Quick Start
+Key Commands
+- `chat` — send a single prompt to the provider
+- `exec` — automation mode with sandbox/approvals
+- `patch-apply` — apply an apply_patch envelope from stdin or file
+- `fix` — organize imports and run `dotnet format`
+- `repo-status|repo-diff|repo-commit` — helpful git wrappers
 
-- TUI (default provider `echo`):
-  - `dotnet run --project Hoho.App`
-- One‑shot chat (non‑interactive):
-  - `dotnet run --project Hoho.App -- chat --provider echo "List files in the repo"`
-  - OpenAI example: `OPENAI_API_KEY=... dotnet run --project Hoho.App -- chat --provider openai -m gpt-4o-mini "Say hi calmly"`
+Providers
+- `echo` — local echo, no network
+- `openai` — requires `OPENAI_API_KEY` (env or `~/.hoho/config.json` under `Secrets`)
 
-## Providers
+Config
+- Path: `~/.hoho/config.json`
+- Example:
+  {
+    "Sandbox": {},
+    "Profile": "default",
+    "Secrets": { "OPENAI_API_KEY": "sk-..." },
+    "AuthProvider": "none",
+    "ChatGptSession": null,
+    "ExperimentalUi": false
+  }
 
-- `echo`: local echo provider (no network).
-- `openai`: uses `OPENAI_API_KEY` from environment, or from `~/.hoho/config.json` under `Secrets`.
+Sandbox & Approvals
+- `--sandbox` read-only | workspace-write | danger-full-access
+- `--ask-for-approval` untrusted | on-failure | on-request | never
+- Used on `patch-apply`, `repo-commit`, and in `exec` mode
 
-Example config (`~/.hoho/config.json`):
+Apply Patches & Fixers
+- From stdin: `cat patch.txt | dotnet run --project Hoho.App -- patch-apply --sandbox workspace-write --ask-for-approval on-request`
+- After a successful patch, Hoho runs `fix` to organize imports and format
 
-```
-{
-  "Sandbox": {},
-  "Profile": "default",
-  "Secrets": { "OPENAI_API_KEY": "sk-..." },
-  "AuthProvider": "none",
-  "ChatGptSession": null,
-  "ExperimentalUi": false
-}
-```
-
-## Sandbox & Approvals
-
-- Sandbox: `--sandbox read-only|workspace-write|danger-full-access`
-- Approvals: `--ask-for-approval untrusted|on-failure|on-request|never`
-
-These flags exist on commands like `patch-apply`, and in automation (`exec`).
-
-## Apply Patches & Fixers
-
-- Apply a patch from stdin: `cat patch.txt | dotnet run --project Hoho.App -- patch-apply --sandbox workspace-write --ask-for-approval on-request`
-- Run fixers (organize imports / format): `dotnet run --project Hoho.App -- fix -C .`
-
-`patch-apply` prints a compact per‑file summary and runs `fix` automatically afterward when applicable.
-
-## Data Locations
-
+Data Locations
 - Transcripts: `~/.hoho/sessions/<session-id>/transcript.jsonl`
 - Config: `~/.hoho/config.json`
 
-## CI
+Implementation Notes
+- Uses vendored Terminal.Gui v2 for the TUI (single‑column chat UI)
+- Core/CLI separation: `Hoho.Core` (domain/services), `Hoho.App` (CLI/TUI)
 
-GitHub Actions builds the solution on push/PR for Linux, macOS, and Windows. See the badge above or the Actions tab for status.
-
-## Contributing
-
-- See `proposals/` for planned enhancements. Non‑parity UI stays behind the Experimental UI flag by default.
+Contributing
+- See `proposals/` for planned enhancements. Experimental UI remains off by default to preserve Codex parity.
 - PRs and issue reports welcome.
 
-## Project Vision
-
-- For the extended vision and brand doc, see `docs/README.md`.
+Extended Vision
+- For the narrative/brand doc, see `docs/README.md`.
