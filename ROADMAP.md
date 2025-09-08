@@ -130,7 +130,13 @@ What makes hoho the 'last' CLI agent
 * Shift-tab modes
 	* Normal:
 	* Plan: model cannot edit files, a prompt is injectd to specify that we're in planning mode
-	* 
+	* Auto-continue
+* Sound effects
+	* Mode 1: console ping
+	* Mode 2: configurable alsa supremacy
+		* sfx on fnish
+		* sfx on tool
+		* sfx on 
 
 ### HUD
 

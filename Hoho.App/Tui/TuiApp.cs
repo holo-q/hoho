@@ -78,6 +78,7 @@ internal static class TuiApp
         System.Threading.CancellationTokenSource? currentTurnCts = null;
         bool flushIdleActive = false;
         DateTime lastFlush = DateTime.MinValue;
+        const bool streamUi = false; // match Codex calm UX: show final output only
 
         void EnsureFlushIdle()
         {
@@ -119,7 +120,7 @@ internal static class TuiApp
             status.Text = "Running… (Ctrl-C to cancel)";
             status.ColorScheme = new ColorScheme { Normal = Application.Driver.MakeAttribute(Color.Gray, Color.Black) };
             currentTurnCts = new System.Threading.CancellationTokenSource();
-            EnsureFlushIdle();
+            if (streamUi) EnsureFlushIdle();
             try
             {
                 await runner.RunOnceAsync(sid!, prompt, onText: s =>

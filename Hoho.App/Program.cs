@@ -85,7 +85,9 @@ public static class Program {
                 };
 
                 var runner = new AgentRunner(provider, store);
-                await runner.RunOnceAsync(sessionId!, prompt, onText: s => Console.Write(s));
+                var buf = new System.Text.StringBuilder();
+                await runner.RunOnceAsync(sessionId!, prompt, onText: s => buf.Append(s));
+                Console.Write(buf.ToString());
             });
             rootCommand.AddCommand(chat);
 
@@ -229,7 +231,9 @@ public static class Program {
 
                 var guidance = Hoho.Core.Guidance.AgentsLoader.LoadMergedAgents(workdir);
                 var runner = new AgentRunner(provider, store);
-                await runner.RunOnceAsync(sid!, prompt, onText: s => Console.Write(s), systemPrompt: guidance);
+                var buf = new System.Text.StringBuilder();
+                await runner.RunOnceAsync(sid!, prompt, onText: s => buf.Append(s), systemPrompt: guidance);
+                Console.Write(buf.ToString());
             });
             rootCommand.AddCommand(exec);
 

@@ -9,6 +9,9 @@ public sealed class HohoConfig
     [JsonInclude] public SandboxSettings Sandbox { get; private set; } = new();
     [JsonInclude] public string Profile { get; private set; } = "default";
     [JsonInclude] public Dictionary<string, string> Secrets { get; private set; } = new();
+    // Auth
+    [JsonInclude] public string AuthProvider { get; private set; } = "none"; // chatgpt|openai|none
+    [JsonInclude] public string? ChatGptSession { get; private set; }
 
     public static string GetDefaultPath()
     {
@@ -42,5 +45,19 @@ public sealed class HohoConfig
         var json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(path, json);
     }
-}
 
+    // Mutators for auth (fluent-style)
+    public HohoConfig SetChatGptSession(string token)
+    {
+        ChatGptSession = token;
+        AuthProvider = "chatgpt";
+        return this;
+    }
+
+    public HohoConfig ClearAuth()
+    {
+        ChatGptSession = null;
+        AuthProvider = "none";
+        return this;
+    }
+}
