@@ -29,11 +29,13 @@ public static class Program {
 		try {
 			Log.Information("🥋 HOHO Shadow Protocol - Startup initiated");
 
-            // Codex parity: root runs TUI; optional initial prompt; resume/continue flags.
+            // Codex parity: root runs TUI; optional initial prompt; resume/continue flags; sandbox/approvals.
             var initialPromptArg = new Argument<string?>(name: "prompt", description: "initial prompt for interactive TUI", getDefaultValue: () => null);
             var resumeOpt  = new Option<bool>(name: "--resume", description: "open recent sessions picker", getDefaultValue: () => false);
             var contOpt    = new Option<bool>(name: "--continue", description: "resume most recent session", getDefaultValue: () => false);
-            var rootCommand = new RootCommand("🥋 HOHO - The CLI Agent That Just Says 'OK.'") { initialPromptArg, resumeOpt, contOpt };
+            var approvalsOptRoot= new Option<string>(name: "--ask-for-approval", getDefaultValue: () => "on-failure", description: "untrusted|on-failure|on-request|never");
+            var sandboxOptRoot  = new Option<string>(name: "--sandbox", getDefaultValue: () => "workspace-write", description: "read-only|workspace-write|danger-full-access");
+            var rootCommand = new RootCommand("🥋 HOHO - The CLI Agent That Just Says 'OK.'") { initialPromptArg, resumeOpt, contOpt, approvalsOptRoot, sandboxOptRoot };
 
             // Home
             var homeCommand = new Command("home", "Show hoho home screen with Saitama face");
@@ -209,7 +211,7 @@ public static class Program {
             rootCommand.AddCommand(tree);
 
             // TUI default behavior
-            rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial, bool resume, bool cont) =>
+            rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial, bool resume, bool cont, string approvalsRoot, string sandboxRoot) =>
             {
                 Environment.CurrentDirectory = workdir;
                 // Handle resume/continue semantics
@@ -247,8 +249,10 @@ public static class Program {
                     var sidLatest = Hoho.Core.Sessions.SessionDiscovery.ListSessions(1).FirstOrDefault()?.Id;
                     if (!string.IsNullOrWhiteSpace(sidLatest)) sid = sidLatest;
                 }
-                TuiApp.Run(workdir, provider, sid, initial);
-            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt);
+                var ap = ParseApprovals(approvalsRoot);
+                var sm = ParseSandbox(sandboxRoot);
+                TuiApp.Run(workdir, provider, sid, initial, ap, sm);
+            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt, approvalsOptRoot, sandboxOptRoot);
 
             // Exec (non-interactive automation mode)
             var modelOpt = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");
@@ -308,6 +312,16 @@ public static class Program {
             "on-request" => Hoho.Core.Sandbox.ApprovalPolicy.OnRequest,
             "untrusted" => Hoho.Core.Sandbox.ApprovalPolicy.Untrusted,
             _ => Hoho.Core.Sandbox.ApprovalPolicy.OnFailure,
+        };
+    }
+
+    private static Hoho.Core.Sandbox.SandboxMode ParseSandbox(string s)
+    {
+        return s.ToLowerInvariant() switch
+        {
+            "read-only" => Hoho.Core.Sandbox.SandboxMode.ReadOnly,
+            "danger-full-access" => Hoho.Core.Sandbox.SandboxMode.DangerFullAccess,
+            _ => Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite,
         };
     }
 

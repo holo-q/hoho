@@ -8,7 +8,7 @@ namespace Hoho;
 
 internal static class TuiApp
 {
-    public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null)
+    public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null, Hoho.Core.Sandbox.ApprovalPolicy approval = Hoho.Core.Sandbox.ApprovalPolicy.OnFailure, Hoho.Core.Sandbox.SandboxMode sandbox = Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite)
     {
         Application.Init();
 
@@ -70,7 +70,7 @@ internal static class TuiApp
         void UpdateInfo()
         {
             var hints = backtrackPrimed ? "Esc edit prev (primed)" : "Esc edit prev";
-            info.Text = $"{hints} | Shift+Enter newline; Enter send | @ insert path; Ctrl+K files | Provider: {provider.Name} | {workdir}";
+            info.Text = $"{hints} | Shift+Enter newline; Enter send | @ insert path; Ctrl+K files | Mode: {sandbox} | Approvals: {approval} | Provider: {provider.Name} | {workdir}";
         }
         UpdateInfo();
 
@@ -272,6 +272,12 @@ internal static class TuiApp
             {
                 e.Handled = true;
                 var dlg = new ApplyPatchDialog();
+                Application.Run(dlg);
+            }
+            else if (e.KeyEvent.Key == Key.G && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            {
+                e.Handled = true;
+                var dlg = new CommitDialog(workdir);
                 Application.Run(dlg);
             }
         };
