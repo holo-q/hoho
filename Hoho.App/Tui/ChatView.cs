@@ -91,16 +91,31 @@ internal sealed class ChatView : View
             };
 
             var lines = WrapWithPrefix(prefix, text, bounds.Width);
+            bool first = true;
             foreach (var line in lines)
             {
                 if (y >= 0 && y < bounds.Height)
                 {
                     Move(0, y);
-                    if (color is Attribute a) Driver.SetAttribute(a);
-                    Driver.AddStr(line.PadRight(bounds.Width));
+                    var display = line.PadRight(bounds.Width);
+                    if (first)
+                    {
+                        // Color only the prefix on the first line
+                        var prefLen = Math.Min(prefix.Length + 1, display.Length);
+                        if (color is Attribute a) Driver.SetAttribute(a);
+                        Driver.AddStr(display.Substring(0, prefLen));
+                        Driver.SetAttribute(ColorScheme.Normal);
+                        Driver.AddStr(display.Substring(prefLen));
+                    }
+                    else
+                    {
+                        // Subsequent lines: plain text (indented spaces already present)
+                        Driver.AddStr(display);
+                    }
                     Driver.SetAttribute(ColorScheme.Normal);
                 }
                 y++;
+                first = false;
             }
             y++; // spacing between messages
         }

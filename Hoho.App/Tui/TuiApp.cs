@@ -53,14 +53,12 @@ internal static class TuiApp
             Text = $"Esc edit prev  |  Shift+Enter newline, Enter send  |  Provider: {provider.Name}  Workdir: {workdir}"
         };
 
-        var composer = new TextView
+        var composer = new ComposerView
         {
             X = 0,
             Y = Pos.AnchorEnd(3),
             Width = Dim.Fill(),
             Height = 2,
-            ReadOnly = false,
-            WordWrap = false,
         };
 
         bool backtrackPrimed = false;
@@ -71,17 +69,36 @@ internal static class TuiApp
         }
         UpdateInfo();
 
+        System.Text.StringBuilder streamBuf = new();
+        System.Threading.CancellationTokenSource? currentTurnCts = null;
+
+        async Task FlushStreamAsync()
+        {
+            if (streamBuf.Length == 0) return;
+            var s = streamBuf.ToString();
+            streamBuf.Clear();
+            Application.MainLoop?.Invoke(() => chat.AppendAssistantChunk(s));
+        }
+
         async Task SendAsync(string prompt)
         {
             chat.AppendUser(prompt);
             chat.BeginAssistant();
             status.Text = "Running… (Ctrl-C to cancel)";
+            currentTurnCts = new System.Threading.CancellationTokenSource();
             try
             {
                 await runner.RunOnceAsync(sid!, prompt, onText: s =>
                 {
-                    Application.MainLoop?.Invoke(() => chat.AppendAssistantChunk(s));
-                }, systemPrompt: system);
+                    // Buffer streaming tokens to reduce redraw churn
+                    streamBuf.Append(s);
+                }, systemPrompt: system, ct: currentTurnCts.Token);
+                await FlushStreamAsync();
+            }
+            catch (OperationCanceledException)
+            {
+                await FlushStreamAsync();
+                chat.AppendInfo("🖐  Turn interrupted");
             }
             catch (Exception ex)
             {
@@ -91,15 +108,21 @@ internal static class TuiApp
             {
                 chat.EndAssistant();
                 status.Text = string.Empty;
+                currentTurnCts?.Dispose();
+                currentTurnCts = null;
             }
         }
 
-        composer.KeyPress += async args =>
+        composer.KeyPressInner += async args =>
         {
             // Ctrl-C clears composer
             if (args.KeyEvent.Key == Key.C && (args.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 args.Handled = true;
+                if (currentTurnCts is not null)
+                {
+                    currentTurnCts.Cancel();
+                }
                 composer.Text = string.Empty;
                 backtrackPrimed = false;
                 UpdateInfo();
@@ -110,7 +133,7 @@ internal static class TuiApp
             if (args.KeyEvent.Key == Key.Esc)
             {
                 args.Handled = true;
-                var txt = composer.Text.ToString();
+                var txt = composer.Text;
                 if (string.IsNullOrEmpty(txt))
                 {
                     if (!backtrackPrimed)
@@ -133,12 +156,12 @@ internal static class TuiApp
                 args.Handled = true;
                 if ((args.KeyEvent.KeyModifiers & KeyModifiers.Shift) != 0)
                 {
-                    composer.InsertText("\n");
+                    composer.InsertNewLine();
                 }
                 else
                 {
-                    var prompt = composer.Text.ToString();
-                    composer.Text = "";
+                    var prompt = composer.Text;
+                    composer.Text = string.Empty;
                     await SendAsync(prompt);
                 }
                 return;
