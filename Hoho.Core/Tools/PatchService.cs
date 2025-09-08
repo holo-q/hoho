@@ -7,7 +7,18 @@ public sealed class PatchService
     private readonly FileService _files;
     public PatchService(FileService files) { _files = files; }
 
-    public async Task ApplyAsync(string patchText, CancellationToken ct = default)
+    public sealed record PatchChange(string Path, string Operation, int Added, int Removed);
+    public sealed record PatchApplyResult(System.Collections.Generic.IReadOnlyList<PatchChange> Changes)
+    {
+        public override string ToString()
+        {
+            var sb = new System.Text.StringBuilder();
+            foreach (var c in Changes) sb.AppendLine("- "+c.Operation+": "+c.Path+" (+"+c.Added+" -"+c.Removed+")");
+            return sb.ToString();
+        }
+    }
+
+    public async Task<PatchApplyResult> ApplyAsync(string patchText, CancellationToken ct = default)
     {
         using var reader = new StringReader(patchText);
         string? line;
@@ -18,6 +29,7 @@ public sealed class PatchService
         var inHunks = false;
         List<string>? baseLines = null;
         var hunkLines = new List<string>();
+        var changes = new List<PatchChange>();
 
         async Task FlushPending()
         {
@@ -25,7 +37,9 @@ public sealed class PatchService
             switch (op)
             {
                 case "Add File":
-                    await _files.WriteTextAsync(path, buffer.ToString());
+                    var addContent = buffer.ToString();
+                    await _files.WriteTextAsync(path, addContent);
+                    changes.Add(new PatchChange(path, "add", CountLines(addContent), 0));
                     break;
                 case "Update File":
                     if (moveTo is not null)
@@ -36,16 +50,22 @@ public sealed class PatchService
                     if (inHunks)
                     {
                         baseLines ??= new List<string>((await _files.ReadTextAsync(path)).Split('\n'));
-                        var result = ApplyHunks(baseLines!, hunkLines);
+                        var (result, added, removed) = ApplyHunks(baseLines!, hunkLines);
                         await _files.WriteTextAsync(path, string.Join("\n", result));
+                        changes.Add(new PatchChange(path, "update", added, removed));
                     }
                     else
                     {
-                        await _files.WriteTextAsync(path, buffer.ToString());
+                        var prev = await _files.ReadTextAsync(path);
+                        var next = buffer.ToString();
+                        await _files.WriteTextAsync(path, next);
+                        changes.Add(new PatchChange(path, "update", CountLines(next), CountLines(prev)));
                     }
                     break;
                 case "Delete File":
+                    var prior = await _files.ReadTextAsync(path);
                     _files.Delete(path);
+                    changes.Add(new PatchChange(path, "delete", 0, CountLines(prior)));
                     break;
             }
         }
@@ -122,13 +142,16 @@ public sealed class PatchService
         }
 
         await FlushPending();
+        return new PatchApplyResult(changes);
     }
 
-    private static List<string> ApplyHunks(List<string> baseLines, List<string> patch)
+    private static int CountLines(string s) { if (string.IsNullOrEmpty(s)) return 0; return s.Split('\n').Length; }
+
+    private static (System.Collections.Generic.List<string> result, int added, int removed) ApplyHunks(System.Collections.Generic.List<string> baseLines, System.Collections.Generic.List<string> patch)
     {
         // Very simple unified-hunk applier using +, -, and space lines; ignores positions in @@
-        var output = new List<string>();
-        int idx = 0;
+        var output = new System.Collections.Generic.List<string>();
+        int idx = 0; int add = 0, rem = 0;
         for (int i = 0; i < patch.Count; i++)
         {
             var ln = patch[i];
@@ -154,10 +177,12 @@ public sealed class PatchService
                     if (idx >= baseLines.Count || baseLines[idx] != content)
                         throw new InvalidOperationException("Patch removal mismatch");
                     idx++;
+                    rem++;
                     break;
                 case '+':
                     // insertion
                     output.Add(content);
+                    add++;
                     break;
                 default:
                     // treat as passthrough
@@ -167,6 +192,6 @@ public sealed class PatchService
         }
         // Append remaining base lines if any
         for (; idx < baseLines.Count; idx++) output.Add(baseLines[idx]);
-        return output;
+        return (output, add, rem);
     }
 }
