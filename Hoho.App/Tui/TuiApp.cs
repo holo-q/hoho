@@ -255,6 +255,21 @@ internal static class TuiApp
 
         top.Add(chat, composer, status, info);
 
+        // Ctrl+R to open resume picker (switch session)
+        top.KeyPress += e =>
+        {
+            if (e.KeyEvent.Key == Key.R && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            {
+                e.Handled = true;
+                var pick = ResumePicker.Show();
+                if (!string.IsNullOrWhiteSpace(pick))
+                {
+                    sid = pick;
+                    chat.AppendInfo($"[resumed session: {sid}]");
+                }
+            }
+        };
+
         if (!string.IsNullOrWhiteSpace(initialPrompt))
         {
             Application.MainLoop.AddIdle(async () =>

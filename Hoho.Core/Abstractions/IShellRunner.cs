@@ -16,5 +16,5 @@ public record ShellOptions
     public bool WithEscalatedPermissions { get; init; }
     public bool AllowNetwork { get; init; }
     public TimeSpan? Timeout { get; init; }
+    public string? AllowedRoot { get; init; }
 }
-
