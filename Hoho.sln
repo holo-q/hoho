@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoho", "dotnet\Hoho\Hoho.csproj", "{2150D3AB-8B86-4887-B86F-5B5BF2224079}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoho.App", "Hoho.App\Hoho.csproj", "{2150D3AB-8B86-4887-B86F-5B5BF2224079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decomp", "dotnet\Decomp\Decomp.csproj", "{F3E75E3A-451F-4068-9BA0-DBDA7A4B3251}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decomp.Tests", "dotnet\Decomp.Tests\Decomp.Tests.csproj", "{26C31FF9-B8D0-4922-BAAD-FE595A0F1631}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoho.Core", "Hoho.Core\Hoho.Core.csproj", "{F3E75E3A-451F-4068-9BA0-DBDA7A4B3251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +24,5 @@ Global
 		{F3E75E3A-451F-4068-9BA0-DBDA7A4B3251}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3E75E3A-451F-4068-9BA0-DBDA7A4B3251}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3E75E3A-451F-4068-9BA0-DBDA7A4B3251}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26C31FF9-B8D0-4922-BAAD-FE595A0F1631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26C31FF9-B8D0-4922-BAAD-FE595A0F1631}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26C31FF9-B8D0-4922-BAAD-FE595A0F1631}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26C31FF9-B8D0-4922-BAAD-FE595A0F1631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
