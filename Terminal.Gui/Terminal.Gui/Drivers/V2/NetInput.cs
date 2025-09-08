@@ -40,13 +40,19 @@ public class NetInput : ConsoleInput<ConsoleKeyInfo>, INetInput
             }
         }
 
-        //Enable alternative screen buffer.
-        Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
+        //Enable alternative screen buffer per options
+        if (Application.Options?.UseAlternateScreenBuffer == true)
+        {
+            Console.Out.Write (EscSeqUtils.CSI_SaveCursorAndActivateAltBufferNoBackscroll);
+        }
 
         //Set cursor key to application.
         Console.Out.Write (EscSeqUtils.CSI_HideCursor);
 
-        Console.Out.Write (EscSeqUtils.CSI_EnableMouseEvents);
+        if (Application.Options?.MouseTracking != MouseTrackingMode.None)
+        {
+            Console.Out.Write (EscSeqUtils.CSI_EnableMouseEvents);
+        }
         Console.TreatControlCAsInput = true;
     }
 
@@ -76,8 +82,11 @@ public class NetInput : ConsoleInput<ConsoleKeyInfo>, INetInput
         base.Dispose ();
         Console.Out.Write (EscSeqUtils.CSI_DisableMouseEvents);
 
-        //Disable alternative screen buffer.
-        Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
+        //Disable alternative screen buffer per options
+        if (Application.Options?.UseAlternateScreenBuffer == true)
+        {
+            Console.Out.Write (EscSeqUtils.CSI_RestoreCursorAndRestoreAltBufferWithBackscroll);
+        }
 
         //Set cursor key to cursor.
         Console.Out.Write (EscSeqUtils.CSI_ShowCursor);

@@ -40,6 +40,18 @@ public static partial class Application // Initialization (Init/Shutdown)
     [RequiresDynamicCode ("AOT")]
     public static void Init (IConsoleDriver? driver = null, string? driverName = null)
     {
+        Options = Options ?? new ApplicationOptions();
+        ApplicationImpl.Instance.Init (driver, driverName);
+    }
+
+    /// <summary>
+    /// Initializes the application with explicit options controlling terminal behavior.
+    /// </summary>
+    [RequiresUnreferencedCode ("AOT")]
+    [RequiresDynamicCode ("AOT")]
+    public static void Init (IConsoleDriver? driver, string? driverName, ApplicationOptions? options)
+    {
+        Options = options ?? new ApplicationOptions();
         ApplicationImpl.Instance.Init (driver, driverName);
     }
 
@@ -240,7 +252,14 @@ public static partial class Application // Initialization (Init/Shutdown)
     ///     up (Disposed)
     ///     and terminal settings are restored.
     /// </remarks>
-    public static void Shutdown () => ApplicationImpl.Instance.Shutdown ();
+    public static void Shutdown ()
+    {
+        ApplicationImpl.Instance.Shutdown ();
+        if (Options?.RestoreConsoleOnExit == true)
+        {
+            try { ConsoleStateRestorer.Restore(); } catch { }
+        }
+    }
 
     /// <summary>
     ///     Gets whether the application has been initialized with <see cref="Init"/> and not yet shutdown with <see cref="Shutdown"/>.

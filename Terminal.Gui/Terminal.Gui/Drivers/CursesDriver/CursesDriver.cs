@@ -103,7 +103,10 @@ internal class CursesDriver : ConsoleDriver
     {
         if (!RunningUnitTests)
         {
-            Console.Out.Write (EscSeqUtils.CSI_EnableMouseEvents);
+            if (Application.Options?.MouseTracking != MouseTrackingMode.None)
+            {
+                Console.Out.Write (EscSeqUtils.CSI_EnableMouseEvents);
+            }
         }
     }
 
