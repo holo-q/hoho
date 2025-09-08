@@ -1,4 +1,5 @@
 using Hoho.Core.Agents;
+using Hoho.Core.Guidance;
 using Hoho.Core.Providers;
 using Hoho.Core.Sessions;
 using Terminal.Gui;
@@ -7,7 +8,7 @@ namespace Hoho;
 
 internal static class TuiApp
 {
-    public static int Run(string workdir, string providerName, string? sessionId)
+    public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null)
     {
         Application.Init();
 
@@ -21,76 +22,81 @@ internal static class TuiApp
             _ => new EchoProvider(),
         };
         var runner = new AgentRunner(provider, store);
+        var system = AgentsLoader.LoadMergedAgents(workdir);
 
         var top = Application.Top;
 
-        var menu = new MenuBar(new MenuBarItem[]
+        // Single column chat list + composer + info line
+        var chat = new ChatView
         {
-            new("_File", new MenuItem[]
-            {
-                new("_New Session", "", () => { sid = store.CreateNewSessionId(); AppendLine(transcript, $"[new session: {sid}]"); }),
-                new("_Quit", "", () => Application.RequestStop())
-            }),
-        });
-
-        var status = new StatusBar(new StatusItem[]
-        {
-            new(Key.F1, $"SID: {sid}", null),
-            new(Key.F2, $"Provider: {provider.Name}", null),
-        });
-
-        var transcript = new TextView
-        {
-            ReadOnly = true,
-            WordWrap = true,
-            X = 0, Y = 1,
-            Width = Dim.Fill(),
-            Height = Dim.Fill(3)
-        };
-
-        var composer = new TextView
-        {
-            ReadOnly = false,
-            WordWrap = true,
             X = 0,
-            Y = Pos.Bottom(transcript),
+            Y = 0,
             Width = Dim.Fill(),
-            Height = 3
+            Height = Dim.Fill(2)
         };
+
+        var info = new Label
+        {
+            X = 0,
+            Y = Pos.AnchorEnd(1),
+            Width = Dim.Fill(),
+            Height = 1,
+            Text = $"Mode: workspace-write  Approval: on-failure  Provider: {provider.Name}  Workdir: {workdir}"
+        };
+
+        var composer = new TextField("")
+        {
+            X = 0,
+            Y = Pos.AnchorEnd(2),
+            Width = Dim.Fill(),
+            Height = 1,
+        };
+
+        async Task SendAsync(string prompt)
+        {
+            chat.AppendUser(prompt);
+            chat.BeginAssistant();
+            try
+            {
+                await runner.RunOnceAsync(sid!, prompt, onText: s =>
+                {
+                    Application.MainLoop?.Invoke(() => chat.AppendAssistantChunk(s));
+                }, systemPrompt: system);
+            }
+            catch (Exception ex)
+            {
+                chat.AppendInfo($"error: {ex.Message}");
+            }
+            finally
+            {
+                chat.EndAssistant();
+            }
+        }
 
         composer.KeyPress += async args =>
         {
-            if (args.KeyEvent.Key == Key.Enter && (args.KeyEvent.KeyModifiers & KeyModifiers.Shift) == 0)
+            if (args.KeyEvent.Key == Key.Enter)
             {
                 args.Handled = true;
                 var prompt = composer.Text.ToString();
                 composer.Text = "";
-                AppendLine(transcript, $"> {prompt}");
-                try
-                {
-                    await runner.RunOnceAsync(sid!, prompt, onText: s =>
-                    {
-                        Application.MainLoop?.Invoke(() => transcript.InsertText(s));
-                    });
-                    AppendLine(transcript, "\n");
-                }
-                catch (Exception ex)
-                {
-                    AppendLine(transcript, $"\n[error] {ex.Message}\n");
-                }
+                await SendAsync(prompt);
             }
         };
 
-        top.Add(menu, transcript, composer, status);
+        top.Add(chat, composer, info);
+
+        if (!string.IsNullOrWhiteSpace(initialPrompt))
+        {
+            Application.MainLoop.AddIdle(async () =>
+            {
+                await SendAsync(initialPrompt!);
+                return false;
+            });
+        }
+
         Application.Run();
         Application.Shutdown();
         return 0;
     }
-
-    private static void AppendLine(TextView tv, string text)
-    {
-        tv.InsertText(text + (text.EndsWith("\n") ? string.Empty : "\n"));
-        tv.MoveEnd();
-    }
 }
-

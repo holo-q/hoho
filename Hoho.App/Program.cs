@@ -190,7 +190,7 @@ public static class Program {
             rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial) =>
             {
                 Environment.CurrentDirectory = workdir;
-                TuiApp.Run(workdir, provider, sid);
+                TuiApp.Run(workdir, provider, sid, initial);
             }, providerOpt, sessionOpt, workdirOpt, initialPromptArg);
 
             // Exec (non-interactive automation mode)
