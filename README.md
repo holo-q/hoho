@@ -3,10 +3,6 @@
   <img src="docs/holoq-hoho-wide.png" alt="Hoho Banner" width="100%" />
   <br/>
   <p><strong>THE CLI AGENT THAT JUST SAYS "OK."</strong></p>
-  <p>CLASSIFICATION: UNCLASSIFIED</p>
-  <p>CODENAME: SAITAMA PROTOCOL</p>
-  <p>STATUS: ACTIVE</p>
-  <p>CLEARANCE: SHADOW</p>
   <p>— Overwhelming power through calm, principled simplicity —</p>
   <p>— one punch, one shot —</p>
   <p>
