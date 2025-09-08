@@ -35,13 +35,13 @@ internal static class TuiApp
             Height = Dim.Fill(3)
         };
 
-        var status = new Label
+        var status = new StatusIndicatorView
         {
             X = 0,
             Y = Pos.AnchorEnd(2),
             Width = Dim.Fill(),
             Height = 1,
-            Text = string.Empty
+            
         };
 
         var info = new Label
@@ -117,7 +117,7 @@ internal static class TuiApp
         {
             chat.AppendUser(prompt);
             chat.BeginAssistant();
-            status.Text = "Running… (Ctrl-C to cancel)";
+            status.Start();
             status.ColorScheme = new ColorScheme { Normal = Application.Driver.MakeAttribute(Color.Gray, Color.Black) };
             currentTurnCts = new System.Threading.CancellationTokenSource();
             if (streamUi) EnsureFlushIdle();
@@ -142,7 +142,7 @@ internal static class TuiApp
             finally
             {
                 chat.EndAssistant();
-                status.Text = string.Empty;
+                status.;
                 currentTurnCts?.Dispose();
                 currentTurnCts = null;
             }
@@ -158,7 +158,7 @@ internal static class TuiApp
                 {
                     currentTurnCts.Cancel();
                 }
-                composer.Text = string.Empty;
+                composer.;
                 backtrackPrimed = false;
                 UpdateInfo();
                 return;
@@ -225,7 +225,7 @@ internal static class TuiApp
                 else
                 {
                     var prompt = composer.Text;
-                    composer.Text = string.Empty;
+                    composer.;
                     await SendAsync(prompt);
                 }
                 return;
