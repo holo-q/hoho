@@ -29,9 +29,11 @@ public static class Program {
 		try {
 			Log.Information("🥋 HOHO Shadow Protocol - Startup initiated");
 
-            // Codex parity: root runs TUI; optional initial prompt.
+            // Codex parity: root runs TUI; optional initial prompt; resume/continue flags.
             var initialPromptArg = new Argument<string?>(name: "prompt", description: "initial prompt for interactive TUI", getDefaultValue: () => null);
-            var rootCommand = new RootCommand("🥋 HOHO - The CLI Agent That Just Says 'OK.'") { initialPromptArg };
+            var resumeOpt  = new Option<bool>(name: "--resume", description: "open recent sessions picker", getDefaultValue: () => false);
+            var contOpt    = new Option<bool>(name: "--continue", description: "resume most recent session", getDefaultValue: () => false);
+            var rootCommand = new RootCommand("🥋 HOHO - The CLI Agent That Just Says 'OK.'") { initialPromptArg, resumeOpt, contOpt };
 
             // Home
             var homeCommand = new Command("home", "Show hoho home screen with Saitama face");
@@ -191,11 +193,46 @@ public static class Program {
             rootCommand.AddCommand(tree);
 
             // TUI default behavior
-            rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial) =>
+            rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial, bool resume, bool cont) =>
             {
                 Environment.CurrentDirectory = workdir;
+                // Handle resume/continue semantics
+                if (resume && cont)
+                {
+                    Console.Error.WriteLine("Cannot use --resume and --continue together.");
+                    return;
+                }
+                if (resume)
+                {
+                    var sessions = Hoho.Core.Sessions.SessionDiscovery.ListSessions(30).ToList();
+                    if (sessions.Count == 0)
+                    {
+                        Console.WriteLine("No sessions found.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Recent sessions:");
+                        for (int i = 0; i < sessions.Count; i++)
+                        {
+                            var sInfo = sessions[i];
+                            var preview = Hoho.Core.Sessions.SessionDiscovery.FirstUserPreview(sInfo.Id) ?? "(no preview)";
+                            Console.WriteLine($"{i + 1,2}. {sInfo.Id}  -  {preview}");
+                        }
+                        Console.Write("Select (1-" + sessions.Count + "): ");
+                        var choice = Console.ReadLine();
+                        if (int.TryParse(choice, out var idx) && idx >= 1 && idx <= sessions.Count)
+                        {
+                            sid = sessions[idx - 1].Id;
+                        }
+                    }
+                }
+                else if (cont)
+                {
+                    var sidLatest = Hoho.Core.Sessions.SessionDiscovery.ListSessions(1).FirstOrDefault()?.Id;
+                    if (!string.IsNullOrWhiteSpace(sidLatest)) sid = sidLatest;
+                }
                 TuiApp.Run(workdir, provider, sid, initial);
-            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg);
+            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt);
 
             // Exec (non-interactive automation mode)
             var modelOpt = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");

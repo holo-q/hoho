@@ -137,6 +137,7 @@ What makes hoho the 'last' CLI agent
 		* sfx on fnish
 		* sfx on tool
 		* sfx on 
+* Streaming mode toggle in configuration (no streaming = more zen)
 
 ### HUD
 
