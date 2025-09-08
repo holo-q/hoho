@@ -195,10 +195,11 @@ internal static class TuiApp
                 return;
             }
 
-            // Esc backtrack logic
+            // Esc backtrack logic (suppress during paste burst)
             if (args.KeyEvent.Key == Key.Esc)
             {
                 args.Handled = true;
+                if (composer.IsInPasteBurst) return;
                 var txt = composer.Text;
                 if (string.IsNullOrEmpty(txt))
                 {
@@ -265,6 +266,26 @@ internal static class TuiApp
                 composer.Text = combined[historyIndex];
                 lastHistoryText = composer.Text;
                 return;
+            }
+
+            // UP/DOWN: only navigate history when caret at start (approximate) and text equals last recall or empty
+            if (args.KeyEvent.KeyModifiers == 0 && (args.KeyEvent.Key == Key.CursorUp || args.KeyEvent.Key == Key.CursorDown))
+            {
+                var textNow = composer.Text ?? string.Empty;
+                if (string.IsNullOrEmpty(textNow) || (!string.IsNullOrEmpty(lastHistoryText) && textNow == lastHistoryText))
+                {
+                    args.Handled = true;
+                    var combined = new System.Collections.Generic.List<string>(persistentHistory);
+                    combined.AddRange(userHistory);
+                    if (combined.Count == 0) return;
+                    if (args.KeyEvent.Key == Key.CursorUp)
+                        historyIndex = System.Math.Max(0, historyIndex - 1);
+                    else
+                        historyIndex = System.Math.Min(combined.Count - 1, historyIndex + 1);
+                    composer.Text = combined[historyIndex];
+                    lastHistoryText = composer.Text;
+                    return;
+                }
             }
 
             if (args.KeyEvent.Key == Key.Enter)

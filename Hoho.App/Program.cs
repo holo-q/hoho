@@ -169,7 +169,8 @@ public static class Program {
                 var gate = new Hoho.Core.Approvals.ApprovalService(ap);
                 if (!gate.Confirm("Apply patch to workspace")) { Console.WriteLine("canceled"); return; }
                 var result = await ps.ApplyAsync(text);
-                Console.WriteLine(result.ToString());
+                if (result.Changes.Count == 0) Console.WriteLine("No changes");
+                else Console.WriteLine(result.ToString());
             }, workdirOpt, approvalsOpt, sandboxOpt, new Option<string?>("--file"));
             rootCommand.AddCommand(patchApply);
 

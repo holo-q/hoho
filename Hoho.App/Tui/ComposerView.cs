@@ -64,7 +64,7 @@ internal sealed class ComposerView : View
         if (IsPrintableChar(e) && (e.KeyEvent.KeyModifiers & (KeyModifiers.Ctrl | KeyModifiers.Alt)) == 0)
         {
             var now = DateTime.UtcNow;
-            if ((now - _lastCharAt).TotalMilliseconds <= 25)
+            if ((now - _lastCharAt).TotalMilliseconds <= 20)
             {
                 _burstCount++;
             }
@@ -73,7 +73,7 @@ internal sealed class ComposerView : View
                 _burstCount = 1;
             }
             _lastCharAt = now;
-            _inBurst = _burstCount >= 5; // enter burst after a few rapid chars
+            _inBurst = _burstCount >= 8; // enter burst after a few rapid chars
         }
         else
         {
