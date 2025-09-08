@@ -79,6 +79,10 @@ internal static class TuiApp
         bool flushIdleActive = false;
         DateTime lastFlush = DateTime.MinValue;
         const bool streamUi = false; // match Codex calm UX: show final output only
+        var promptQueue = new System.Collections.Generic.Queue<string>();
+        bool drainingQueue = false;
+        var userHistory = new System.Collections.Generic.List<string>();
+        int historyIndex = 0; // points to next insert position
 
         void EnsureFlushIdle()
         {
@@ -145,6 +149,18 @@ internal static class TuiApp
                 status.Stop();
                 currentTurnCts?.Dispose();
                 currentTurnCts = null;
+                // Drain queued prompts
+                if (!drainingQueue && promptQueue.Count > 0)
+                {
+                    drainingQueue = true;
+                    while (promptQueue.Count > 0)
+                    {
+                        var next = promptQueue.Dequeue();
+                        status.QueuedCount = promptQueue.Count;
+                        await SendAsync(next);
+                    }
+                    drainingQueue = false;
+                }
             }
         }
 
@@ -223,6 +239,23 @@ internal static class TuiApp
                 return;
             }
 
+            // ALT+UP/DOWN: navigate history (previous user prompts)
+            if ((args.KeyEvent.KeyModifiers & KeyModifiers.Alt) != 0 && (args.KeyEvent.Key == Key.CursorUp || args.KeyEvent.Key == Key.CursorDown))
+            {
+                args.Handled = true;
+                if (userHistory.Count == 0) return;
+                if (args.KeyEvent.Key == Key.CursorUp)
+                {
+                    historyIndex = System.Math.Max(0, historyIndex - 1);
+                }
+                else
+                {
+                    historyIndex = System.Math.Min(userHistory.Count - 1, historyIndex + 1);
+                }
+                composer.Text = userHistory[historyIndex];
+                return;
+            }
+
             if (args.KeyEvent.Key == Key.Enter)
             {
                 args.Handled = true;
@@ -234,7 +267,17 @@ internal static class TuiApp
                 {
                     var prompt = composer.Text;
                     composer.Clear();
-                    await SendAsync(prompt);
+                    if (currentTurnCts is not null)
+                    {
+                        promptQueue.Enqueue(prompt);
+                        status.QueuedCount = promptQueue.Count;
+                    }
+                    else
+                    {
+                        userHistory.Add(prompt);
+                        historyIndex = userHistory.Count - 1;
+                        await SendAsync(prompt);
+                    }
                 }
                 return;
             }

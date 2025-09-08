@@ -7,6 +7,7 @@ internal sealed class StatusIndicatorView : View
     private DateTime _startedAt;
     private bool _active;
     private bool _idleHooked;
+    public int QueuedCount { get; set; }
 
     public StatusIndicatorView()
     {
@@ -77,7 +78,8 @@ internal sealed class StatusIndicatorView : View
         }
         Driver.SetAttribute(ColorScheme.Normal);
 
-        var tail = $" ({FmtElapsed(elapsed)} • Esc to interrupt)";
+        var tail = $" ({FmtElapsed(elapsed)} • Esc to interrupt" + (QueuedCount > 0 ? $" • queued {QueuedCount}" : ")");
+        if (!tail.EndsWith(")")) tail += ")";
         Driver.AddStr(tail);
 
         // Pad rest of line
