@@ -54,6 +54,8 @@ internal sealed class StatusIndicatorView : View
         return $"{secs / 3600}h{(secs % 3600) / 60:00}m{secs % 60:00}s";
     }
 
+    public int DesiredHeight => 1 + Math.Min(QueuedPreviews?.Length ?? 0, 2);
+
     public override void OnDrawContent(Rect bounds)
     {
         Clear();
@@ -83,16 +85,17 @@ internal sealed class StatusIndicatorView : View
         if (!tail.EndsWith(")")) tail += ")";
         Driver.AddStr(tail);
 
-        // If there is room, render a couple of queued previews on the same line (compact)
-        if (QueuedCount > 0 && bounds.Width > (x + header.Length + tail.Length + 10))
+        // Render queued previews on subsequent lines if height allows
+        int linesToShow = Math.Min(QueuedPreviews?.Length ?? 0, 2);
+        for (int i = 0; i < linesToShow && (i + 1) < bounds.Height; i++)
         {
-            var previews = string.Join(" | ", QueuedPreviews.Select(p => San(p)));
-            var prevText = $"  {previews}";
-            if (prevText.Length > bounds.Width - (x + header.Length + tail.Length))
-            {
-                prevText = prevText.Substring(0, Math.Max(0, bounds.Width - (x + header.Length + tail.Length) - 1)) + "…";
-            }
-            Driver.AddStr(prevText);
+            Move(0, i + 1);
+            var preview = San(QueuedPreviews[i]);
+            var line = $" ↳ {preview}";
+            Driver.SetAttribute(Application.Driver.MakeAttribute(Color.Gray, Color.Black));
+            if (line.Length > bounds.Width) line = line.Substring(0, Math.Max(0, bounds.Width - 1)) + "…";
+            Driver.AddStr(line.PadRight(bounds.Width));
+            Driver.SetAttribute(ColorScheme.Normal);
         }
 
         // Pad rest of line

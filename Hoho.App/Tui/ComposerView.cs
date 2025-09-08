@@ -108,4 +108,6 @@ internal sealed class ComposerView : View
     }
 
     public void InsertText(string s) => _text.InsertText(s);
+
+    public int CaretColumn => _text?.CurrentColumn ?? 0;
 }

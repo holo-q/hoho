@@ -41,7 +41,6 @@ internal static class TuiApp
             Y = Pos.AnchorEnd(2),
             Width = Dim.Fill(),
             Height = 1,
-            
         };
 
         var info = new Label
@@ -65,6 +64,16 @@ internal static class TuiApp
             Width = Dim.Fill(),
             Height = 2,
         };
+
+        void UpdateLayout()
+        {
+            var h = status.DesiredHeight;
+            status.Height = h;
+            composer.Y = Pos.AnchorEnd(1 + h);
+            status.Y = Pos.AnchorEnd(1 + h);
+            chat.Height = Dim.Fill(1 + h + composer.Height);
+        }
+        UpdateLayout();
 
         bool backtrackPrimed = false;
         void UpdateInfo()
@@ -162,10 +171,13 @@ internal static class TuiApp
                         var next = promptQueue.Dequeue();
                         status.QueuedCount = promptQueue.Count;
                         status.QueuedPreviews = promptQueue.Take(2).ToArray();
+                        UpdateLayout();
                         await SendAsync(next);
                     }
                     drainingQueue = false;
                     status.QueuedPreviews = Array.Empty<string>();
+                    status.QueuedCount = 0;
+                    UpdateLayout();
                 }
             }
         }
@@ -304,6 +316,7 @@ internal static class TuiApp
                         promptQueue.Enqueue(prompt);
                         status.QueuedCount = promptQueue.Count;
                         status.QueuedPreviews = promptQueue.Take(2).ToArray();
+                        UpdateLayout();
                     }
                     else
                     {
