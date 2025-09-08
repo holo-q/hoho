@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Hoho.Core.Providers;
 using Hoho.Core.Sessions;
 
@@ -14,7 +15,7 @@ public sealed class AgentRunner
         _store = store;
     }
 
-    public async Task RunOnceAsync(string sessionId, string userContent, CancellationToken ct = default)
+    public async Task RunOnceAsync(string sessionId, string userContent, Action<string>? onText = null, CancellationToken ct = default)
     {
         var history = new List<ChatMessage>();
         await foreach (var ev in _store.ReadAllAsync(sessionId, ct))
@@ -44,6 +45,7 @@ public sealed class AgentRunner
             {
                 case ChunkKind.Text:
                     assistantBuffer.Append(chunk.Text);
+                    if (chunk.Text is { Length: > 0 }) onText?.Invoke(chunk.Text);
                     await _store.AppendAsync(sessionId, new[] { new TranscriptEvent { Type = "assistant_chunk", At = DateTimeOffset.UtcNow, Data = chunk.Text ?? string.Empty } }, ct);
                     break;
                 case ChunkKind.ToolCall:
@@ -61,4 +63,3 @@ public sealed class AgentRunner
         await _store.AppendAsync(sessionId, new[] { new TranscriptEvent { Type = "message", At = DateTimeOffset.UtcNow, Data = assistantMsg } }, ct);
     }
 }
-
