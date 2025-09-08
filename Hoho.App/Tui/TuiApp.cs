@@ -70,7 +70,7 @@ internal static class TuiApp
         void UpdateInfo()
         {
             var hints = backtrackPrimed ? "Esc edit prev (primed)" : "Esc edit prev";
-            info.Text = $"{hints}  |  Shift+Enter newline, Enter send  |  Provider: {provider.Name}  Workdir: {workdir}";
+            info.Text = $"{hints} | Shift+Enter newline; Enter send | @ insert path; Ctrl+K files | Provider: {provider.Name} | {workdir}";
         }
         UpdateInfo();
 
@@ -255,7 +255,7 @@ internal static class TuiApp
 
         top.Add(chat, composer, status, info);
 
-        // Ctrl+R to open resume picker (switch session)
+        // Ctrl+R to open resume picker (switch session); Ctrl+P apply patch dialog
         top.KeyPress += e =>
         {
             if (e.KeyEvent.Key == Key.R && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
@@ -267,6 +267,12 @@ internal static class TuiApp
                     sid = pick;
                     chat.AppendInfo($"[resumed session: {sid}]");
                 }
+            }
+            else if (e.KeyEvent.Key == Key.P && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            {
+                e.Handled = true;
+                var dlg = new ApplyPatchDialog();
+                Application.Run(dlg);
             }
         };
 

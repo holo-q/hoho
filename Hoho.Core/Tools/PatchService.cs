@@ -152,6 +152,14 @@ public sealed class PatchService
         // Very simple unified-hunk applier using +, -, and space lines; ignores positions in @@
         var output = new System.Collections.Generic.List<string>();
         int idx = 0; int add = 0, rem = 0;
+        // Helper: try to resynchronize idx to next occurrence of a context line within a small window
+        int FindNextIndex(string ctx, int start, int window = 200)
+        {
+            int end = System.Math.Min(baseLines.Count, start + window);
+            for (int j = start; j < end; j++)
+                if (baseLines[j] == ctx) return j;
+            return -1;
+        }
         for (int i = 0; i < patch.Count; i++)
         {
             var ln = patch[i];
@@ -168,14 +176,25 @@ public sealed class PatchService
                 case ' ':
                     // context: must match base
                     if (idx >= baseLines.Count || baseLines[idx] != content)
-                        throw new InvalidOperationException("Patch context mismatch");
+                    {
+                        // Attempt to resync to next matching context line
+                        var next = FindNextIndex(content, idx);
+                        if (next < 0) throw new InvalidOperationException("Patch context mismatch");
+                        // Append untouched lines to output to catch up
+                        for (; idx < next; idx++) output.Add(baseLines[idx]);
+                    }
                     output.Add(baseLines[idx]);
                     idx++;
                     break;
                 case '-':
                     // removal: base must match; skip it
                     if (idx >= baseLines.Count || baseLines[idx] != content)
-                        throw new InvalidOperationException("Patch removal mismatch");
+                    {
+                        var next = FindNextIndex(content, idx);
+                        if (next < 0) throw new InvalidOperationException("Patch removal mismatch");
+                        // Append intervening lines untouched, then remove
+                        for (; idx < next; idx++) output.Add(baseLines[idx]);
+                    }
                     idx++;
                     rem++;
                     break;

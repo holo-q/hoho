@@ -14,7 +14,7 @@ public sealed class GitService
     public async Task<string> StatusAsync(CancellationToken ct = default)
     {
         var sb = new System.Text.StringBuilder();
-        await foreach (var c in _shell.RunAsync(new[] { "git", "status", "--porcelain=v1" }, new ShellOptions { WorkDir = _workdir }, ct))
+        await foreach (var c in _shell.RunAsync(new[] { "git", "status", "--porcelain=v1" }, new ShellOptions { WorkDir = _workdir, AllowedRoot = _workdir, AllowNetwork = false }, ct))
         {
             if (c.Stream == "stdout") sb.Append(c.Data);
         }
@@ -26,7 +26,7 @@ public sealed class GitService
         var args = new List<string> { "git", "diff" };
         if (!string.IsNullOrWhiteSpace(path)) args.Add(path!);
         var sb = new System.Text.StringBuilder();
-        await foreach (var c in _shell.RunAsync(args, new ShellOptions { WorkDir = _workdir }, ct))
+        await foreach (var c in _shell.RunAsync(args, new ShellOptions { WorkDir = _workdir, AllowedRoot = _workdir, AllowNetwork = false }, ct))
         {
             if (c.Stream == "stdout") sb.Append(c.Data);
         }
@@ -45,7 +45,7 @@ public sealed class GitService
 
     public async Task CommitAllAsync(string message, CancellationToken ct = default)
     {
-        await foreach (var _ in _shell.RunAsync(new[] { "git", "add", "-A" }, new ShellOptions { WorkDir = _workdir }, ct)) { }
-        await foreach (var _ in _shell.RunAsync(new[] { "git", "commit", "-m", message }, new ShellOptions { WorkDir = _workdir }, ct)) { }
+        await foreach (var _ in _shell.RunAsync(new[] { "git", "add", "-A" }, new ShellOptions { WorkDir = _workdir, AllowedRoot = _workdir, AllowNetwork = false }, ct)) { }
+        await foreach (var _ in _shell.RunAsync(new[] { "git", "commit", "-m", message }, new ShellOptions { WorkDir = _workdir, AllowedRoot = _workdir, AllowNetwork = false }, ct)) { }
     }
 }
