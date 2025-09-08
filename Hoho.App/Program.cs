@@ -184,6 +184,15 @@ public static class Program {
             }, workdirOpt, new Option<int>("--depth"));
             rootCommand.AddCommand(tree);
 
+            // TUI
+            var tui = new Command("tui", "Launch Terminal.Gui TUI") { providerOpt, sessionOpt, workdirOpt };
+            tui.SetHandler((string provider, string? sid, string workdir) =>
+            {
+                Environment.CurrentDirectory = workdir;
+                TuiApp.Run(workdir, provider, sid);
+            }, providerOpt, sessionOpt, workdirOpt);
+            rootCommand.AddCommand(tui);
+
             return await rootCommand.InvokeAsync(args);
         } catch (Exception ex) {
             Log.Error(ex, "Fatal error in HOHO Shadow Protocol");
