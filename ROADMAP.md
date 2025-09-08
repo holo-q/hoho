@@ -77,8 +77,9 @@ What makes hoho the 'last' CLI agent
 	* Auto-resume detection with hint
 	* Auto-hint on escape
 	* Auto-hint on error
-* Run shell commands (hoho should function like a shell augmentation)
-	* Shell mode? allowing the user to cd around, etc. instead of entering prompts
+* Run shell commands directly inside
+	* RATIONALE: hoho should function like a shell augmentation
+	* IDEA: Shell mode? allowing the user to cd around, etc. instead of entering prompts
 * Auto-summary insertion
 	* 
 * CONTEXT.md can be added to any file such that it's injected in context when the directory is ls'd or included, like a concept definition for this content partition
@@ -136,8 +137,9 @@ What makes hoho the 'last' CLI agent
 	* Mode 2: configurable alsa supremacy
 		* sfx on fnish
 		* sfx on tool
-		* sfx on 
+		* etc.
 * Streaming mode toggle in configuration (no streaming = more zen)
+* Queue up /commands like normal prompts (/compact currently says disabled while a task is in progress)
 
 ### HUD
 

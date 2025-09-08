@@ -1,4 +1,8 @@
 using Terminal.Gui;
+using Terminal.Gui.Input;
+using Terminal.Gui.Views;
+using Terminal.Gui.ViewBase;
+using Terminal.Gui.App;
 
 namespace Hoho;
 
@@ -8,8 +12,8 @@ internal sealed class ApprovalModal : Window
     public bool? Result => _result;
 
     public ApprovalModal(string title, string message)
-        : base(title, 0)
     {
+        Title = title;
         Modal = true;
         Width = Dim.Percent(70);
         Height = Dim.Percent(40);
@@ -27,20 +31,19 @@ internal sealed class ApprovalModal : Window
             Text = message,
         };
 
-        var yes = new Button(" Yes ") { X = Pos.Center() - 6, Y = Pos.AnchorEnd(2) };
-        var no  = new Button(" No ")  { X = Pos.Center() + 2, Y = Pos.AnchorEnd(2) };
+        var yes = new Button { Text = " Yes ", X = Pos.Center() - 6, Y = Pos.AnchorEnd(2) };
+        var no  = new Button { Text = " No ",  X = Pos.Center() + 2, Y = Pos.AnchorEnd(2) };
 
-        yes.Clicked += () => { _result = true; Application.RequestStop(); };
-        no.Clicked  += () => { _result = false; Application.RequestStop(); };
+        yes.Accepting += (s,e) => { _result = true; Application.RequestStop(); e.Handled = true; };
+        no.Accepting  += (s,e) => { _result = false; Application.RequestStop(); e.Handled = true; };
 
         Add(msg, yes, no);
-        KeyPress += e =>
+        KeyDown += (s, key) =>
         {
-            if (e.KeyEvent.Key == Key.Enter || e.KeyEvent.Key == Key.Y)
-            { _result = true; e.Handled = true; Application.RequestStop(); }
-            else if (e.KeyEvent.Key == Key.Esc || e.KeyEvent.Key == Key.N)
-            { _result = false; e.Handled = true; Application.RequestStop(); }
+            if (key == Key.Enter || key == Key.Y)
+            { _result = true; Application.RequestStop(); }
+            else if (key == Key.Esc || key == Key.N)
+            { _result = false; Application.RequestStop(); }
         };
     }
 }
-

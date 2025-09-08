@@ -37,29 +37,21 @@ public sealed class ShellRunner : IShellRunner
 
         using var proc = new Process { StartInfo = psi, EnableRaisingEvents = true };
         proc.Start();
-
         var exited = new TaskCompletionSource();
         proc.Exited += (_, _) => exited.TrySetResult();
-
-        var stdout = Task.Run(async () =>
+        var outTask = proc.StandardOutput.ReadToEndAsync();
+        var errTask = proc.StandardError.ReadToEndAsync();
+        await Task.WhenAll(exited.Task, outTask, errTask);
+        foreach (var line in (outTask.Result ?? string.Empty).Split('\n'))
         {
-            string? line;
-            while ((line = await proc.StandardOutput.ReadLineAsync()) is not null)
-            {
-                yield return new ShellChunk("stdout", line + "\n");
-            }
-        });
-
-        var stderr = Task.Run(async () =>
+            if (line.Length == 0) continue;
+            yield return new ShellChunk("stdout", line + "\n");
+        }
+        foreach (var line in (errTask.Result ?? string.Empty).Split('\n'))
         {
-            string? line;
-            while ((line = await proc.StandardError.ReadLineAsync()) is not null)
-            {
-                yield return new ShellChunk("stderr", line + "\n");
-            }
-        });
-
-        await Task.WhenAll(exited.Task, stdout, stderr);
+            if (line.Length == 0) continue;
+            yield return new ShellChunk("stderr", line + "\n");
+        }
     }
 
     private static bool IsNetworkCommand(IReadOnlyList<string> cmd)

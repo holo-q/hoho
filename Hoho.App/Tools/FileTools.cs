@@ -1,6 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
-using Hoho.Core;
+using Serilog;
 using NetFabric.Hyperlinq;
 using Microsoft.Toolkit.HighPerformance;
 
@@ -75,7 +75,7 @@ public class FileReadTool : HohoTool<FileReadInput> {
 	public override string Description => "Read a file from the local filesystem with optional line offset and limit";
 
 	protected override async Task<ToolResult> ExecuteInternalAsync(FileReadInput input, CancellationToken cancellationToken) {
-		using var timer = Logger.TimeOperation($"FileRead: {input.FilePath}");
+        Log.Information("FileRead: {File}", input.FilePath);
 
 		if (!File.Exists(input.FilePath)) {
 			return ToolResult.Fail($"File not found: {input.FilePath}");
@@ -112,14 +112,14 @@ public class FileReadTool : HohoTool<FileReadInput> {
 				content = string.Join(Environment.NewLine, numberedLines);
 			}
 
-			Logger.Info("Read {ByteCount} bytes from {FilePath}",
-				Encoding.UTF8.GetByteCount(content), input.FilePath);
+            Log.Information("Read {ByteCount} bytes from {FilePath}",
+                Encoding.UTF8.GetByteCount(content), input.FilePath);
 
 			return ToolResult.Ok(content);
-		} catch (Exception ex) {
-			Logger.Error(ex, "Failed to read file {FilePath}", input.FilePath);
-			return ToolResult.Fail($"Error reading file: {ex.Message}");
-		}
+        } catch (Exception ex) {
+            Log.Error(ex, "Failed to read file {FilePath}", input.FilePath);
+            return ToolResult.Fail($"Error reading file: {ex.Message}");
+        }
 	}
 
 	protected override bool ValidateInputInternal(FileReadInput input, out string? error) {
@@ -157,7 +157,7 @@ public class FileWriteTool : HohoTool<FileWriteInput> {
 	public override string Description => "Write content to a file, creating or overwriting it";
 
 	protected override async Task<ToolResult> ExecuteInternalAsync(FileWriteInput input, CancellationToken cancellationToken) {
-		using var timer = Logger.TimeOperation($"FileWrite: {input.FilePath}");
+        Log.Information("FileWrite: {File}", input.FilePath);
 
 		try {
 			// Ensure directory exists
@@ -168,14 +168,14 @@ public class FileWriteTool : HohoTool<FileWriteInput> {
 
 			await File.WriteAllTextAsync(input.FilePath, input.Content, cancellationToken);
 
-			Logger.Info("Wrote {ByteCount} bytes to {FilePath}",
-				Encoding.UTF8.GetByteCount(input.Content), input.FilePath);
+            Log.Information("Wrote {ByteCount} bytes to {FilePath}",
+                Encoding.UTF8.GetByteCount(input.Content), input.FilePath);
 
 			return ToolResult.Ok($"Successfully wrote to {input.FilePath}");
-		} catch (Exception ex) {
-			Logger.Error(ex, "Failed to write file {FilePath}", input.FilePath);
-			return ToolResult.Fail($"Error writing file: {ex.Message}");
-		}
+        } catch (Exception ex) {
+            Log.Error(ex, "Failed to write file {FilePath}", input.FilePath);
+            return ToolResult.Fail($"Error writing file: {ex.Message}");
+        }
 	}
 
 	protected override bool ValidateInputInternal(FileWriteInput input, out string? error) {
@@ -209,7 +209,7 @@ public class FileEditTool : HohoTool<FileEditInput> {
 	public override string Description => "Edit a file using string-based find and replace (NOT line-based)";
 
 	protected override async Task<ToolResult> ExecuteInternalAsync(FileEditInput input, CancellationToken cancellationToken) {
-		using var timer = Logger.TimeOperation($"FileEdit: {input.FilePath}");
+        Log.Information("FileEdit: {File}", input.FilePath);
 
 		if (!File.Exists(input.FilePath)) {
 			return ToolResult.Fail($"File not found: {input.FilePath}");
@@ -227,7 +227,7 @@ public class FileEditTool : HohoTool<FileEditInput> {
 			string newContent;
 			if (input.ReplaceAll) {
 				newContent = content.Replace(input.OldString, input.NewString);
-				Logger.Info("Replaced all occurrences in {FilePath}", input.FilePath);
+                Log.Information("Replaced all occurrences in {FilePath}", input.FilePath);
 			} else {
 				// Replace only first occurrence
 				var index = content.IndexOf(input.OldString);
@@ -237,7 +237,7 @@ public class FileEditTool : HohoTool<FileEditInput> {
 				} else {
 					return ToolResult.Fail("String not found");
 				}
-				Logger.Info("Replaced first occurrence in {FilePath}", input.FilePath);
+                Log.Information("Replaced first occurrence in {FilePath}", input.FilePath);
 			}
 
 			// Only write if content actually changed
@@ -248,10 +248,10 @@ public class FileEditTool : HohoTool<FileEditInput> {
 			await File.WriteAllTextAsync(input.FilePath, newContent, cancellationToken);
 
 			return ToolResult.Ok($"Successfully edited {input.FilePath}");
-		} catch (Exception ex) {
-			Logger.Error(ex, "Failed to edit file {FilePath}", input.FilePath);
-			return ToolResult.Fail($"Error editing file: {ex.Message}");
-		}
+        } catch (Exception ex) {
+            Log.Error(ex, "Failed to edit file {FilePath}", input.FilePath);
+            return ToolResult.Fail($"Error editing file: {ex.Message}");
+        }
 	}
 
 	protected override bool ValidateInputInternal(FileEditInput input, out string? error) {
@@ -294,7 +294,7 @@ public class FileMultiEditTool : HohoTool<FileMultiEditInput> {
 	public override string Description => "Apply multiple string-based edits to a file in sequence";
 
 	protected override async Task<ToolResult> ExecuteInternalAsync(FileMultiEditInput input, CancellationToken cancellationToken) {
-		using var timer = Logger.TimeOperation($"FileMultiEdit: {input.FilePath}");
+        Log.Information("FileMultiEdit: {File}", input.FilePath);
 
 		if (!File.Exists(input.FilePath)) {
 			return ToolResult.Fail($"File not found: {input.FilePath}");
@@ -327,12 +327,12 @@ public class FileMultiEditTool : HohoTool<FileMultiEditInput> {
 
 			await File.WriteAllTextAsync(input.FilePath, content, cancellationToken);
 
-			Logger.Info("Applied {EditCount} edits to {FilePath}", input.Edits.Count, input.FilePath);
+            Log.Information("Applied {EditCount} edits to {FilePath}", input.Edits.Count, input.FilePath);
 			return ToolResult.Ok($"Successfully applied {input.Edits.Count} edits to {input.FilePath}");
-		} catch (Exception ex) {
-			Logger.Error(ex, "Failed to apply multi-edit to {FilePath}", input.FilePath);
-			return ToolResult.Fail($"Error applying edits: {ex.Message}");
-		}
+        } catch (Exception ex) {
+            Log.Error(ex, "Failed to apply multi-edit to {FilePath}", input.FilePath);
+            return ToolResult.Fail($"Error applying edits: {ex.Message}");
+        }
 	}
 
 	protected override bool ValidateInputInternal(FileMultiEditInput input, out string? error) {

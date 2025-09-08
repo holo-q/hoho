@@ -1,3 +1,5 @@
+using Hoho.Core.Sessions;
+
 namespace Hoho.Core.Providers;
 
 public enum ChunkKind { Text, ToolCall, Error, Done }
@@ -11,4 +13,3 @@ public interface IChatProvider
     IAsyncEnumerable<ChatChunk> StreamAsync(IReadOnlyList<ChatMessage> messages, CancellationToken ct = default);
     string Name { get; }
 }
-

@@ -1,6 +1,10 @@
 using Hoho.Core.Sandbox;
 using Hoho.Core.Tools;
 using Terminal.Gui;
+using Terminal.Gui.Input;
+using Terminal.Gui.Views;
+using Terminal.Gui.ViewBase;
+using Terminal.Gui.App;
 
 namespace Hoho;
 
@@ -9,12 +13,12 @@ internal sealed class ApplyPatchDialog : Window
     private readonly TextView _input;
     private readonly Label _hint;
     private readonly string _workdir;
-    private readonly Hoho.Core.Sandbox.SandboxMode _sandbox;
-    private readonly Hoho.Core.Sandbox.ApprovalPolicy _approval;
+    private readonly SandboxMode _sandbox;
+    private readonly ApprovalPolicy _approval;
 
-    public ApplyPatchDialog(string workdir, Hoho.Core.Sandbox.SandboxMode sandbox, Hoho.Core.Sandbox.ApprovalPolicy approval)
-        : base("Apply Patch", 0)
+    public ApplyPatchDialog(string workdir, SandboxMode sandbox, ApprovalPolicy approval)
     {
+        Title = "Apply Patch";
         _workdir = workdir; _sandbox = sandbox; _approval = approval;
         Modal = true;
         Width = Dim.Percent(80);
@@ -23,20 +27,19 @@ internal sealed class ApplyPatchDialog : Window
         Y = Pos.Center();
 
         _input = new TextView { X = 1, Y = 1, Width = Dim.Fill(2), Height = Dim.Fill(3), WordWrap = false };
-        _hint = new Label("Paste apply_patch envelope. Enter to confirm, Esc to cancel.") { X = 1, Y = Pos.AnchorEnd(2) };
+        _hint = new Label { Text = "Paste apply_patch envelope. Enter to confirm, Esc to cancel.", X = 1, Y = Pos.AnchorEnd(2) };
         Add(_input, _hint);
 
-        KeyPress += e =>
+        KeyDown += (s, key) =>
         {
-            if (e.KeyEvent.Key == Key.Enter)
+            if (key == Key.Enter)
             {
-                e.Handled = true;
                 var approved = _approval switch
                 {
-                    Hoho.Core.Sandbox.ApprovalPolicy.Never => true,
-                    Hoho.Core.Sandbox.ApprovalPolicy.OnFailure => true,
-                    Hoho.Core.Sandbox.ApprovalPolicy.OnRequest => Ask(),
-                    Hoho.Core.Sandbox.ApprovalPolicy.Untrusted => Ask(),
+                    ApprovalPolicy.Never => true,
+                    ApprovalPolicy.OnFailure => true,
+                    ApprovalPolicy.OnRequest => Ask(),
+                    ApprovalPolicy.Untrusted => Ask(),
                     _ => Ask(),
                 };
                 if (approved)
@@ -55,9 +58,8 @@ internal sealed class ApplyPatchDialog : Window
                 }
                 Application.RequestStop();
             }
-            else if (e.KeyEvent.Key == Key.Esc)
+            else if (key == Key.Esc)
             {
-                e.Handled = true;
                 Application.RequestStop();
             }
         };

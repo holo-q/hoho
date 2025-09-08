@@ -1,4 +1,8 @@
 using Terminal.Gui;
+using Terminal.Gui.Input;
+using Terminal.Gui.Views;
+using Terminal.Gui.ViewBase;
+using Terminal.Gui.App;
 
 namespace Hoho;
 
@@ -10,16 +14,17 @@ internal sealed class BacktrackPreview : Window
     public event Action? Canceled;
 
     public BacktrackPreview(string content)
-        : base("Edit previous message", 0)
     {
+        Title = "Edit previous message";
         Modal = true;
         Width = Dim.Percent(80);
         Height = Dim.Percent(40);
         X = Pos.Center();
         Y = Pos.AnchorEnd(5);
 
-        _title = new Label("Press Enter to edit; Esc to cancel")
+        _title = new Label
         {
+            Text = "Press Enter to edit; Esc to cancel",
             X = 1,
             Y = 0,
             Width = Dim.Fill(2),
@@ -37,19 +42,10 @@ internal sealed class BacktrackPreview : Window
         };
 
         Add(_title, _preview);
-        KeyPress += e =>
+        KeyDown += (s, key) =>
         {
-            if (e.KeyEvent.Key == Key.Enter)
-            {
-                e.Handled = true;
-                Accepted?.Invoke();
-            }
-            else if (e.KeyEvent.Key == Key.Esc)
-            {
-                e.Handled = true;
-                Canceled?.Invoke();
-            }
+            if (key == Key.Enter) { Accepted?.Invoke(); }
+            else if (key == Key.Esc) { Canceled?.Invoke(); }
         };
     }
 }
-

@@ -1,4 +1,8 @@
+using System.Collections.ObjectModel;
 using Terminal.Gui;
+using Terminal.Gui.Views;
+using Terminal.Gui.ViewBase;
+using Terminal.Gui.App;
 
 namespace Hoho;
 
@@ -6,8 +10,9 @@ internal static class FileSearchPopup
 {
     public static string? Show(string workdir)
     {
-        var dlg = new Window("Insert file path")
+        var dlg = new Window
         {
+            Title = "Insert file path",
             Modal = true,
             Width = Dim.Percent(80),
             Height = Dim.Percent(60),
@@ -15,13 +20,13 @@ internal static class FileSearchPopup
             Y = Pos.Center(),
         };
 
-        var filter = new TextField("") { X = 1, Y = 0, Width = Dim.Fill(2) };
+        var filter = new TextField { Text = "", X = 1, Y = 0, Width = Dim.Fill(2) };
         var list = new ListView() { X = 1, Y = 2, Width = Dim.Fill(2), Height = Dim.Fill(2) };
-        var hint = new Label("Type to filter; Enter to insert; Esc to cancel") { X = 1, Y = 1 };
+        var hint = new Label { Text = "Type to filter; Enter to insert; Esc to cancel", X = 1, Y = 1 };
 
         // Collect files (limit for performance)
         var all = EnumerateRelPaths(workdir, max: 3000).ToList();
-        var filtered = new List<string>(all);
+        var filtered = new ObservableCollection<string>(all);
         list.SetSource(filtered);
 
         void ApplyFilter()
@@ -30,7 +35,7 @@ internal static class FileSearchPopup
             filtered.Clear();
             if (string.IsNullOrEmpty(q))
             {
-                filtered.AddRange(all);
+                foreach (var p in all) filtered.Add(p);
             }
             else
             {
@@ -41,12 +46,16 @@ internal static class FileSearchPopup
                 }
             }
             list.MoveHome();
-            list.SetNeedsDisplay();
+            list.SetNeedsDraw();
         }
 
-        filter.TextChanging += _ => ApplyFilter();
+        filter.TextChanged += (s,e) => ApplyFilter();
         string? selected = null;
-        list.OpenSelectedItem += args => { selected = filtered.Count > args.Item ? filtered[args.Item] : null; Application.RequestStop(); };
+        list.OpenSelectedItem += (sender, args) =>
+        {
+            if (args.Item >= 0 && args.Item < filtered.Count) selected = filtered[args.Item];
+            Application.RequestStop();
+        };
 
         dlg.Add(filter, hint, list);
         Application.Run(dlg);
@@ -82,4 +91,3 @@ internal static class FileSearchPopup
         }
     }
 }
-

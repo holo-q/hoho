@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json.Serialization;
-using Hoho.Core;
+using Serilog;
 using Microsoft.Toolkit.HighPerformance.Buffers;
 
 namespace Hoho.Tools;
@@ -123,9 +123,8 @@ public static class BackgroundShellManager {
 		process.BeginOutputReadLine();
 		process.BeginErrorReadLine();
 
-		_shells[id] = shell;
-
-		Logger.Info("Started background shell {ShellId} for command: {Command}", id, command);
+            _shells[id] = shell;
+            Log.Information("Started background shell {ShellId} for command: {Command}", id, command);
 
 		return id;
 	}
@@ -136,18 +135,18 @@ public static class BackgroundShellManager {
 		if (!_shells.TryRemove(id, out var shell))
 			return false;
 
-		try {
+            try {
 			if (!shell.Process.HasExited) {
 				shell.Process.Kill(entireProcessTree: true);
 				shell.Process.WaitForExit(5000);
 			}
-			shell.Process.Dispose();
-			Logger.Info("Killed shell {ShellId}", id);
-			return true;
-		} catch (Exception ex) {
-			Logger.Error(ex, "Failed to kill shell {ShellId}", id);
-			return false;
-		}
+                shell.Process.Dispose();
+                Log.Information("Killed shell {ShellId}", id);
+                return true;
+            } catch (Exception ex) {
+                Log.Error(ex, "Failed to kill shell {ShellId}", id);
+                return false;
+            }
 	}
 
 	public static Dictionary<string, object> GetAllShells() {
@@ -175,7 +174,8 @@ public class BashTool : HohoTool<BashInput> {
 	private const int DefaultTimeout = 120000; // 2 minutes default
 
 	protected override async Task<ToolResult> ExecuteInternalAsync(BashInput input, CancellationToken cancellationToken) {
-		using var timer = Logger.TimeOperation($"Bash: {input.Description ?? input.Command}");
+        // Log context for operation
+        Log.Information("Bash: {Desc}", input.Description ?? input.Command);
 
 		if (input.RunInBackground) {
 			// Background execution - return immediately with shell ID
@@ -249,17 +249,17 @@ public class BashTool : HohoTool<BashInput> {
 				result = result[..30000] + "\n... (output truncated)";
 			}
 
-			Logger.Info("Executed command with exit code {ExitCode}", process.ExitCode);
+            Log.Information("Executed command with exit code {ExitCode}", process.ExitCode);
 
 			if (process.ExitCode != 0) {
 				return ToolResult.Ok($"Exit code: {process.ExitCode}\n{result}");
 			}
 
 			return ToolResult.Ok(result);
-		} catch (Exception ex) {
-			Logger.Error(ex, "Failed to execute command: {Command}", input.Command);
-			return ToolResult.Fail($"Command execution failed: {ex.Message}");
-		}
+        } catch (Exception ex) {
+            Log.Error(ex, "Failed to execute command: {Command}", input.Command);
+            return ToolResult.Fail($"Command execution failed: {ex.Message}");
+        }
 	}
 
 	protected override bool ValidateInputInternal(BashInput input, out string? error) {
@@ -318,9 +318,9 @@ public class BashOutputTool : HohoTool<BashOutputInput> {
 				var lines    = newOutput.Split('\n');
 				var filtered = lines.Where(line => regex.IsMatch(line));
 				newOutput = string.Join('\n', filtered);
-			} catch (Exception ex) {
-				Logger.Warn($"Invalid regex filter: {input.Filter} - {ex.Message}");
-			}
+            } catch (Exception ex) {
+                Log.Warning("Invalid regex filter: {Filter} - {Message}", input.Filter, ex.Message);
+            }
 		}
 
 		var status = shell.IsComplete

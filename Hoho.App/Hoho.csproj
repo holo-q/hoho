@@ -27,8 +27,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- TUI FRAMEWORK (v2 via vendored project reference) -->
-
         <!-- ZERO-ALLOCATION STACK -->
         <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1"/>
         <PackageReference Include="System.Text.Json" Version="8.0.5"/>
@@ -60,7 +58,7 @@
     <ItemGroup>
         <!-- Core domain/services -->
         <ProjectReference Include="..\Hoho.Core\Hoho.Core.csproj" />
-        <!-- Terminal.Gui v2 (vendored) -->
+        <!-- Terminal.Gui v2 vendored project -->
         <ProjectReference Include="..\Terminal.Gui\Terminal.Gui\Terminal.Gui.csproj" />
     </ItemGroup>
 

@@ -1,3 +1,5 @@
+using Hoho.Core.Sessions;
+
 namespace Hoho.Core.Providers;
 
 public sealed class EchoProvider : IChatProvider
@@ -18,4 +20,3 @@ public sealed class EchoProvider : IChatProvider
         yield return new ChatChunk(ChunkKind.Done);
     }
 }
-

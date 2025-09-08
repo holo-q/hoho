@@ -1,4 +1,8 @@
 using Terminal.Gui;
+using Terminal.Gui.App;
+using Terminal.Gui.ViewBase;
+using Terminal.Gui.Views;
+using Terminal.Gui.Input;
 
 namespace Hoho;
 
@@ -23,17 +27,17 @@ internal sealed class ComposerView : View
             WordWrap = false,
             ReadOnly = false,
         };
-        _placeholder = new Label("Type your message…")
+        _placeholder = new Label
         {
+            Text = "Type your message…",
             X = 3,
             Y = 0,
             Width = Dim.Fill(),
             Height = 1,
             Visible = true,
-            ColorScheme = new ColorScheme { Normal = Application.Driver.MakeAttribute(Color.Gray, Color.Black) },
         };
         Add(_text, _placeholder);
-        _text.KeyPress += (e) => OnKeyPress(e);
+        _text.KeyDown += (sender, key) => OnTextKeyDown(key);
     }
 
     public string Text
@@ -50,30 +54,22 @@ internal sealed class ComposerView : View
     public void InsertNewLine() => _text.InsertText("\n");
     public void FocusInner() => _text.SetFocus();
 
-    public event Action<KeyEventEventArgs>? KeyPressInner;
-    protected override bool OnKeyDown(Key key)
-    {
-        return base.OnKeyDown(key);
-    }
+    public event Action<Key>? KeyDownInner;
 
     public bool IsInPasteBurst => _inBurst;
 
-    private void OnKeyPress(KeyEventEventArgs e)
+    private void OnTextKeyDown(Key key)
     {
         // Update a simple paste-burst detector: many printable chars in quick succession
-        if (IsPrintableChar(e) && (e.KeyEvent.KeyModifiers & (KeyModifiers.Ctrl | KeyModifiers.Alt)) == 0)
+        var rune = key.AsRune;
+        bool printable = rune.Value != 0 && rune.Value >= 32 && rune.Value <= 126 && !key.IsCtrl && !key.IsAlt;
+        if (printable)
         {
             var now = DateTime.UtcNow;
-            if ((now - _lastCharAt).TotalMilliseconds <= 20)
-            {
-                _burstCount++;
-            }
-            else
-            {
-                _burstCount = 1;
-            }
+            if ((now - _lastCharAt).TotalMilliseconds <= 20) _burstCount++;
+            else _burstCount = 1;
             _lastCharAt = now;
-            _inBurst = _burstCount >= 8; // enter burst after a few rapid chars
+            _inBurst = _burstCount >= 8;
         }
         else
         {
@@ -81,30 +77,18 @@ internal sealed class ComposerView : View
             _burstCount = 0;
         }
         _placeholder.Visible = string.IsNullOrEmpty(_text.Text?.ToString());
-        KeyPressInner?.Invoke(e);
+        KeyDownInner?.Invoke(key);
     }
 
-    private static bool IsPrintableChar(KeyEventEventArgs e)
-    {
-        var code = (uint)e.KeyEvent.Key;
-        if (code > 0x7E) return false;
-        char c = (char)code;
-        return c >= ' ' && c <= '~';
-    }
-
-    public override void OnDrawContent(Rect bounds)
+    protected override bool OnDrawingContent()
     {
         // Draw a thick vertical edge on the left (Unicode heavy vertical bar)
-        Move(0, 0);
-        var attr = Application.Driver.MakeAttribute(Color.Cyan, Color.Black);
-        Driver.SetAttribute(attr);
-        for (int row = 0; row < bounds.Height; row++)
+        for (int row = 0; row < Viewport.Height; row++)
         {
             Move(0, row);
-            Driver.AddStr("┃");
+            Application.Driver?.AddStr("┃");
         }
-        Driver.SetAttribute(ColorScheme.Normal);
-        base.OnDrawContent(bounds);
+        return false; // let base draw children (TextView)
     }
 
     public void InsertText(string s) => _text.InsertText(s);

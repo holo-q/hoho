@@ -16,7 +16,7 @@ namespace Hoho;
 /// HOHO - The CLI Agent That Just Says "OK."
 /// Shadow Protocol: Overwhelming power through calm, principled simplicity.
 /// </summary>
-public static class Program {
+public static partial class Program {
     public static async Task<int> Main(string[] args) {
 		// Initialize logging
 		Log.Logger = new LoggerConfiguration()
@@ -86,7 +86,7 @@ public static class Program {
                 IChatProvider provider = providerName.ToLowerInvariant() switch
                 {
                     "echo" => new EchoProvider(),
-                    "openai" => CreateOpenAIProvider(config, model),
+                    "openai" => ProviderFactory.CreateOpenAIProvider(config, model),
                     _ => new EchoProvider(),
                 };
 
@@ -158,27 +158,37 @@ public static class Program {
             {
                 var mode = sandbox.ToLowerInvariant() switch
                 {
-                    "read-only" => Hoho.Core.Sandbox.SandboxMode.ReadOnly,
-                    "danger-full-access" => Hoho.Core.Sandbox.SandboxMode.DangerFullAccess,
-                    _ => Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite,
+                    "read-only" => Core.Sandbox.SandboxMode.ReadOnly,
+                    "danger-full-access" => Core.Sandbox.SandboxMode.DangerFullAccess,
+                    _ => Core.Sandbox.SandboxMode.WorkspaceWrite,
                 };
                 var fs = new FileService(workdir, mode);
                 var ps = new PatchService(fs);
                 string text = file is { Length: > 0 } ? await File.ReadAllTextAsync(file) : await Console.In.ReadToEndAsync();
                 var ap = ParseApprovals(approvals);
-                var gate = new Hoho.Core.Approvals.ApprovalService(ap);
+                var gate = new Core.Approvals.ApprovalService(ap);
                 if (!gate.Confirm("Apply patch to workspace")) { Console.WriteLine("canceled"); return; }
                 var result = await ps.ApplyAsync(text);
                 if (result.Changes.Count == 0) Console.WriteLine("No changes");
                 else Console.WriteLine(result.ToString());
+                // Auto-run fixers for C# after patch apply
+                await RunFixAsync(workdir);
             }, workdirOpt, approvalsOpt, sandboxOpt, new Option<string?>("--file"));
             rootCommand.AddCommand(patchApply);
+
+            // Fix: organize imports and add GlobalUsings templates if missing
+            var fix = new Command("fix", "Organize imports and add GlobalUsings templates (C#)") { workdirOpt };
+            fix.SetHandler(async (string workdir) =>
+            {
+                await RunFixAsync(workdir);
+            }, workdirOpt);
+            rootCommand.AddCommand(fix);
 
             // Repo helpers
             var repoStatus = new Command("repo-status", "git status --porcelain=v1") { workdirOpt };
             repoStatus.SetHandler(async (string workdir) =>
             {
-                var gs = new GitService(new Hoho.Core.Services.ShellRunner(), workdir);
+                var gs = new GitService(new Core.Services.ShellRunner(), workdir);
                 Console.Write(await gs.StatusAsync());
             }, workdirOpt);
             rootCommand.AddCommand(repoStatus);
@@ -186,7 +196,7 @@ public static class Program {
             var repoDiff = new Command("repo-diff", "git diff (optionally a path)") { workdirOpt, new Option<string?>("--path") };
             repoDiff.SetHandler(async (string workdir, string? path) =>
             {
-                var gs = new GitService(new Hoho.Core.Services.ShellRunner(), workdir);
+                var gs = new GitService(new Core.Services.ShellRunner(), workdir);
                 Console.Write(await gs.DiffAsync(path));
             }, workdirOpt, new Option<string?>("--path"));
             rootCommand.AddCommand(repoDiff);
@@ -194,9 +204,9 @@ public static class Program {
             var repoCommit = new Command("repo-commit", "git add -A && git commit -m <msg>") { workdirOpt, approvalsOpt, new Argument<string>("message") };
             repoCommit.SetHandler(async (string workdir, string approvals, string message) =>
             {
-                var gs = new GitService(new Hoho.Core.Services.ShellRunner(), workdir);
+                var gs = new GitService(new Core.Services.ShellRunner(), workdir);
                 var ap = ParseApprovals(approvals);
-                var gate = new Hoho.Core.Approvals.ApprovalService(ap);
+                var gate = new Core.Approvals.ApprovalService(ap);
                 if (!gate.Confirm("Commit all changes")) { Console.WriteLine("canceled"); return; }
                 await gs.CommitAllAsync(message);
                 Console.WriteLine("ok");
@@ -212,9 +222,23 @@ public static class Program {
             rootCommand.AddCommand(tree);
 
             // TUI default behavior
-            rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial, bool resume, bool cont, string approvalsRoot, string sandboxRoot) =>
+            rootCommand.SetHandler((string provider, string? sid, string? workdir, string? initial, bool resume, bool cont) =>
             {
-                Environment.CurrentDirectory = workdir;
+                // Normalize working directory; default to current if missing
+                if (string.IsNullOrWhiteSpace(workdir))
+                {
+                    workdir = Directory.GetCurrentDirectory();
+                }
+                else if (!Path.IsPathRooted(workdir))
+                {
+                    workdir = Path.GetFullPath(workdir);
+                }
+                try { Environment.CurrentDirectory = workdir; }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine($"error: invalid workdir '{workdir}': {ex.Message}");
+                    return;
+                }
                 var cfgRoot = HohoConfig.Load();
                 // Handle resume/continue semantics
                 if (resume && cont)
@@ -231,7 +255,7 @@ public static class Program {
                 }
                 if (resume)
                 {
-                    var sessions = Hoho.Core.Sessions.SessionDiscovery.ListSessions(30).ToList();
+                    var sessions = SessionDiscovery.ListSessions(30).ToList();
                     if (sessions.Count == 0)
                     {
                         Console.WriteLine("No sessions found.");
@@ -242,7 +266,7 @@ public static class Program {
                         for (int i = 0; i < sessions.Count; i++)
                         {
                             var sInfo = sessions[i];
-                            var preview = Hoho.Core.Sessions.SessionDiscovery.FirstUserPreview(sInfo.Id) ?? "(no preview)";
+                            var preview = SessionDiscovery.FirstUserPreview(sInfo.Id) ?? "(no preview)";
                             Console.WriteLine($"{i + 1,2}. {sInfo.Id}  -  {preview}");
                         }
                         Console.Write("Select (1-" + sessions.Count + "): ");
@@ -255,30 +279,42 @@ public static class Program {
                 }
                 else if (cont)
                 {
-                    var sidLatest = Hoho.Core.Sessions.SessionDiscovery.ListSessions(1).FirstOrDefault()?.Id;
+                    var sidLatest = SessionDiscovery.ListSessions(1).FirstOrDefault()?.Id;
                     if (!string.IsNullOrWhiteSpace(sidLatest)) sid = sidLatest;
                 }
-                var ap = ParseApprovals(approvalsRoot);
-                var sm = ParseSandbox(sandboxRoot);
-                TuiApp.Run(workdir, provider, sid, initial, ap, sm, cfgRoot.ExperimentalUi);
-            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt, approvalsOptRoot, sandboxOptRoot);
+                TuiApp.Run(workdir!, provider, sid, initial);
+            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt);
 
             // Exec (non-interactive automation mode)
-            var modelOpt = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");
-            var approvalsOpt = new Option<string>(name: "--ask-for-approval", description: "untrusted|on-failure|on-request|never", getDefaultValue: () => "on-failure");
-            var sandboxOpt = new Option<string>(name: "--sandbox", description: "read-only|workspace-write|danger-full-access", getDefaultValue: () => "workspace-write");
-            var exec = new Command("exec", "Non-interactive 'automation mode' like Codex") { providerOpt, modelOpt, approvalsOpt, sandboxOpt, sessionOpt, workdirOpt, promptArg };
+            var execModelOpt = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");
+            var execApprovalsOpt = new Option<string>(name: "--ask-for-approval", description: "untrusted|on-failure|on-request|never", getDefaultValue: () => "on-failure");
+            var execSandboxOpt = new Option<string>(name: "--sandbox", description: "read-only|workspace-write|danger-full-access", getDefaultValue: () => "workspace-write");
+            var exec = new Command("exec", "Non-interactive 'automation mode' like Codex") { providerOpt, execModelOpt, execApprovalsOpt, execSandboxOpt, sessionOpt, workdirOpt, promptArg };
             exec.SetHandler(async (InvocationContext ctx) =>
             {
                 var providerName = ctx.ParseResult.GetValueForOption(providerOpt)!;
-                var model = ctx.ParseResult.GetValueForOption(modelOpt)!;
-                var appro = ctx.ParseResult.GetValueForOption(approvalsOpt)!;
-                var sandbox = ctx.ParseResult.GetValueForOption(sandboxOpt)!;
+                var model = ctx.ParseResult.GetValueForOption(execModelOpt)!;
+                var appro = ctx.ParseResult.GetValueForOption(execApprovalsOpt)!;
+                var sandbox = ctx.ParseResult.GetValueForOption(execSandboxOpt)!;
                 var sid = ctx.ParseResult.GetValueForOption(sessionOpt);
-                var workdir = ctx.ParseResult.GetValueForOption(workdirOpt)!;
+                var workdir = ctx.ParseResult.GetValueForOption(workdirOpt);
                 var prompt = ctx.ParseResult.GetValueForArgument(promptArg)!;
 
-                Environment.CurrentDirectory = workdir;
+                // Normalize working directory
+                if (string.IsNullOrWhiteSpace(workdir))
+                {
+                    workdir = Directory.GetCurrentDirectory();
+                }
+                else if (!Path.IsPathRooted(workdir))
+                {
+                    workdir = Path.GetFullPath(workdir);
+                }
+                try { Environment.CurrentDirectory = workdir; }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine($"error: invalid workdir '{workdir}': {ex.Message}");
+                    return;
+                }
 
                 var config = HohoConfig.Load();
                 var store = new TranscriptStore();
@@ -295,7 +331,7 @@ public static class Program {
                     _ => new EchoProvider(),
                 };
 
-                var guidance = Hoho.Core.Guidance.AgentsLoader.LoadMergedAgents(workdir);
+                var guidance = Core.Guidance.AgentsLoader.LoadMergedAgents(workdir);
                 var runner = new AgentRunner(provider, store);
                 var buf = new System.Text.StringBuilder();
                 await runner.RunOnceAsync(sid!, prompt, onText: s => buf.Append(s), systemPrompt: guidance);
@@ -303,34 +339,34 @@ public static class Program {
             });
             rootCommand.AddCommand(exec);
 
-            return await rootCommand.InvokeAsync(args);
-        } catch (Exception ex) {
-            Log.Error(ex, "Fatal error in HOHO Shadow Protocol");
-            return 1;
-        } finally {
-            Log.Information("🥋 HOHO Shadow Protocol - Shutdown complete");
-            Log.CloseAndFlush();
-        }
+        return await rootCommand.InvokeAsync(args);
+    } catch (Exception ex) {
+        Log.Error(ex, "Fatal error in HOHO Shadow Protocol");
+        return 1;
+    } finally {
+        Log.Information("🥋 HOHO Shadow Protocol - Shutdown complete");
+        Log.CloseAndFlush();
     }
+}
 
-    private static Hoho.Core.Sandbox.ApprovalPolicy ParseApprovals(string s)
+    private static Core.Sandbox.ApprovalPolicy ParseApprovals(string s)
     {
         return s.ToLowerInvariant() switch
         {
-            "never" => Hoho.Core.Sandbox.ApprovalPolicy.Never,
-            "on-request" => Hoho.Core.Sandbox.ApprovalPolicy.OnRequest,
-            "untrusted" => Hoho.Core.Sandbox.ApprovalPolicy.Untrusted,
-            _ => Hoho.Core.Sandbox.ApprovalPolicy.OnFailure,
+            "never" => Core.Sandbox.ApprovalPolicy.Never,
+            "on-request" => Core.Sandbox.ApprovalPolicy.OnRequest,
+            "untrusted" => Core.Sandbox.ApprovalPolicy.Untrusted,
+            _ => Core.Sandbox.ApprovalPolicy.OnFailure,
         };
     }
 
-    private static Hoho.Core.Sandbox.SandboxMode ParseSandbox(string s)
+    private static Core.Sandbox.SandboxMode ParseSandbox(string s)
     {
         return s.ToLowerInvariant() switch
         {
-            "read-only" => Hoho.Core.Sandbox.SandboxMode.ReadOnly,
-            "danger-full-access" => Hoho.Core.Sandbox.SandboxMode.DangerFullAccess,
-            _ => Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite,
+            "read-only" => Core.Sandbox.SandboxMode.ReadOnly,
+            "danger-full-access" => Core.Sandbox.SandboxMode.DangerFullAccess,
+            _ => Core.Sandbox.SandboxMode.WorkspaceWrite,
         };
     }
 
@@ -383,7 +419,7 @@ public static class Program {
 
 static class ProviderFactory
 {
-    public static IChatProvider CreateOpenAIProvider(Hoho.Core.Configuration.HohoConfig config, string model)
+    public static IChatProvider CreateOpenAIProvider(HohoConfig config, string model)
     {
         var key = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
         if (string.IsNullOrWhiteSpace(key))
@@ -391,6 +427,58 @@ static class ProviderFactory
             config.Secrets.TryGetValue("OPENAI_API_KEY", out key);
         }
         if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("OPENAI_API_KEY not set in env or config");
-        return new Hoho.Core.Providers.OpenAIProvider(key!, model);
+        return new OpenAIProvider(key!, model);
+    }
+}
+
+static class Fixers
+{
+    public static void EnsureGlobalUsings(string workdir)
+    {
+        // Hoho.App global usings
+        var appUsingsPath = Path.Combine(workdir, "Hoho.App", "GlobalUsings.cs");
+        if (!File.Exists(appUsingsPath))
+        {
+            var content = string.Join('\n', new []
+            {
+                "global using Terminal.Gui;",
+                "global using Terminal.Gui.Views;",
+                "global using Terminal.Gui.ViewBase;",
+                "global using Terminal.Gui.Input;",
+                "global using System.Text;",
+                ""
+            });
+            try { File.WriteAllText(appUsingsPath, content); } catch { /* ignore */ }
+        }
+        // Hoho.Core global usings
+        var coreUsingsPath = Path.Combine(workdir, "Hoho.Core", "GlobalUsings.cs");
+        if (!File.Exists(coreUsingsPath))
+        {
+            var content = string.Join('\n', new []
+            {
+                "global using Hoho.Core.Sessions;",
+                ""
+            });
+            try { File.WriteAllText(coreUsingsPath, content); } catch { /* ignore */ }
+        }
+    }
+}
+
+partial class Program
+{
+    private static async Task RunFixAsync(string workdir)
+    {
+        Fixers.EnsureGlobalUsings(workdir);
+        // Try running dotnet format if available
+        try
+        {
+            var shell = new Core.Services.ShellRunner();
+            await foreach (var c in shell.RunAsync(new []{"dotnet","format","Hoho.sln","--severity","info"}, new ShellOptions{ WorkDir = workdir, AllowedRoot = workdir, AllowNetwork = false }))
+            {
+                if (c.Stream == "stdout") Console.Write(c.Data);
+            }
+        }
+        catch { /* ignore if not available */ }
+        Console.WriteLine("fix: completed");
     }
 }

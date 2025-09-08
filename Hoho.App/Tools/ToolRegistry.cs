@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text.Json;
-using Hoho.Core;
+using Serilog;
 using NetFabric.Hyperlinq;
 
 namespace Hoho.Tools;
@@ -29,9 +29,9 @@ public class ToolRegistry {
 	/// </summary>
 	public void RegisterTool(IHohoTool tool) {
 		if (_tools.TryAdd(tool.Name, tool)) {
-			Logger.Info($"Registered tool: {tool.Name}");
+            Log.Information("Registered tool: {Tool}", tool.Name);
 		} else {
-			Logger.Warn($"Tool already registered: {tool.Name}");
+            Log.Warning("Tool already registered: {Tool}", tool.Name);
 		}
 	}
 
@@ -73,15 +73,15 @@ public class ToolRegistry {
 				return ToolResult.Fail($"Failed to deserialize input for tool: {toolName}");
 			}
 
-			Logger.Info($"Executing tool: {toolName}");
+            Log.Information("Executing tool: {Tool}", toolName);
 			return await tool.ExecuteAsync(typedInput, cancellationToken);
-		} catch (JsonException ex) {
-			Logger.Error(ex, "Invalid JSON input for tool {ToolName}", toolName);
-			return ToolResult.Fail($"Invalid input format: {ex.Message}");
-		} catch (Exception ex) {
-			Logger.Error(ex, "Tool execution failed: {ToolName}", toolName);
-			return ToolResult.Fail($"Tool execution failed: {ex.Message}");
-		}
+        } catch (JsonException ex) {
+            Log.Error(ex, "Invalid JSON input for tool {ToolName}", toolName);
+            return ToolResult.Fail($"Invalid input format: {ex.Message}");
+        } catch (Exception ex) {
+            Log.Error(ex, "Tool execution failed: {ToolName}", toolName);
+            return ToolResult.Fail($"Tool execution failed: {ex.Message}");
+        }
 	}
 
 	/// <summary>
@@ -101,12 +101,12 @@ public class ToolRegistry {
 				if (Activator.CreateInstance(type) is IHohoTool tool) {
 					RegisterTool(tool);
 				}
-			} catch (Exception ex) {
-				Logger.Warn($"Failed to register tool type: {type.Name} - {ex.Message}");
-			}
-		}
+            } catch (Exception ex) {
+                Log.Warning("Failed to register tool type: {Type} - {Message}", type.Name, ex.Message);
+            }
+        }
 
-		Logger.Info($"Registered {_tools.Count} tools from assembly");
+        Log.Information("Registered {Count} tools from assembly", _tools.Count);
 	}
 
 	/// <summary>

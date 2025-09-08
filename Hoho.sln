@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoho.App", "Hoho.App\Hoho.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoho.Core", "Hoho.Core\Hoho.Core.csproj", "{F3E75E3A-451F-4068-9BA0-DBDA7A4B3251}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terminal.Gui", "Terminal.Gui\\Terminal.Gui\\Terminal.Gui.csproj", "{A1B2C3D4-E5F6-47A8-9B0C-D1E2F3A4B5C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terminal.Gui.Analyzers", "Terminal.Gui\\Terminal.Gui.Analyzers\\Terminal.Gui.Analyzers.csproj", "{B7C8D9EA-F0A1-42B3-94C5-06D7E8F9A0B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +20,14 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7C8D9EA-F0A1-42B3-94C5-06D7E8F9A0B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C8D9EA-F0A1-42B3-94C5-06D7E8F9A0B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C8D9EA-F0A1-42B3-94C5-06D7E8F9A0B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C8D9EA-F0A1-42B3-94C5-06D7E8F9A0B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-E5F6-47A8-9B0C-D1E2F3A4B5C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-47A8-9B0C-D1E2F3A4B5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-47A8-9B0C-D1E2F3A4B5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-47A8-9B0C-D1E2F3A4B5C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2150D3AB-8B86-4887-B86F-5B5BF2224079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2150D3AB-8B86-4887-B86F-5B5BF2224079}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2150D3AB-8B86-4887-B86F-5B5BF2224079}.Release|Any CPU.ActiveCfg = Release|Any CPU
