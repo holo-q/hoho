@@ -221,6 +221,13 @@ public static class Program {
                     Console.Error.WriteLine("Cannot use --resume and --continue together.");
                     return;
                 }
+                // Enforce parity: unless ExperimentalUi is enabled, reject unsupported flags
+                if (!cfgRoot.ExperimentalUi && (resume || cont))
+                {
+                    if (resume) { Console.Error.WriteLine("error: unexpected argument '--resume' found"); }
+                    if (cont)   { Console.Error.WriteLine("error: unexpected argument '--continue' found"); }
+                    return;
+                }
                 if (resume)
                 {
                     var sessions = Hoho.Core.Sessions.SessionDiscovery.ListSessions(30).ToList();
