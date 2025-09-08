@@ -26,13 +26,22 @@ internal static class TuiApp
 
         var top = Application.Top;
 
-        // Single column chat list + composer + info line
+        // Single column chat list + composer + status + info line
         var chat = new ChatView
         {
             X = 0,
             Y = 0,
             Width = Dim.Fill(),
-            Height = Dim.Fill(2)
+            Height = Dim.Fill(3)
+        };
+
+        var status = new Label
+        {
+            X = 0,
+            Y = Pos.AnchorEnd(2),
+            Width = Dim.Fill(),
+            Height = 1,
+            Text = string.Empty
         };
 
         var info = new Label
@@ -41,21 +50,32 @@ internal static class TuiApp
             Y = Pos.AnchorEnd(1),
             Width = Dim.Fill(),
             Height = 1,
-            Text = $"Mode: workspace-write  Approval: on-failure  Provider: {provider.Name}  Workdir: {workdir}"
+            Text = $"Esc edit prev  |  Shift+Enter newline, Enter send  |  Provider: {provider.Name}  Workdir: {workdir}"
         };
 
-        var composer = new TextField("")
+        var composer = new TextView
         {
             X = 0,
-            Y = Pos.AnchorEnd(2),
+            Y = Pos.AnchorEnd(3),
             Width = Dim.Fill(),
-            Height = 1,
+            Height = 2,
+            ReadOnly = false,
+            WordWrap = false,
         };
+
+        bool backtrackPrimed = false;
+        void UpdateInfo()
+        {
+            var hints = backtrackPrimed ? "Esc edit prev (primed)" : "Esc edit prev";
+            info.Text = $"{hints}  |  Shift+Enter newline, Enter send  |  Provider: {provider.Name}  Workdir: {workdir}";
+        }
+        UpdateInfo();
 
         async Task SendAsync(string prompt)
         {
             chat.AppendUser(prompt);
             chat.BeginAssistant();
+            status.Text = "Running… (Ctrl-C to cancel)";
             try
             {
                 await runner.RunOnceAsync(sid!, prompt, onText: s =>
@@ -70,21 +90,62 @@ internal static class TuiApp
             finally
             {
                 chat.EndAssistant();
+                status.Text = string.Empty;
             }
         }
 
         composer.KeyPress += async args =>
         {
+            // Ctrl-C clears composer
+            if (args.KeyEvent.Key == Key.C && (args.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            {
+                args.Handled = true;
+                composer.Text = string.Empty;
+                backtrackPrimed = false;
+                UpdateInfo();
+                return;
+            }
+
+            // Esc backtrack logic
+            if (args.KeyEvent.Key == Key.Esc)
+            {
+                args.Handled = true;
+                var txt = composer.Text.ToString();
+                if (string.IsNullOrEmpty(txt))
+                {
+                    if (!backtrackPrimed)
+                    {
+                        backtrackPrimed = true;
+                    }
+                    else
+                    {
+                        var last = chat.GetLastUserMessageText();
+                        composer.Text = last ?? string.Empty;
+                        backtrackPrimed = false;
+                    }
+                    UpdateInfo();
+                }
+                return;
+            }
+
             if (args.KeyEvent.Key == Key.Enter)
             {
                 args.Handled = true;
-                var prompt = composer.Text.ToString();
-                composer.Text = "";
-                await SendAsync(prompt);
+                if ((args.KeyEvent.KeyModifiers & KeyModifiers.Shift) != 0)
+                {
+                    composer.InsertText("\n");
+                }
+                else
+                {
+                    var prompt = composer.Text.ToString();
+                    composer.Text = "";
+                    await SendAsync(prompt);
+                }
+                return;
             }
         };
 
-        top.Add(chat, composer, info);
+        top.Add(chat, composer, status, info);
 
         if (!string.IsNullOrWhiteSpace(initialPrompt))
         {

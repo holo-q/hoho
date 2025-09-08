@@ -53,6 +53,15 @@ internal sealed class ChatView : View
         SetNeedsDisplay();
     }
 
+    public string GetLastUserMessageText()
+    {
+        for (int i = _messages.Count - 1; i >= 0; i--)
+        {
+            if (_messages[i].role == "user") return _messages[i].text;
+        }
+        return string.Empty;
+    }
+
     private void EnsureBottom()
     {
         _scrollY = int.MaxValue;
@@ -75,9 +84,9 @@ internal sealed class ChatView : View
             };
             var color = role switch
             {
-                "user" => ColorScheme.HotNormal,
-                "assistant" => ColorScheme.HotFocus,
-                "info" => ColorScheme.Disabled,
+                "user" => Application.Driver.MakeAttribute(Color.Cyan, Color.Black),
+                "assistant" => Application.Driver.MakeAttribute(Color.BrightMagenta, Color.Black),
+                "info" => Application.Driver.MakeAttribute(Color.Gray, Color.Black),
                 _ => ColorScheme.Normal,
             };
 
@@ -87,7 +96,7 @@ internal sealed class ChatView : View
                 if (y >= 0 && y < bounds.Height)
                 {
                     Move(0, y);
-                    Driver.SetAttribute(color);
+                    if (color is Attribute a) Driver.SetAttribute(a);
                     Driver.AddStr(line.PadRight(bounds.Width));
                     Driver.SetAttribute(ColorScheme.Normal);
                 }
@@ -125,4 +134,3 @@ internal sealed class ChatView : View
         }
     }
 }
-
