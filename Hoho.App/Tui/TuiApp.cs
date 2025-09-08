@@ -8,7 +8,7 @@ namespace Hoho;
 
 internal static class TuiApp
 {
-    public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null, Hoho.Core.Sandbox.ApprovalPolicy approval = Hoho.Core.Sandbox.ApprovalPolicy.OnFailure, Hoho.Core.Sandbox.SandboxMode sandbox = Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite)
+    public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null, Hoho.Core.Sandbox.ApprovalPolicy approval = Hoho.Core.Sandbox.ApprovalPolicy.OnFailure, Hoho.Core.Sandbox.SandboxMode sandbox = Hoho.Core.Sandbox.SandboxMode.WorkspaceWrite, bool experimentalUi = false)
     {
         Application.Init();
 
@@ -70,7 +70,9 @@ internal static class TuiApp
         void UpdateInfo()
         {
             var hints = backtrackPrimed ? "Esc edit prev (primed)" : "Esc edit prev";
-            info.Text = $"{hints} | Shift+Enter newline; Enter send | @ insert path; Ctrl+K files | Mode: {sandbox} | Approvals: {approval} | Provider: {provider.Name} | {workdir}";
+            var common = $"{hints} | Shift+Enter newline; Enter send";
+            var extra = experimentalUi ? " | @ insert path; Ctrl+K files" : string.Empty;
+            info.Text = $"{common}{extra} | Mode: {sandbox} | Approvals: {approval} | Provider: {provider.Name} | {workdir}";
         }
         UpdateInfo();
 
@@ -301,7 +303,7 @@ internal static class TuiApp
         // Ctrl+R to open resume picker (switch session); Ctrl+P apply patch dialog
         top.KeyPress += e =>
         {
-            if (e.KeyEvent.Key == Key.R && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            if (experimentalUi && e.KeyEvent.Key == Key.R && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 e.Handled = true;
                 var pick = ResumePicker.Show();
@@ -311,19 +313,19 @@ internal static class TuiApp
                     chat.AppendInfo($"[resumed session: {sid}]");
                 }
             }
-            else if (e.KeyEvent.Key == Key.P && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            else if (experimentalUi && e.KeyEvent.Key == Key.P && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 e.Handled = true;
                 var dlg = new ApplyPatchDialog(workdir, sandbox, approval);
                 Application.Run(dlg);
             }
-            else if (e.KeyEvent.Key == Key.G && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            else if (experimentalUi && e.KeyEvent.Key == Key.G && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 e.Handled = true;
                 var dlg = new CommitDialog(workdir, approval);
                 Application.Run(dlg);
             }
-            else if (e.KeyEvent.Key == Key.M && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            else if (experimentalUi && e.KeyEvent.Key == Key.M && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 e.Handled = true;
                 // Cycle sandbox mode
@@ -335,7 +337,7 @@ internal static class TuiApp
                 };
                 UpdateInfo();
             }
-            else if (e.KeyEvent.Key == Key.A && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
+            else if (experimentalUi && e.KeyEvent.Key == Key.A && (e.KeyEvent.KeyModifiers & KeyModifiers.Ctrl) != 0)
             {
                 e.Handled = true;
                 // Cycle approval policy

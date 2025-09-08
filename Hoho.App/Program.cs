@@ -214,6 +214,7 @@ public static class Program {
             rootCommand.SetHandler((string provider, string? sid, string workdir, string? initial, bool resume, bool cont, string approvalsRoot, string sandboxRoot) =>
             {
                 Environment.CurrentDirectory = workdir;
+                var cfgRoot = HohoConfig.Load();
                 // Handle resume/continue semantics
                 if (resume && cont)
                 {
@@ -251,7 +252,7 @@ public static class Program {
                 }
                 var ap = ParseApprovals(approvalsRoot);
                 var sm = ParseSandbox(sandboxRoot);
-                TuiApp.Run(workdir, provider, sid, initial, ap, sm);
+                TuiApp.Run(workdir, provider, sid, initial, ap, sm, cfgRoot.ExperimentalUi);
             }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt, approvalsOptRoot, sandboxOptRoot);
 
             // Exec (non-interactive automation mode)

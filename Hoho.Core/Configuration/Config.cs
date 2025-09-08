@@ -12,6 +12,8 @@ public sealed class HohoConfig
     // Auth
     [JsonInclude] public string AuthProvider { get; private set; } = "none"; // chatgpt|openai|none
     [JsonInclude] public string? ChatGptSession { get; private set; }
+    // UI
+    [JsonInclude] public bool ExperimentalUi { get; private set; } = false;
 
     public static string GetDefaultPath()
     {
@@ -58,6 +60,12 @@ public sealed class HohoConfig
     {
         ChatGptSession = null;
         AuthProvider = "none";
+        return this;
+    }
+
+    public HohoConfig SetExperimentalUi(bool on)
+    {
+        ExperimentalUi = on;
         return this;
     }
 }
