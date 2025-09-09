@@ -222,7 +222,11 @@ public static partial class Program {
             rootCommand.AddCommand(tree);
 
             // TUI default behavior
-            rootCommand.SetHandler((string provider, string? sid, string? workdir, string? initial, bool resume, bool cont) =>
+            var smokeOpt = new Option<int?>(name: "--tui-smoke-ms", description: "Run TUI for N ms then exit (smoke test)");
+            var backendOpt = new Option<string>(name: "--backend", getDefaultValue: () => "terminal-gui", description: "TUI backend: terminal-gui|ratatui");
+            rootCommand.AddOption(smokeOpt);
+            rootCommand.AddOption(backendOpt);
+            rootCommand.SetHandler((string provider, string? sid, string? workdir, string? initial, bool resume, bool cont, int? smokeMs, string backendName) =>
             {
                 // Normalize working directory; default to current if missing
                 if (string.IsNullOrWhiteSpace(workdir))
@@ -282,8 +286,14 @@ public static partial class Program {
                     var sidLatest = SessionDiscovery.ListSessions(1).FirstOrDefault()?.Id;
                     if (!string.IsNullOrWhiteSpace(sidLatest)) sid = sidLatest;
                 }
-                TuiApp.Run(workdir!, provider, sid, initial);
-            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt);
+                ITuiBackend backend = backendName.ToLowerInvariant() switch
+                {
+                    "terminal-gui" => new TerminalGuiBackend(),
+                    "ratatui" => new NotImplementedBackend(),
+                    _ => new TerminalGuiBackend(),
+                };
+                backend.Run(workdir!, provider, sid, initial, smokeMs);
+            }, providerOpt, sessionOpt, workdirOpt, initialPromptArg, resumeOpt, contOpt, smokeOpt, backendOpt);
 
             // Exec (non-interactive automation mode)
             var execModelOpt = new Option<string>(name: "-m", description: "model", getDefaultValue: () => "gpt-4o-mini");

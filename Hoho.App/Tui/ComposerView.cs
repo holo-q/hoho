@@ -50,13 +50,13 @@ internal sealed class ComposerView : View
         }
     }
 
-    public void Clear() => _text.Text = string.Empty;
+    public void Clear() => Text = string.Empty;
     public void InsertNewLine() => _text.InsertText("\n");
     public void FocusInner() => _text.SetFocus();
 
     public event Action<Key>? KeyDownInner;
 
-    public bool IsInPasteBurst => _inBurst;
+    public bool IsInPasteBurst => _inBurst || Application.IsInBracketedPaste;
 
     private void OnTextKeyDown(Key key)
     {
