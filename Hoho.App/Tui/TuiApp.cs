@@ -11,15 +11,25 @@ namespace Hoho;
 
 internal static class TuiApp
 {
-	public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null)
+	public static int Run(string workdir, string providerName, string? sessionId, string? initialPrompt = null, int? smokeMs = null)
 	{
-		Application.Init();
+        Application.Init(driver: null, driverName: "NetDriver", options: new ApplicationOptions
+        {
+            UseAlternateScreenBuffer = false,
+            MouseTracking = MouseTrackingMode.None,
+            RestoreConsoleOnExit = true,
+            ClearOnInit = true,
+        });
+        // Prefer terminal palette (4-bit) and default background for a Ratatui-like look
+        Application.Force16Colors = true;
+        try { Application.UseDefaultBackground = true; } catch { }
 
 		var store                               = new TranscriptStore();
 		var sid                                 = sessionId;
 		if (string.IsNullOrWhiteSpace(sid)) sid = store.CreateNewSessionId();
 
-		IChatProvider provider = providerName.ToLowerInvariant() switch
+		var pkey = string.IsNullOrWhiteSpace(providerName) ? "echo" : providerName.ToLowerInvariant();
+		IChatProvider provider = pkey switch
 		{
 			"echo" => new EchoProvider(),
 			_      => new EchoProvider(),
@@ -27,16 +37,18 @@ internal static class TuiApp
 		var runner = new AgentRunner(provider, store);
 		var system = AgentsLoader.LoadMergedAgents(workdir);
 
-		var top = Application.Top;
+        var top = new Toplevel
+        {
+            X = 0,
+            Y = 0,
+            Width = Dim.Fill(),
+            Height = Dim.Fill(),
+        };
+        // Optional: show perf overlay for power users
+        try { top.Add(new Terminal.Gui.Views.PerfOverlayView()); } catch { }
 
-		// Single column chat list + composer + status + info line
-		var chat = new ChatView
-		{
-			X      = 0,
-			Y      = 0,
-			Width  = Dim.Fill(),
-			Height = Dim.Fill(3)
-		};
+		// Single column chat list + composer + status + info line (virtualized)
+		var chat = new ChatListView { X = 0, Y = 0, Width = Dim.Fill(), Height = Dim.Fill(3) };
 
 		var status = new Label { X = 0, Y = Pos.AnchorEnd(2), Width = Dim.Fill(), Height = 1, Text = string.Empty };
 
@@ -209,12 +221,22 @@ internal static class TuiApp
 		// Ctrl+R to open resume picker (switch session); Ctrl+P apply patch dialog
         // global keybindings (reserved for future parity toggles)
 
+        // Ensure the input composer has focus so typing works immediately
+        Application.AddTimeout(TimeSpan.Zero, () => { composer.FocusInner(); return false; });
+
         if (!string.IsNullOrWhiteSpace(initialPrompt))
         {
             Application.AddTimeout(TimeSpan.Zero, () => { _ = SendAsync(initialPrompt!); return false; });
         }
 
-		Application.Run();
+        if (smokeMs is { } dwell && dwell > 0)
+        {
+            Application.AddTimeout(TimeSpan.FromMilliseconds(dwell), () => { Application.RequestStop(); return false; });
+        }
+
+		Application.Run(top);
+		// Dispose the Toplevel before shutting down to satisfy Terminal.Gui's ResetState assertions
+		try { top.Dispose(); } catch { }
 		Application.Shutdown();
 		return 0;
 	}
