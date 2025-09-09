@@ -138,6 +138,9 @@ What makes hoho the 'last' CLI agent
 			* Auto-hint on escape
 			* Auto-hint on error
 			* The keys may be 1/2/3/4/5/6/7/8/9 which have contextual meaning in normal mode
+	* 
+* Loom view
+	* We need a CLI timeline renderer similar to a git commit history so we can do non-linear conversation lines and display them in a minimap with intuition navigation, TABing into it and using the arrow keys to navigate.
 * Shift-tab modes
 	* Normal:
 	* Plan: model cannot edit files, a prompt is injectd to specify that we're in planning mode
